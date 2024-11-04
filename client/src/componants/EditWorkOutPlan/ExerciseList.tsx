@@ -13,9 +13,9 @@ const ExerciseList = () => {
 
   return (
     <ul className="list-availableExercises">
-      {AvailableExercises.map((ExerciseName) => (
+      {AvailableExercises.map((Exercise) => (
         <div className="exercise-box">
-          <h2>{ExerciseName.name}</h2>
+          <h2>{Exercise.name}</h2>
         </div>
       ))}
     </ul>
