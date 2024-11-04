@@ -16,24 +16,6 @@ function App() {
     <AppProvider>
       <div className="App">
         <EditWorkOutPlan />
-        <ul>
-          {exercises.map((exercise, index) => {
-            return (
-              <li key={index}>
-                <h2>{exercise.name}</h2>
-                <p>Type: {exercise.type}</p>
-                <p>Sets:</p>
-                <ul>
-                  {exercise.sets.map((set, setIndex) => (
-                    <li key={setIndex}>
-                      Weight: {set.weight} lbs, Reps: {set.reps}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            );
-          })}
-        </ul>
       </div>
     </AppProvider>
   );
