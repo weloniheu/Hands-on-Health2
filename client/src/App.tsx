@@ -1,22 +1,23 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { fetchWorkoutTemplate } from "./utils/exercise-utils";
-import { Exercise, Exercise2 } from "./types/types";
-import { defaultExercises } from "./constants/Initial_consts";
-import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
 import { AppProvider } from "./contexts/AppContext";
+import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
+import FocusMusclesView from "./views/FocusMuscles";
+import Header from './views/Header';
 
-// ALL TEMPORARY CODE - CAN BE DELETED
 function App() {
-  const [exercises, setExercises] =
-    React.useState<Exercise2[]>(defaultExercises);
-  //   const [show, setShow] = React.useState<boolean>(false); // Disabled for testing
-
   return (
     <AppProvider>
-      <div className="App">
-        <EditWorkOutPlan />
-      </div>
+      <Router>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/" element={<EditWorkOutPlan />} />
+            <Route path="/focus-muscles" element={<FocusMusclesView duration={30} />} />
+          </Routes>
+        </div>
+      </Router>
     </AppProvider>
   );
 }
