@@ -1,7 +1,11 @@
+import React, { useState } from "react";
 import ExerciseList from "../componants/EditWorkOutPlan/ExerciseList";
-import "./css/EditWorkOutPlan.css";
+import EditFocusGroups from "../componants/EditWorkOutPlan/EditFocusGroups";
+// import "./css/EditWorkOutPlan.css";
 
 export const EditWorkOutPlan = () => {
+  const [duration, setDuration] = useState(30); // Example 30 mins
+
   return (
     <div>
       <div className="header-container">
@@ -10,6 +14,7 @@ export const EditWorkOutPlan = () => {
       </div>
       <div className="exercise-list-container">
         <ExerciseList />
+        <EditFocusGroups duration={duration} setDuration={setDuration} />  {/* Add the EditFocusGroups component */}
       </div>
     </div>
   );

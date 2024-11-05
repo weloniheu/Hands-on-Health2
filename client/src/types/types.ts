@@ -15,3 +15,9 @@ export type Set = {
   reps: number;
   weight: number;
 };
+
+export type FocusMuscles = {
+  id: number;
+  name: string;
+  selected: boolean;
+};
