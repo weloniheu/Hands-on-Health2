@@ -62,3 +62,56 @@
   outline: none; /* Remove default outline */
   border-color: #007bff; /* Change border color on focus */
 }
+
+/* Overlay to cover the entire screen */
+.overlay-AET {
+  position: fixed; /* Stay in place */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex; /* Flexbox to center the modal */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensure it appears on top */
+}
+
+/* Modal box styling */
+.modal-AET {
+  background-color: lightgrey; /* Grey background for the modal */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Space inside the modal */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  width: 300px; /* Set a width for the modal */
+}
+
+/* Input fields styling */
+.input-fields-AET {
+  display: flex;
+  flex-direction: column; /* Stack input fields vertically */
+  gap: 10px; /* Space between input fields */
+  margin: 20px 0; /* Margin for spacing */
+}
+
+/* Button container styling */
+.button-container-AET {
+  display: flex; /* Flexbox for button alignment */
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between buttons */
+}
+
+/* Modal button styling */
+.modal-button-AET {
+  background-color: grey; /* Grey background for buttons */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 10px 15px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.modal-button-AET:hover {
+  background-color: darkgrey; /* Darker grey on hover */
+}

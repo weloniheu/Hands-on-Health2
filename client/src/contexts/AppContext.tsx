@@ -6,6 +6,8 @@ interface AppContextType {
   setAvailableExercises: React.Dispatch<React.SetStateAction<Exercise2[]>>;
   SearchedExercises: Exercise2[];
   setSearchedExercises: React.Dispatch<React.SetStateAction<Exercise2[]>>;
+  noSearchResult: boolean;
+  setNoSearchResult: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const initialState: AppContextType = {
@@ -13,6 +15,8 @@ const initialState: AppContextType = {
   setAvailableExercises: () => {},
   SearchedExercises: [],
   setSearchedExercises: () => {},
+  noSearchResult: false,
+  setNoSearchResult: () => {},
 };
 
 export const AppContext = createContext<AppContextType>(initialState);
@@ -25,6 +29,11 @@ export const AppProvider = (props: any) => {
   const [SearchedExercises, setSearchedExercises] = useState<Exercise2[]>(
     initialState.SearchedExercises
   );
+
+  const [noSearchResult, setNoSearchResult] = useState<boolean>(
+    initialState.noSearchResult
+  );
+
   return (
     <AppContext.Provider
       value={{
@@ -32,6 +41,8 @@ export const AppProvider = (props: any) => {
         setAvailableExercises: setAvailableExercises,
         SearchedExercises: SearchedExercises,
         setSearchedExercises: setSearchedExercises,
+        noSearchResult: noSearchResult,
+        setNoSearchResult: setNoSearchResult,
       }}
     >
       {props.children}

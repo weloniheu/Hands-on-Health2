@@ -2,8 +2,12 @@ import { useContext, useState, ChangeEvent } from "react";
 import { AppContext } from "../../contexts/AppContext";
 
 const SearchBar = () => {
-  const { AvailableExercises, SearchedExercises, setSearchedExercises } =
-    useContext(AppContext);
+  const {
+    AvailableExercises,
+    SearchedExercises,
+    setSearchedExercises,
+    setNoSearchResult,
+  } = useContext(AppContext);
 
   /*
 Plan for this doc:
@@ -19,6 +23,9 @@ Plan for this doc:
           ex.name.toLowerCase().includes(searched.toLowerCase())
         ) //if there is a match between user input and available exercise
     );
+    if (searched !== "" && SearchedExercises.length === 0) {
+      setNoSearchResult(true);
+    }
   };
 
   // Function that passes the event to searchExercise

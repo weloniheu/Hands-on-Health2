@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { defaultAvaliableExercises } from "../../constants/Initial_consts";
 import DeleteExercise from "./DeleteExerciseType";
@@ -11,12 +11,23 @@ const ExerciseList = () => {
     SearchedExercises,
     setSearchedExercises,
     setAvailableExercises,
+    noSearchResult,
   } = useContext(AppContext);
 
   // EDIT LATER, FOR TESTING
   if (AvailableExercises.length === 0) {
     setAvailableExercises(defaultAvaliableExercises);
   }
+
+  // Used to display everything in the available workout list at initial page load
+  if (!noSearchResult && SearchedExercises.length === 0) {
+    setSearchedExercises(AvailableExercises);
+  }
+
+  // Used to reflect any new exercises types added
+  useEffect(() => {
+    setSearchedExercises(AvailableExercises);
+  }, [AvailableExercises]);
 
   //TODO Function to load the current list of workouts from the Backend
 
