@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { defaultAvaliableExercises } from "../../constants/Initial_consts";
-import DeleteExercise from "./DeleteExercise";
+import DeleteExercise from "./DeleteExerciseType";
 import { Exercise2 } from "../../types/types";
 
 const ExerciseList = () => {
@@ -17,12 +17,6 @@ const ExerciseList = () => {
   if (AvailableExercises.length === 0) {
     setAvailableExercises(defaultAvaliableExercises);
   }
-
-  const emptySearchBoxCallBack = (empty: boolean) => {
-    if (empty && SearchedExercises.length === 0) {
-      setSearchedExercises(AvailableExercises);
-    }
-  };
 
   //TODO Function to load the current list of workouts from the Backend
 
