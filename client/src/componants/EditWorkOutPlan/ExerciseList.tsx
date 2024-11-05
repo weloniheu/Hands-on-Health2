@@ -6,18 +6,29 @@ import { Exercise2 } from "../../types/types";
 
 const ExerciseList = () => {
   // Get the context
-  const { AvailableExercises, setAvailableExercises } = useContext(AppContext);
+  const {
+    AvailableExercises,
+    SearchedExercises,
+    setSearchedExercises,
+    setAvailableExercises,
+  } = useContext(AppContext);
 
-  // DELETE LATER, FOR TESTING
+  // EDIT LATER, FOR TESTING
   if (AvailableExercises.length === 0) {
     setAvailableExercises(defaultAvaliableExercises);
   }
+
+  const emptySearchBoxCallBack = (empty: boolean) => {
+    if (empty && SearchedExercises.length === 0) {
+      setSearchedExercises(AvailableExercises);
+    }
+  };
 
   //TODO Function to load the current list of workouts from the Backend
 
   return (
     <ul className="list-availableExercises">
-      {AvailableExercises.map((Exercise) => (
+      {SearchedExercises.map((Exercise) => (
         <div className="exercise-box">
           <h2>{Exercise.name}</h2>
           <DeleteExercise Exercise={Exercise} />

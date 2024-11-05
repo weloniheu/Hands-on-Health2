@@ -12,7 +12,7 @@ export const defaultAvaliableExercises = [
   { name: "Dips1", type: "default", sets: defaultSets },
   { name: "Dips2", type: "default", sets: defaultSets },
   { name: "Dips3", type: "default", sets: defaultSets },
-  { name: "Dips33", type: "default", sets: defaultSets },
-  { name: "Dips333", type: "default", sets: defaultSets },
-  { name: "Dips3333", type: "default", sets: defaultSets },
+  { name: "Arm", type: "default", sets: defaultSets },
+  { name: "Leg", type: "default", sets: defaultSets },
+  { name: "Abs", type: "default", sets: defaultSets },
 ];
