@@ -1,19 +1,20 @@
+// Signup.tsx
 import React, { useState } from "react";
 
-const Login = ({
-	onLoginSuccess,
+function Signup({
+	onSignupSuccess,
 }: {
-	onLoginSuccess: (token: string) => void;
-}) => {
+	onSignupSuccess: (token: string) => void;
+}) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 
-	const handleLogin = async (e: React.FormEvent) => {
-		e.preventDefault();
+	const handleSignup = async () => {
+		setError("");
 		try {
 			const response = await fetch(
-				"http://localhost:8080/api/auth/login",
+				"http://localhost:8080/api/auth/create-account",
 				{
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
@@ -21,21 +22,26 @@ const Login = ({
 				},
 			);
 
+			console.log("Received response:", response); // Log response details
+
 			if (response.ok) {
 				const data = await response.json();
-				onLoginSuccess(data.token); // Pass the token to App component or save it
+				console.log("Signup successful:", data); // Log success
+				onSignupSuccess(data.token);
 			} else {
 				const errorData = await response.json();
-				setError(errorData.message || "Login failed");
+				console.error("Error response data:", errorData); // Log error response body
+				setError(errorData.message || "Signup failed");
 			}
-		} catch (err) {
-			setError("Error occurred during login");
+		} catch (error) {
+			console.error("Error occurred during signup:", error); // Log unexpected errors
+			setError("An error occurred during signup");
 		}
 	};
 
 	return (
-		<form onSubmit={handleLogin}>
-			<h2>Login</h2>
+		<div>
+			<h2>Sign Up</h2>
 			{error && <p style={{ color: "red" }}>{error}</p>}
 			<input
 				type="text"
@@ -49,9 +55,9 @@ const Login = ({
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 			/>
-			<button type="submit">Login</button>
-		</form>
+			<button onClick={handleSignup}>Create Account</button>
+		</div>
 	);
-};
+}
 
-export default Login;
+export default Signup;

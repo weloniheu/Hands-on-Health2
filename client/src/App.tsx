@@ -6,6 +6,7 @@ import { defaultExercises } from "./constants/Initial_consts";
 import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
 import { AppProvider } from "./contexts/AppContext";
 import Login from "./componants/Login";
+import Signup from "./componants/Signup";
 
 // ALL TEMPORARY CODE - CAN BE DELETED
 function App() {
@@ -15,6 +16,7 @@ function App() {
 	const [token, setToken] = useState<string | null>(
 		localStorage.getItem("token"),
 	);
+	const [showSignup, setShowSignup] = useState(false);
 
 	const handleSetToken = (newToken: string | null) => {
 		setToken(newToken);
@@ -24,17 +26,39 @@ function App() {
 			localStorage.removeItem("token");
 		}
 	};
+	const handleLoginSuccess = (newToken: string) => {
+		setToken(newToken);
+		localStorage.setItem("token", newToken); // Save token to persist login
+	};
+	const handleLogout = () => {
+		setToken(null);
+		localStorage.removeItem("token");
+	};
 
-	// Render the login page if the user is not logged in
+	// Render the login or signup page if the user is not logged in
 	if (!token) {
-		return <Login setToken={handleSetToken} />;
+		return (
+			<div>
+				{showSignup ? (
+					<Signup onSignupSuccess={handleLoginSuccess} />
+				) : (
+					<Login onLoginSuccess={handleLoginSuccess} />
+				)}
+				<button onClick={() => setShowSignup(!showSignup)}>
+					{showSignup
+						? "Already have an account? Login"
+						: "Don't have an account? Create Account"}
+				</button>
+			</div>
+		);
 	}
 
+	// Render the main app view (e.g., EditWorkOutPlan) if the user is logged in
 	return (
 		<AppProvider>
 			<div className="App">
-				<button onClick={() => handleSetToken(null)}>Logout</button>
-				<EditWorkOutPlan />
+				<button onClick={handleLogout}>Logout</button>
+				<EditWorkOutPlan /> {/* Show the main workout plan component */}
 			</div>
 		</AppProvider>
 	);
