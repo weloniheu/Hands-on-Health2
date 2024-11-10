@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useWorkout } from "./WorkoutContext";
 import "./DurationSelectionPage.css";
 
 const DurationSelectionPage: React.FC = () => {
+    const { setDuration } = useWorkout();
     const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
     const navigate = useNavigate();
 
     const handleSelect = (duration: number) => {
         setSelectedDuration(duration);
+        setDuration(duration);
     };
 
     const handleNext = () => {
@@ -43,7 +46,7 @@ const DurationSelectionPage: React.FC = () => {
                         </button>
                     ))}
                 </div>
-                <button className="next-button" onClick={handleNext} disabled={selectedDuration === null}>
+                <button className="duration-next-button" onClick={handleNext} disabled={selectedDuration === null}>
                     Next
                 </button>
             </div>

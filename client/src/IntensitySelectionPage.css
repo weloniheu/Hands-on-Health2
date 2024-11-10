@@ -48,10 +48,12 @@
     padding-left: 10px;
 }
 
-.subtitle {
+.app-subtitle {
     font-size: 24px;
     font-weight: 600;
     color: #333;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .cancel-button {
@@ -65,7 +67,7 @@
     font-weight: bold;
 }
 
-.duration-title {
+.intensity-title {
     font-size: 55px;
     font-weight: bold;
     color: #333;
@@ -73,7 +75,7 @@
     margin-top: 55px;
 }
 
-.duration-options {
+.intensity-options {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
@@ -81,7 +83,7 @@
     margin-top: 75px;
 }
 
-.duration-button {
+.intensity-button {
     padding: 15px 30px;
     font-size: 18px;
     font-weight: bold;
@@ -93,34 +95,60 @@
     margin-top: 10px;
 }
 
-.duration-button.selected {
+.intensity-button.selected {
     background-color: #4a90e2;
     color: white;
 }
 
-.duration-button:hover {
+.intensity-button:hover {
     transform: translateY(-2px);
     background-color: #c0c0c0;
 }
 
-.duration-next-button {
-    margin-top: 90px;
+.intensity-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 75px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.intensity-prev-button {
+    position: absolute;
+    bottom: -100px;
+    left: 180px;
     padding: 12px 24px;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
     background-color: #4a90e2;
     color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    width: 100px;
 }
 
-.duration-next-button:disabled {
+.intensity-next-button {
+    position: absolute;
+    bottom: -100px;
+    left: 300px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #4a90e2;
+    color: white;
+    width: 100px;
+}
+
+.intensity-prev-button:hover, .next-button:hover {
+    background-color: #357abd;
+}
+
+.intensity-next-button:disabled {
     background-color: #b0b0b0;
     cursor: not-allowed;
-}
-
-.duration-next-button:hover:not(:disabled) {
-    background-color: #357abd;
 }

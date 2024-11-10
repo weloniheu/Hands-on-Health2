@@ -1,22 +1,29 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { WorkoutProvider } from "./WorkoutContext";
 import HomePage from "./HomePage";
 import DurationSelectionPage from "./DurationSelectionPage";
 import FocusPage from "./FocusPage";
+import IntensitySelectionPage from "./IntensitySelectionPage";
+import ReviewWorkoutPage from "./ReviewWorkoutPage";
 
-function App() {
+const App: React.FC = () => {
     return (
-        <Router>
-            <div className="App">
+        <WorkoutProvider>
+            <Router>
                 <Routes>
-                    <Route path="/" element={<HomePage />} /> {/* Home Page Route */}
-                    <Route path="/select-duration" element={<DurationSelectionPage />} /> {/* Duration Selection Page */}
-                    <Route path="/focus" element={<FocusPage />} /> {/* Focus Page */}
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/select-duration" element={<DurationSelectionPage />} />
+                    <Route path="/focus" element={<FocusPage />} />
+                    <Route path="/intensity" element={<IntensitySelectionPage />} />
+                    <Route path="/review-workout" element={<ReviewWorkoutPage />} />
                 </Routes>
-            </div>
-        </Router>
+            </Router>
+        </WorkoutProvider>
     );
-}
+};
 
 export default App;
+
+
 
