@@ -1,0 +1,33 @@
+body {
+  background-color: rgb(241, 255, 250);
+}
+
+.header-container {
+  display: flex;
+  justify-content: center; /* Center the header */
+  align-items: center; /* Vertically center items */
+  position: relative; /* Allow absolute positioning of button */
+  margin: 20px 0; /* Optional: adds some space around the header */
+  font-size: x-large;
+}
+
+.header-title {
+  margin: 0; /* Remove default margin from the h1 */
+}
+
+.back-button {
+  position: absolute; /* Position the button absolutely */
+  width: 75px;
+  right: 20px; /* Move it a little from the right */
+  padding: 5px 15px;
+  background-color: lightgray; /* Set background to grey */
+  color: black; /* Text color */
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: darkgrey; /* Change for hover effect */
+}
