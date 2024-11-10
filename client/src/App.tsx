@@ -1,12 +1,23 @@
 import React from "react";
 import "./App.css";
-import Review from "./components/WorkOutPlan/review";
+import { defaultExercises } from "./constants/Initial_consts";
+import { AppProvider } from "./contexts/AppContext";
 
 function App() {
+    const [exercises, setExercises] = React.useState(defaultExercises);
+    const [show, setShow] = React.useState(false);
+
+    const handleToggleShow = () => {
+        setShow((prevShow) => !prevShow);
+    };
+
     return (
-        <div>
-            <Review />
-        </div>
+        <AppProvider>
+            <div className="App">
+                <h1>Workout Planner</h1>
+                <button onClick={handleToggleShow}>{show ? "Hide Plan" : "Show Plan"}</button>
+            </div>
+        </AppProvider>
     );
 }
 
