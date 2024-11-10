@@ -10,7 +10,7 @@ export const EditWorkOutPlan = () => {
         <h1 className="header-title">Add Exercise</h1>
         <button className="back-button">Back</button>
       </div>
-      <div>
+      <div className="search-add-container">
         <SearchBar />
         <AddExerciseType />
       </div>

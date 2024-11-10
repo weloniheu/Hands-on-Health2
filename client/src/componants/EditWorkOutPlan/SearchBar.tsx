@@ -37,6 +37,7 @@ Plan for this doc:
   return (
     <div className="search-container">
       <input
+        className="search-bar"
         type="text"
         placeholder="🔎Search..."
         name="search"

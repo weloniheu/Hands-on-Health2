@@ -56,14 +56,14 @@ const AddExerciseType = () => {
             <h2>New Exercise</h2>
             <form onSubmit={(event) => handleAddNewExerciseType(event)}>
               <div className="input-fields-AET">
-                <label htmlFor="Exercise-AET">Exercise</label>
+                <label htmlFor="Exercise-AET">Exercise:</label>
                 <input
                   id="input1"
                   name="input2"
                   type="text"
                   placeholder="Enter Your Exercise Name"
                 />
-                <label htmlFor="Category-AET">Category</label>
+                <label htmlFor="Category-AET">Category:</label>
                 <select
                   id="input2"
                   name="input2"

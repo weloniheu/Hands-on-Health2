@@ -1,9 +1,14 @@
+body {
+  background-color: rgb(241, 255, 250);
+}
+
 .header-container {
   display: flex;
   justify-content: center; /* Center the header */
   align-items: center; /* Vertically center items */
   position: relative; /* Allow absolute positioning of button */
   margin: 20px 0; /* Optional: adds some space around the header */
+  font-size: x-large;
 }
 
 .header-title {
@@ -13,8 +18,8 @@
 .back-button {
   position: absolute; /* Position the button absolutely */
   width: 75px;
-  right: 10px; /* Move it a little from the right */
-  padding: 5px 12px;
+  right: 20px; /* Move it a little from the right */
+  padding: 5px 15px;
   background-color: lightgray; /* Set background to grey */
   color: black; /* Text color */
   font-weight: bold;
@@ -41,16 +46,18 @@
   margin: 10px 20px;
 }
 .search-container {
-  width: 100%; /* Ensure the container takes the full width */
   display: flex; /* Use flexbox for alignment if needed */
   justify-content: center; /* Center the input field if desired */
+  flex-grow: 1; /* Let the search bar grow */
+  max-width: calc(100% - 120px); /* Limit max width if needed */
+  margin-right: 0px; /* Adjust spacing by moving the right side slightly inward */
 }
 
 .search-container input {
   width: calc(
     100% - 40px
   ); /* Make the input field take the full width minus the gaps */
-  margin: 0 40px; /* Add margin to left and right for spacing */
+  margin: 0 0px; /* Add margin to left and right for spacing */
   padding: 10px; /* Add some padding for better appearance */
   font-size: 16px; /* Increase font size for better readability */
   border: 2px solid black; /* Optional: Add a border */
@@ -83,7 +90,9 @@
   border-radius: 10px; /* Rounded corners */
   padding: 20px; /* Space inside the modal */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  width: 300px; /* Set a width for the modal */
+  width: 60%; /* Set a width for the modal */
+  height: 40%;
+  font-size: 25px;
 }
 
 /* Input fields styling */
@@ -92,6 +101,25 @@
   flex-direction: column; /* Stack input fields vertically */
   gap: 10px; /* Space between input fields */
   margin: 20px 0; /* Margin for spacing */
+  font-size: large;
+  text-align: start;
+  color: black;
+}
+
+.input-fields-AET input {
+  height: 40px;
+  padding: 2px;
+  padding-left: 8px;
+}
+
+.input-fields-AET input::placeholder {
+  font-size: 18px; /* Adjust to your desired font size */
+}
+
+.input-fields-AET select {
+  height: 40px;
+  font-size: 20px;
+  padding: 5px;
 }
 
 /* Button container styling */
@@ -114,4 +142,22 @@
 
 .modal-button-AET:hover {
   background-color: darkgrey; /* Darker grey on hover */
+}
+
+.search-add-container {
+  display: flex; /* Enable flex layout */
+  justify-content: flex-start; /* Place items at start and end */
+  align-items: center; /* Align items vertically in the center */
+  gap: 5px;
+}
+
+.new-button {
+  margin-left: 5px; /* Ensure small gap */
+
+  height: 40px;
+  width: 90px;
+  font-size: large;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
 }
