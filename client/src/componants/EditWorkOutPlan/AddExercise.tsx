@@ -5,7 +5,7 @@ import { Exercise2 } from "../../types/types";
 const AddExercise = () => {
   const { AvailableExercises, setAvailableExercises } = useContext(AppContext);
 
-  const { exercise, setExercise } = useState<Exercise2>({
+  const [exercise, setExercise] = useState<Exercise2>({
     name: "",
     type: "",
     sets: [],
