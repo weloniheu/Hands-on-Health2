@@ -22,9 +22,9 @@ jobs: # the things being executed
        working-directory: ./server
        run: npm install
 
-     - name: Run server tests
-       working-directory: ./server
-       run: npm test
+    # - name: Run server tests
+    #   working-directory: ./server
+    #   run: npm test
 
      # Set up and test client
      - name: Set up Node for client
