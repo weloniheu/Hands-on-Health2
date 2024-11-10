@@ -40,6 +40,11 @@
   padding-right: 20px; /* Additional right padding */
   margin: 10px 20px;
 }
+
+.exercise-box:hover {
+  background-color: darkgrey; /* Change for hover effect */
+}
+
 .search-container {
   width: 100%; /* Ensure the container takes the full width */
   display: flex; /* Use flexbox for alignment if needed */

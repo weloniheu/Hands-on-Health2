@@ -34,10 +34,11 @@ const ExerciseList = () => {
   return (
     <ul className="list-availableExercises">
       {SearchedExercises.map((Exercise) => (
-        <div className="exercise-box">
+        // Add onClick so that upon pressing, the exercise is added to current workout
+        <div className="exercise-box" >
           <h2>{Exercise.name}</h2>
           <DeleteExercise Exercise={Exercise} />
-        </div>
+        </div> 
       ))}
     </ul>
   );
