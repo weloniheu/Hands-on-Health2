@@ -14,7 +14,7 @@ function App() {
     return (
         <AppProvider>
             <div className="App">
-                <h1>Workout Planne</h1>
+                <h1>Workout Planner</h1>
                 <button onClick={handleToggleShow}>{show ? "Hide Plan" : "Show Plan"}</button>
             </div>
         </AppProvider>
