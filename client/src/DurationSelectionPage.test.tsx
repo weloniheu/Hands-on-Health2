@@ -1,15 +1,19 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import DurationSelectionPage from "./DurationSelectionPage";
 import { WorkoutProvider } from "./WorkoutContext";
+import HomePage from "./HomePage";
+import FocusPage from "./FocusPage";
 
 test("renders DurationSelectionPage and selects duration", () => {
   render(
     <WorkoutProvider>
-      <BrowserRouter>
-        <DurationSelectionPage />
-      </BrowserRouter>
+      <MemoryRouter initialEntries={["/select-duration"]}>
+        <Routes>
+          <Route path="/select-duration" element={<DurationSelectionPage />} />
+        </Routes>
+      </MemoryRouter>
     </WorkoutProvider>
   );
 
@@ -21,4 +25,48 @@ test("renders DurationSelectionPage and selects duration", () => {
   fireEvent.click(durationButton30);
   const nextButton = screen.getByText("Next");
   expect(nextButton).not.toBeDisabled();
+});
+
+test("navigates to home page when Cancel button is clicked", () => {
+  render(
+    <WorkoutProvider>
+      <MemoryRouter initialEntries={["/select-duration"]}>
+        <Routes>
+          <Route path="/select-duration" element={<DurationSelectionPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </MemoryRouter>
+    </WorkoutProvider>
+  );
+
+  // Click the "Cancel" button
+  const cancelButton = screen.getByText("Cancel");
+  fireEvent.click(cancelButton);
+
+  // Check if navigated to the HomePage
+  expect(screen.getByText("Welcome to Hands on Health")).toBeInTheDocument();
+});
+
+test("navigates to focus page when Next button is clicked", () => {
+  render(
+    <WorkoutProvider>
+      <MemoryRouter initialEntries={["/select-duration"]}>
+        <Routes>
+          <Route path="/select-duration" element={<DurationSelectionPage />} />
+          <Route path="/focus" element={<FocusPage />} />
+        </Routes>
+      </MemoryRouter>
+    </WorkoutProvider>
+  );
+
+  // Click on "30 min"
+  const durationButton30 = screen.getByText("30 min");
+  fireEvent.click(durationButton30);
+
+  // Click the "Next" button
+  const nextButton = screen.getByText("Next");
+  fireEvent.click(nextButton);
+
+  // Check if navigated to the Focus page
+  expect(screen.getByText("Focus")).toBeInTheDocument();
 });
