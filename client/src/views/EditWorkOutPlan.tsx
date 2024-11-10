@@ -1,5 +1,5 @@
 import ExerciseList from "../componants/EditWorkOutPlan/ExerciseList";
-import "./css/EditWorkOutPlan.css";
+// import "./css/EditWorkOutPlan.css";
 
 export const EditWorkOutPlan = () => {
   return (
