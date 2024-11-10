@@ -5,6 +5,7 @@ import { Exercise, Exercise2 } from "./types/types";
 import { defaultExercises } from "./constants/Initial_consts";
 import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
 import { AppProvider } from "./contexts/AppContext";
+import { CurrentWorkOutPlan } from "./views/CurrentWorkOutPlan";
 
 // ALL TEMPORARY CODE - CAN BE DELETED
 function App() {
