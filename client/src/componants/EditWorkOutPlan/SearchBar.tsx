@@ -23,7 +23,9 @@ Plan for this doc:
           ex.name.toLowerCase().includes(searched.toLowerCase())
         ) //if there is a match between user input and available exercise
     );
-    if (searched !== "" && SearchedExercises.length === 0) {
+    console.log(SearchedExercises);
+    if (searched !== "") {
+      console.log("right here");
       setNoSearchResult(true);
     }
   };

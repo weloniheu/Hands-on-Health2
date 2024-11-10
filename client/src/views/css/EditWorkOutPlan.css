@@ -161,3 +161,7 @@ body {
   border: none;
   border-radius: 10px;
 }
+
+.new-button:hover {
+  background-color: darkgrey; /* Change for hover effect */
+}

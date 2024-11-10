@@ -21,11 +21,15 @@ const ExerciseList = () => {
 
   // Used to display everything in the available workout list at initial page load
   if (!noSearchResult && SearchedExercises.length === 0) {
+    //If search input is not empty and the length is still 0, indicating no result
+    console.log("here");
     setSearchedExercises(AvailableExercises);
   }
 
   // Used to reflect any new exercises types added
   useEffect(() => {
+    //TODO Function to sort the AvailableExercises alphabetically before updating it;
+
     setSearchedExercises(AvailableExercises);
   }, [AvailableExercises]);
 
