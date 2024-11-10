@@ -3,12 +3,56 @@ import client from "../config/db";
 
 // JSON from frontend
 // {
-//     types: ["Chest", "Back"],
+//     userId: userId
+//     planName: "Upper Body Workout"
+//     exerciseTypes: ["Chest", "Back"],
 //     duration: "30",
 //     intensity: "normal"
 // }
 
-function generateWorkout(exercises: any[], numberOfTypes: number, duration: string, intensity: string) {
+// Create workout template by getting from database and generating the workout
+export async function createWorkoutTemplate(req: Request, res: Response) {
+    const { userId, planName, exerciseTypes, duration, intensity } = req.body as {
+        userId: string;
+        planName: string;
+        exerciseTypes: string[];
+        duration: number;
+        intensity: string;
+    };
+    if (!userId || !exerciseTypes || !duration || !intensity) {
+        return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    try {
+        const exercises = await client
+            .db("main")
+            .collection("exercises")
+            .find({ type: { $in: exerciseTypes } })
+            .toArray();
+
+        // Generate the workout
+        const workoutPlan = generateWorkout(exercises, exerciseTypes.length, duration, intensity);
+
+        // Put the new plan into the database
+        const newDocument = {
+            userId: userId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            planName: planName,
+            exerciseTypes: exerciseTypes,
+            duration: duration,
+            intensity: intensity,
+            workoutPlan: workoutPlan,
+        };
+        await client.db("main").collection("plans").insertOne(newDocument);
+
+        res.status(200).json(workoutPlan);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching exercises", error });
+    }
+}
+
+function generateWorkout(exercises: any[], numberOfTypes: number, duration: number, intensity: string) {
     // Determine the number of sets based on intensity
     let setsPerExercise;
     switch (intensity) {
@@ -29,23 +73,8 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: stri
     }
 
     // Determine the number of total exercises based on duration
-    let totalExercisesNeeded;
-    switch (duration) {
-        case "30":
-            totalExercisesNeeded = 3;
-            break;
-        case "60":
-            totalExercisesNeeded = 6;
-            break;
-        case "90":
-            totalExercisesNeeded = 9;
-            break;
-        case "120":
-            totalExercisesNeeded = 12;
-            break;
-        default:
-            throw new Error("Invalid duration");
-    }
+    // 10 min = 1 exercise
+    let totalExercisesNeeded = Math.round(duration / 10);
 
     // Determine the number of exercises per type
     let exercisesPerType: number[] = [];
@@ -133,32 +162,4 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: stri
     });
 
     return workoutPlan;
-}
-
-// Get workout template by getting from database and generating the workout
-export async function getWorkoutTemplate(req: Request, res: Response) {
-    const types = req.query.types as String;
-    const duration = req.query.duration as string;
-    const intensity = req.query.intensity as string;
-    if (!types || !duration || !intensity) {
-        return res.status(400).send({ error: "Missing required fields" });
-    }
-
-    const typesArray = types.split(",");
-
-    try {
-        const exercises = await client
-            .db("main")
-            .collection("exercises")
-            .find({ type: { $in: typesArray } })
-            .toArray();
-
-        // Generate the workout
-        const workoutPlan = generateWorkout(exercises, typesArray.length, duration, intensity);
-
-        // Send the workout plan as a response
-        res.status(200).json(workoutPlan);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching exercises", error });
-    }
 }
