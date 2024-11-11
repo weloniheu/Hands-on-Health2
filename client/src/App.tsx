@@ -32,7 +32,9 @@ function App() {
       {view === 'currentWorkout' ? (
         <CurrentWorkout onAddExercise={showAddExerciseView} />
       ) : (
-        <EditAddExercise onBack={showCurrentWorkoutView} />
+        <EditAddExercise 
+          onBack={showCurrentWorkoutView} 
+          navigateToCurrentWorkout={showCurrentWorkoutView}/>
       )}
       </div>
     </AppProvider>

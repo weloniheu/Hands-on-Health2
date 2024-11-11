@@ -5,9 +5,10 @@ import "./css/AddExerciseView.css";
 
 interface EditAddExerciseProps {
   onBack: () => void
+  navigateToCurrentWorkout: () => void
 }
 
-export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack }) => {
+export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack, navigateToCurrentWorkout }) => {
 
   return (
     <div>
@@ -20,7 +21,7 @@ export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack }) => {
         <AddExerciseType />
       </div>
       <div className="exercise-list-container">
-        <ExerciseList />
+        <ExerciseList navigateToCurrentWorkout={navigateToCurrentWorkout} />
       </div>
     </div>
   );
