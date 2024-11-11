@@ -24,8 +24,9 @@ body {
   color: black; /* Text color */
   font-weight: bold;
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   cursor: pointer;
+  margin-right: 32px;
 }
 
 .back-button:hover {
@@ -40,21 +41,22 @@ body {
   padding: 10px; /* Add some padding for spacing */
   border-radius: 15px; /* Optional: rounded corners */
   margin-bottom: 10px; /* Spacing between boxes */
-  text-align: left; /* Align text to the left */
+  text-align: center; /* Align text to the left */
   padding-left: 20px; /* Additional left padding */
   padding-right: 20px; /* Additional right padding */
   margin: 10px 20px;
+  margin-right: 50px;
 }
 
-.exercise-box:hover {
-  background-color: darkgrey; /* Change for hover effect */
+.add-new-exType {
+  align-items: end;
 }
 
 .search-container {
   display: flex; /* Use flexbox for alignment if needed */
   justify-content: center; /* Center the input field if desired */
   flex-grow: 1; /* Let the search bar grow */
-  max-width: calc(100% - 120px); /* Limit max width if needed */
+  max-width: calc(100% - 200px); /* Limit max width if needed */
   margin-right: 0px; /* Adjust spacing by moving the right side slightly inward */
 }
 
@@ -157,16 +159,27 @@ body {
 }
 
 .new-button {
-  margin-left: 5px; /* Ensure small gap */
-
+  margin-left: 5px; 
+  margin-top: 10px;
   height: 40px;
   width: 90px;
   font-size: large;
   font-weight: bold;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .new-button:hover {
   background-color: darkgrey; /* Change for hover effect */
+}
+
+.input-fields-AddExInfo label {
+  display: block;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.exType {
+  font-weight: 600;
 }

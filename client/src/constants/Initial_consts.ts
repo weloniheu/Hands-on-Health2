@@ -9,15 +9,15 @@ export const defaultExercises = [
 ];
 
 export const defaultAvaliableExercises = [
-  { name: "Dips-1", type: "Chest", sets: defaultSets },
-  { name: "Dips-2", type: "Chest", sets: defaultSets },
-  { name: "Dips-3", type: "Chest", sets: defaultSets },
-  { name: "Bicep-1", type: "Arm", sets: defaultSets },
-  { name: "Tricep-1", type: "Arm", sets: defaultSets },
-  { name: "Delts-1", type: "Arm", sets: defaultSets },
-  { name: "Glutes-1", type: "Leg", sets: defaultSets },
-  { name: "Quads-1", type: "Leg", sets: defaultSets },
-  { name: "Quads-2", type: "Leg", sets: defaultSets },
-  { name: "Calves-1", type: "Leg", sets: defaultSets },
-  { name: "Hams-1", type: "Leg", sets: defaultSets },
+  { name: "Dumbbell Bench Press", type: "Chest", sets: defaultSets },
+  { name: "Dumbbell Flies", type: "Chest", sets: defaultSets },
+  { name: "Barbell Bench Press", type: "Chest", sets: defaultSets },
+  { name: "Bench Dips", type: "Triceps", sets: defaultSets },
+  { name: "Cable Push Down", type: "Triceps", sets: defaultSets },
+  { name: "EZ Bar Curls", type: "Biceps", sets: defaultSets },
+  { name: "Dumbbell Curls", type: "Biceps", sets: defaultSets },
+  { name: "Squats", type: "Legs", sets: defaultSets },
+  { name: "Elevated Squats", type: "Legs", sets: defaultSets },
+  { name: "Calf Raises", type: "Legs", sets: defaultSets },
+  { name: "Deadlifts", type: "Back", sets: defaultSets },
 ];

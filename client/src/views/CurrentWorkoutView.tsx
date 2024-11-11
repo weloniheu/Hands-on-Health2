@@ -1,4 +1,4 @@
-import "./css/AddExerciseView.css";
+import "./css/CurrentWorkoutView.css";
 
 interface CurrentWorkoutProps {
     onAddExercise: () => void
@@ -10,7 +10,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
       <div>
         <div className="header-container">
           <h1 className="header-title">Current Workout</h1>
-          <button className="back-button" >Finish Exercise</button>
+          <button className="finish-exercise" >Finish Exercise</button>
         </div>
         <div className="exercise-list-container">
 

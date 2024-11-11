@@ -77,9 +77,12 @@ const AddExerciseType = () => {
                     Select an option
                   </option>
                   <option value="cat1">Chest</option>
-                  <option value="cat2">Leg</option>
-                  <option value="cat3">Arm</option>
-                  <option value="cat4">Default</option>
+                  <option value="cat2">Legs</option>
+                  <option value="cat3">Biceps</option>
+                  <option value="cat4">Triceps</option>
+                  <option value="cat5">Back</option>
+                  <option value="cat6">Shoulders</option>
+                  <option value="cat7">Default</option>
                 </select>
               </div>
               <div className="button-container-AET">
