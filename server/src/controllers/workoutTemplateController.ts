@@ -56,16 +56,16 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: numb
     // Determine the number of sets based on intensity
     let setsPerExercise;
     switch (intensity) {
-        case "low":
+        case "Low":
             setsPerExercise = 2;
             break;
-        case "normal":
+        case "Normal":
             setsPerExercise = 3;
             break;
-        case "high":
+        case "High":
             setsPerExercise = 4;
             break;
-        case "extreme":
+        case "Extreme":
             setsPerExercise = 5;
             break;
         default:
