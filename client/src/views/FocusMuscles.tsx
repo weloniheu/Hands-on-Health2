@@ -40,6 +40,9 @@ const FocusMusclesView: React.FC<FocusMusclesViewProps> = ({ duration }) => {
 
         if (duration === 30 && selectedFocuses.length > 3) {
             alert("Only 3 muscle groups can be selected for a 30-minute workout.");
+            setMuscleGroups(muscleGroups);
+            setFocus(muscleGroups.filter(group => group.selected).map(group => group.name));
+            return;
         }
     };
 
