@@ -2,11 +2,8 @@ import React from "react";
 import "./App.css";
 import { defaultExercises } from "./constants/Initial_consts";
 import { AppProvider } from "./contexts/AppContext";
-<<<<<<< HEAD
 import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
-=======
-import { EditWorkOutPlan } from "./views/EditWorkOutPlan"
->>>>>>> main
+
 
 function App() {
     const [exercises, setExercises] = React.useState(defaultExercises);
@@ -28,15 +25,10 @@ function App() {
         <AppProvider>
             <div className="App">
                 <h1>Workout Planner</h1>
-<<<<<<< HEAD
-                <button onClick={handleToggleShow}>{show ? "Hide Plan" : "Show Plan"}</button>
-                {show && <EditWorkOutPlan/>}
-=======
                 <button onClick={handleToggleShow}>
                     {show ? "Hide Plan" : "Show Plan"}
                 </button>
                 {show && <EditWorkOutPlan/>} {/* Conditionally render ExerciseList */}
->>>>>>> main
             </div>
         </AppProvider>
     );
