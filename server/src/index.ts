@@ -19,3 +19,5 @@ app.get("/", (req: Request, res: Response) => {
     res.send({ data: "Hello, TypeScript Express!" });
     res.status(200);
 });
+
+export default app;
