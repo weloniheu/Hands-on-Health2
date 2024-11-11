@@ -1,24 +1,30 @@
-import { Exercise } from "../types/types";
+// Function to create workout template in the backend. Method: POST
+export async function createWorkoutTemplate(userId: string, planName: string, exerciseTypes: string[], duration: number, intensity: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/workout-template`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId,
+                planName,
+                exerciseTypes,
+                duration,
+                intensity,
+            }),
+        });
 
-// Temporary Hardcoded data
-const exerciseTypes = {
-    types: ["Chest", "Back", "Legs"],
-};
-const duration = "90";
-const intensity = "normal";
+        if (!response.ok) {
+            throw new Error("Failed to fetch workout template");
+        }
 
-// Function to get workout template from the backend. Method: GET
-export const fetchWorkoutTemplate = async (): Promise<Exercise[]> => {
-    const response = await fetch(
-        `http://localhost:8080/workout-template?types=${exerciseTypes.types}&duration=${duration}&intensity=${intensity}`
-    );
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch workout template");
+        // Wait for the response to be parsed as JSON
+        const jsonResponse = await response.json();
+        console.log("data in fetchWorkoutTemplate", jsonResponse);
+        return jsonResponse;
+    } catch (error) {
+        console.error("Error in createWorkoutTemplate", error);
+        throw error;
     }
-
-    // Wait for the response to be parsed as JSON
-    const jsonResponse = await response.json(); // Use await here
-    console.log("data in fetchWorkoutTemplate", jsonResponse);
-    return jsonResponse; // Return the data directly
-};
+}

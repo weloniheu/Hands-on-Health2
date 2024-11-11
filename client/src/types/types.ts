@@ -12,6 +12,13 @@ export type Exercise2 = {
 };
 
 export type Set = {
+  // sets: number
   reps: number;
   weight: number;
+};
+
+export type FocusMuscles = {
+  id: number;
+  name: string;
+  selected: boolean;
 };
