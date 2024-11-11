@@ -24,20 +24,23 @@ const FocusMusclesView: React.FC<FocusMusclesViewProps> = ({ duration }) => {
     const navigate = useNavigate();
 
     const toggleMuscleGroup = (id: number) => {
-        const selectedCount = muscleGroups.filter((mg) => mg.selected).length;
-        const isCurrentlySelected = muscleGroups.find((mg) => mg.id === id)?.selected;
+        const updatedMuscleGroups = muscleGroups.map(group => ({
+            ...group,
+            selected: group.id === id ? !group.selected : group.selected
+        }));
 
-        if (duration === 30 && !isCurrentlySelected && selectedCount >= 3) {
+        setMuscleGroups(updatedMuscleGroups);
+
+        // Update Focus
+        const selectedFocuses = updatedMuscleGroups
+            .filter(group => group.selected)
+            .map(group => group.name);
+
+        setFocus(selectedFocuses);
+
+        if (duration === 30 && selectedFocuses.length > 3) {
             alert("Only 3 muscle groups can be selected for a 30-minute workout.");
-            return;
         }
-
-        setMuscleGroups(
-            muscleGroups.map((group) => ({
-                ...group,
-                selected: group.id === id ? !group.selected : group.selected,
-            }))
-        );
     };
 
     return (
