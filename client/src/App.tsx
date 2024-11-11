@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { defaultExercises } from "./constants/Initial_consts";
 import { AppProvider } from "./contexts/AppContext";
+import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
 
 function App() {
     const [exercises, setExercises] = React.useState(defaultExercises);
@@ -16,6 +17,7 @@ function App() {
             <div className="App">
                 <h1>Workout Planner</h1>
                 <button onClick={handleToggleShow}>{show ? "Hide Plan" : "Show Plan"}</button>
+                {show && <EditWorkOutPlan/>}
             </div>
         </AppProvider>
     );

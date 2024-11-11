@@ -39,7 +39,6 @@ const ExerciseList = () => {
         {AvailableExercises.map((exercise) => (
             <div key={exercise.name} className="exercise-box">
               <h2>{exercise.name}</h2>
-              <p>Type: {exercise.type}</p>
               <h3>Sets:</h3>
               <ul>
                 {exercise.sets.map((set, index) => (
