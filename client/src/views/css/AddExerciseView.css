@@ -56,7 +56,7 @@ body {
   display: flex; /* Use flexbox for alignment if needed */
   justify-content: center; /* Center the input field if desired */
   flex-grow: 1; /* Let the search bar grow */
-  max-width: calc(100% - 200px); /* Limit max width if needed */
+  max-width: calc(100% - 150px); /* Limit max width if needed */
   margin-right: 0px; /* Adjust spacing by moving the right side slightly inward */
 }
 
@@ -159,8 +159,7 @@ body {
 }
 
 .new-button {
-  margin-left: 5px; 
-  margin-top: 10px;
+  margin-left: 5px;
   height: 40px;
   width: 90px;
   font-size: large;
