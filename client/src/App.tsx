@@ -19,7 +19,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/select-duration" element={<DurationSelectionPage />} />
-                        <Route path="/select-focus" element={<FocusMusclesView duration={30} />} />
+                        <Route path="/select-focus" element={<FocusMusclesView />} />
                         <Route path="/select-intensity" element={<IntensitySelectionPage />} />
                         <Route path="/review-plan" element={<Review />} />
                         {/* <Route path="/review-workout" element={<ReviewWorkoutPage />} /> */}

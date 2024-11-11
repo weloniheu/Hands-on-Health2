@@ -4,10 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./FocusMuscles.css";
 import { useWorkout } from "../contexts/WorkoutContext";
 
-interface FocusMusclesViewProps {
-    duration: number;
-}
-
 const initialFocusMuscles: FocusMuscles[] = [
     { id: 1, name: "Chest", selected: false },
     { id: 2, name: "Legs", selected: false },
@@ -17,31 +13,29 @@ const initialFocusMuscles: FocusMuscles[] = [
     { id: 6, name: "Abs", selected: false },
 ];
 
-const FocusMusclesView: React.FC<FocusMusclesViewProps> = ({ duration }) => {
+const FocusMusclesView: React.FC = () => {
     // Now accepts duration as a prop
-    const { setFocus } = useWorkout();
+    const { duration, setFocus } = useWorkout();
     const [muscleGroups, setMuscleGroups] = useState<FocusMuscles[]>(initialFocusMuscles);
     const navigate = useNavigate();
 
     const toggleMuscleGroup = (id: number) => {
-        const updatedMuscleGroups = muscleGroups.map(group => ({
+        const updatedMuscleGroups = muscleGroups.map((group) => ({
             ...group,
-            selected: group.id === id ? !group.selected : group.selected
+            selected: group.id === id ? !group.selected : group.selected,
         }));
 
         setMuscleGroups(updatedMuscleGroups);
 
         // Update Focus
-        const selectedFocuses = updatedMuscleGroups
-            .filter(group => group.selected)
-            .map(group => group.name);
+        const selectedFocuses = updatedMuscleGroups.filter((group) => group.selected).map((group) => group.name);
 
         setFocus(selectedFocuses);
 
         if (duration === 30 && selectedFocuses.length > 3) {
             alert("Only 3 muscle groups can be selected for a 30-minute workout.");
             setMuscleGroups(muscleGroups);
-            setFocus(muscleGroups.filter(group => group.selected).map(group => group.name));
+            setFocus(muscleGroups.filter((group) => group.selected).map((group) => group.name));
             return;
         }
     };
