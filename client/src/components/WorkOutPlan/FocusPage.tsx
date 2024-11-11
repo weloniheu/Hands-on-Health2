@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useWorkout } from "./WorkoutContext";
+import { useWorkout } from "../../contexts/WorkoutContext";
 
 const FocusPage: React.FC = () => {
     const { setFocus } = useWorkout();
@@ -9,7 +9,7 @@ const FocusPage: React.FC = () => {
 
     const handleSelect = (focus: string) => {
         setSelectedFocus(focus);
-        setFocus(focus);
+        // setFocus(focus);
     };
 
     const handleNext = () => {
@@ -29,8 +29,16 @@ const FocusPage: React.FC = () => {
                 <button onClick={() => handleSelect("Cardio")}>Cardio</button>
                 <button onClick={() => handleSelect("Strength")}>Strength</button>
                 <div style={{ marginTop: "20px" }}>
-                    <button onClick={handlePrev} style={buttonStyle}>Prev</button>
-                    <button onClick={handleNext} style={{ ...buttonStyle, marginLeft: "10px" }} disabled={selectedFocus === null}>Next</button>
+                    <button onClick={handlePrev} style={buttonStyle}>
+                        Prev
+                    </button>
+                    <button
+                        onClick={handleNext}
+                        style={{ ...buttonStyle, marginLeft: "10px" }}
+                        disabled={selectedFocus === null}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useWorkout } from "./WorkoutContext";
+import { useWorkout } from "../../contexts/WorkoutContext";
 
 const ReviewWorkoutPage: React.FC = () => {
     const { duration, focus, intensity } = useWorkout();
@@ -18,7 +18,7 @@ const ReviewWorkoutPage: React.FC = () => {
                     color: "white",
                     border: "none",
                     borderRadius: "8px",
-                    cursor: "pointer"
+                    cursor: "pointer",
                 }}
             >
                 Start Workout

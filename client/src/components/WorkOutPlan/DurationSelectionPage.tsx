@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useWorkout } from "./WorkoutContext";
-import "./DurationSelectionPage.css";
+import { useWorkout } from "../../contexts/WorkoutContext";
+import "../../css/DurationSelectionPage.css";
 
 const DurationSelectionPage: React.FC = () => {
     const { setDuration } = useWorkout();
@@ -15,12 +15,12 @@ const DurationSelectionPage: React.FC = () => {
 
     const handleNext = () => {
         if (selectedDuration !== null) {
-            navigate("/focus");
+            navigate("/select-focus");
         }
     };
 
     const handleCancel = () => {
-        navigate("/"); // to Home Page
+        navigate("/home"); // to Home Page
     };
 
     return (
@@ -32,7 +32,9 @@ const DurationSelectionPage: React.FC = () => {
             <div className="main-content">
                 <div className="subtitle-row">
                     <h2 className="subtitle">Choose Your Workout Plan</h2>
-                    <button className="cancel-button" onClick={handleCancel}>Cancel</button>
+                    <button className="cancel-button" onClick={handleCancel}>
+                        Cancel
+                    </button>
                 </div>
                 <h3 className="duration-title">Duration</h3>
                 <div className="duration-options">

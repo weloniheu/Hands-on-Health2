@@ -4,10 +4,12 @@ import SearchBar from "../components/EditWorkOutPlan/SearchBar";
 import "./css/AddExerciseView.css";
 
 interface EditAddExerciseProps {
-  onBack: () => void;
+  onBack: () => void
+  navigateToCurrentWorkout: () => void
 }
 
-export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack }) => {
+export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack, navigateToCurrentWorkout }) => {
+
   return (
     <div>
       <div className="header-container">
@@ -24,7 +26,7 @@ export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack }) => {
         <AddExerciseType />
       </div>
       <div className="exercise-list-container">
-        <ExerciseList />
+        <ExerciseList navigateToCurrentWorkout={navigateToCurrentWorkout} />
       </div>
     </div>
   );
