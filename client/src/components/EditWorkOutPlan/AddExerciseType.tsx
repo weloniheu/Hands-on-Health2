@@ -41,7 +41,7 @@ const AddExerciseType = () => {
     AddNewExerciseType(newAvailableWorkout);
     newTypeWindowSwitch(false);
   };
-
+  //AET stands for AddExerciseType
   return (
     <div>
       <button
