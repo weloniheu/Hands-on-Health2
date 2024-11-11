@@ -2,31 +2,30 @@ import { useState } from "react";
 import { createWorkoutTemplate } from "../../utils/exercise-utils";
 import { useNavigate } from "react-router-dom";
 import "../../css/review.css";
+import { useWorkout } from "../../contexts/WorkoutContext";
 
 function Review() {
-    //const navigate = useNavigate();
+    const { duration, focus, intensity } = useWorkout();
+    const navigate = useNavigate();
     const [planName, setPlanName] = useState("");
     const [editPlanName, setEditPlanName] = useState(false);
     const userId = "agoahefnoanvoae";
-    const duration = 90;
-    const focus = ["Chest", "Back"];
-    const intensity = "normal";
 
     async function handleStartWorkout() {
         const data = await createWorkoutTemplate(userId, planName, focus, duration, intensity);
         console.log(data);
 
-        //navigate("/"); // Replace with correct location
+        navigate("/");
     }
 
     // Navigate to the prevous page
-    function handlePrevious(){
-        //navigate("/")
+    function handlePrevious() {
+        navigate("/select-intensity");
     }
 
     // Cancel the workout template creation
-    function handleCancel(){
-        //navigate("/")
+    function handleCancel() {
+        navigate("/home")
     }
 
     return (

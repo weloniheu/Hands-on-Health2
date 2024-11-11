@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useWorkout } from "./WorkoutContext";
-import "./IntensitySelectionPage.css";
+import { useWorkout } from "../../contexts/WorkoutContext";
+import "../../css/IntensitySelectionPage.css";
 
 const IntensitySelectionPage: React.FC = () => {
     const { setIntensity } = useWorkout();
@@ -15,16 +15,16 @@ const IntensitySelectionPage: React.FC = () => {
 
     const handleNext = () => {
         if (selectedIntensity !== null) {
-            navigate("/review-workout");
+            navigate("/review-plan");
         }
     };
 
     const handlePrev = () => {
-        navigate("/focus");
+        navigate("/select-focus");
     };
 
     const handleCancel = () => {
-        navigate("/");
+        navigate("/home");
     };
 
     return (
@@ -51,7 +51,9 @@ const IntensitySelectionPage: React.FC = () => {
                             {level}
                         </button>
                     ))}
-                    <button className="intensity-prev-button" onClick={handlePrev}>Prev</button>
+                    <button className="intensity-prev-button" onClick={handlePrev}>
+                        Prev
+                    </button>
                     <button
                         className="intensity-next-button"
                         onClick={handleNext}
