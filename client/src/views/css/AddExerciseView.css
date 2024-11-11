@@ -182,3 +182,10 @@ body {
 .exType {
   font-weight: 600;
 }
+
+.exercise-box-button-box {
+  display: flex;
+  align-items: end; /* vertically centers items if needed */
+  gap: 10px; /* adds space between the button and DeleteExercise component */
+  justify-content: center; /* Aligns items to the left; use "center" or "space-between" if needed */
+}
