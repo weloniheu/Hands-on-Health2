@@ -6,6 +6,11 @@ import DurationSelectionPage from "./DurationSelectionPage";
 import FocusPage from "./FocusPage";
 import IntensitySelectionPage from "./IntensitySelectionPage";
 import ReviewWorkoutPage from "./ReviewWorkoutPage";
+import "./App.css";
+import { AppProvider } from "./contexts/AppContext";
+import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
+import FocusMusclesView from "./views/FocusMuscles";
+import Header from './views/Header';
 
 const App: React.FC = () => {
     return (
@@ -17,6 +22,8 @@ const App: React.FC = () => {
                     <Route path="/focus" element={<FocusPage />} />
                     <Route path="/intensity" element={<IntensitySelectionPage />} />
                     <Route path="/review-workout" element={<ReviewWorkoutPage />} />
+                    {/* <Route path="/" element={<EditWorkOutPlan />} /> */}
+                    <Route path="/focus-muscles" element={<FocusMusclesView duration={30} />} />
                 </Routes>
             </Router>
         </WorkoutProvider>
