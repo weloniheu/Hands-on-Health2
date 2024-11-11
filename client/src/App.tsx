@@ -1,36 +1,26 @@
 import React from "react";
-import "./App.css";
-import { defaultExercises } from "./constants/Initial_consts";
-import { AppProvider } from "./contexts/AppContext";
-import { EditWorkOutPlan } from "./views/EditWorkOutPlan";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { WorkoutProvider } from "./WorkoutContext";
+import HomePage from "./HomePage";
+import DurationSelectionPage from "./DurationSelectionPage";
+import FocusPage from "./FocusPage";
+import IntensitySelectionPage from "./IntensitySelectionPage";
+import ReviewWorkoutPage from "./ReviewWorkoutPage";
 
 
-function App() {
-    const [exercises, setExercises] = React.useState(defaultExercises);
-    const [show, setShow] = React.useState(false);
-    const handleToggleShow = () => {
-        setShow((prevShow) => !prevShow);
-    };
-
-    // return (
-    //     <AppProvider>
-    //         <div className="App">
-    //             <h1>Workout Planner</h1>
-    //             <button onClick={handleToggleShow}>{show ? "Hide Plan" : "Show Plan"}</button>
-    //
-    //         </div>
-    //     </AppProvider>
-    // );
+const App: React.FC = () => {
     return (
-        <AppProvider>
-            <div className="App">
-                <h1>Workout Planner</h1>
-                <button onClick={handleToggleShow}>
-                    {show ? "Hide Plan" : "Show Plan"}
-                </button>
-                {show && <EditWorkOutPlan/>} {/* Conditionally render ExerciseList */}
-            </div>
-        </AppProvider>
+        <WorkoutProvider>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/select-duration" element={<DurationSelectionPage />} />
+                    <Route path="/focus" element={<FocusPage />} />
+                    <Route path="/intensity" element={<IntensitySelectionPage />} />
+                    <Route path="/review-workout" element={<ReviewWorkoutPage />} />
+                </Routes>
+            </Router>
+        </WorkoutProvider>
     );
 }
 
