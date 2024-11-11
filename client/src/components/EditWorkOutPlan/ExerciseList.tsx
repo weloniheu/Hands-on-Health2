@@ -5,8 +5,13 @@ import DeleteExercise from "./DeleteExerciseType";
 import { Exercise2 } from "../../types/types";
 import ExerciseModal from "./AddExerciseModal";
 import AddExercise from "./AddExercise";
+import { EditAddExercise } from "../../views/AddExerciseView";
 
-const ExerciseList = () => {
+interface ExerciseListProps {
+  navigateToCurrentWorkout: () => void; // Define the prop type here
+}
+
+const ExerciseList : React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }) => {
   // Get the context
   const {
     AvailableExercises,
@@ -14,6 +19,7 @@ const ExerciseList = () => {
     setSearchedExercises,
     setAvailableExercises,
     noSearchResult,
+    addExerciseToCurrentWorkout,
   } = useContext(AppContext);
 
   const [selectedExercise, setSelectedExercise] = useState<Exercise2|null>(null); // Track selected exercise for modal
@@ -64,10 +70,11 @@ const ExerciseList = () => {
         sets: [{ weight: numSets, reps: numReps},
         ],
       };
-      AddExercise(newExerciseToAdd);
+      addExerciseToCurrentWorkout(newExerciseToAdd);
     }
 
     handleModalClose();
+    navigateToCurrentWorkout()
   };
 
 
