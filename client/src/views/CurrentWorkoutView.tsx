@@ -18,11 +18,14 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         <div className="exercise-list-container">
         {currentWorkoutExercises.map((exercise, index) => (
           <div key={index} className="exercise-item">
+            <h2>{exercise.type}</h2>
             <h2>{exercise.name}</h2>
             {exercise.sets.map((set, setIndex) => (
               <div key={setIndex}>
                 <p>Weight: {set.weight}</p>
                 <p>Reps: {set.reps}</p>
+                <button className="edit-exercise-item">Edit</button>
+                <button className="delete-exercise-item" >Delete</button>
               </div>
             ))}
           </div>
