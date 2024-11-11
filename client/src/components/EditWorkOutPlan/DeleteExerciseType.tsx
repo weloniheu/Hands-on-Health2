@@ -24,7 +24,8 @@ const DeleteExercise = (props: Props) => {
   return (
     <div>
       <button onClick={() => handleDeleteAvailableExercise(props.Exercise)}>
-        x
+        {/*Delete*/}
+          X
       </button>
     </div>
   );
