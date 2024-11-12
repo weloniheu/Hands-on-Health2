@@ -11,7 +11,9 @@ interface ExerciseListProps {
   navigateToCurrentWorkout: () => void; // Define the prop type here
 }
 
-const ExerciseList : React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }) => {
+const ExerciseList: React.FC<ExerciseListProps> = ({
+  navigateToCurrentWorkout,
+}) => {
   // Get the context
   const {
     AvailableExercises,
@@ -22,7 +24,9 @@ const ExerciseList : React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }
     addExerciseToCurrentWorkout,
   } = useContext(AppContext);
 
-  const [selectedExercise, setSelectedExercise] = useState<Exercise2|null>(null); // Track selected exercise for modal
+  const [selectedExercise, setSelectedExercise] = useState<Exercise2 | null>(
+    null
+  ); // Track selected exercise for modal
 
   // EDIT LATER, FOR TESTING
   if (AvailableExercises.length === 0) {
@@ -56,27 +60,25 @@ const ExerciseList : React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }
   // To add the exerice with sets and reps chosen to Current Workout
   const handleAddExerciseToCW = (event: React.FormEvent<HTMLFormElement>) => {
     // event.preventDefault();
-    const setsInput = document.getElementById('setsInput') as HTMLInputElement;
-    const repsInput = document.getElementById('repsInput') as HTMLInputElement;
+    const setsInput = document.getElementById("setsInput") as HTMLInputElement;
+    const repsInput = document.getElementById("repsInput") as HTMLInputElement;
 
-    const numSets = parseInt(setsInput?.value || '0');
-    const numReps = parseInt(repsInput?.value || '0');
+    const numSets = parseInt(setsInput?.value || "0");
+    const numReps = parseInt(repsInput?.value || "0");
 
-    if (selectedExercise){
-    // Create new Exercise2 Object
+    if (selectedExercise) {
+      // Create new Exercise2 Object
       const newExerciseToAdd: Exercise2 = {
         name: selectedExercise.name,
         type: selectedExercise.type,
-        sets: [{ weight: numSets, reps: numReps},
-        ],
+        sets: [{ weight: numSets, reps: numReps }],
       };
       addExerciseToCurrentWorkout(newExerciseToAdd);
     }
 
     handleModalClose();
-    navigateToCurrentWorkout()
+    navigateToCurrentWorkout();
   };
-
 
   //TODO Function to load the current list of workouts from the Backend
 
@@ -84,11 +86,22 @@ const ExerciseList : React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }
     <ul className="list-availableExercises">
       {SearchedExercises.map((Exercise) => (
         // Add onClick so that upon pressing, the exercise is added to current workout
-        <div className="exercise-box" key={Exercise.name}>
+        <div
+          className="exercise-box"
+          key={Exercise.name}
+        >
           <h2>{Exercise.name}</h2>
-          <button className="add-new-exType" onClick={() => handleExerciseClick(Exercise)}>Add</button>
-          <DeleteExercise Exercise={Exercise} />
-        </div> 
+          <div className="exercise-box-button-box">
+            {" "}
+            <button
+              className="add-new-exType"
+              onClick={() => handleExerciseClick(Exercise)}
+            >
+              Add
+            </button>
+            <DeleteExercise Exercise={Exercise} />
+          </div>
+        </div>
       ))}
       {selectedExercise && (
         <ExerciseModal
