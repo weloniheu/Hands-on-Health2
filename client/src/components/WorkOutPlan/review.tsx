@@ -7,7 +7,7 @@ import { useWorkout } from "../../contexts/WorkoutContext";
 function Review() {
     const { duration, focus, intensity } = useWorkout();
     const navigate = useNavigate();
-    const [planName, setPlanName] = useState("");
+    const [planName, setPlanName] = useState("Workout 1");
     const [editPlanName, setEditPlanName] = useState(false);
     const userId = "agoahefnoanvoae";
 
@@ -25,7 +25,7 @@ function Review() {
 
     // Cancel the workout template creation
     function handleCancel() {
-        navigate("/home")
+        navigate("/");
     }
 
     return (
