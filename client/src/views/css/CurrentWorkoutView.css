@@ -2,6 +2,10 @@ body {
   background-color: rgb(241, 255, 250);
 }
 
+h1 {
+  margin: 0;
+}
+
 .header-container {
   display: flex;
   justify-content: center; /* Center the header */
@@ -33,7 +37,6 @@ body {
   background-color: rgb(162, 193, 229); /* Change for hover effect */
 }
 
-
 .add-exercise-button {
   position: absolute;
   width: 1450px;
@@ -54,16 +57,16 @@ body {
 }
 
 .add-exercise-button:hover {
-    background-color: rgb(162, 193, 229);
+  background-color: rgb(162, 193, 229);
 }
 
 .exercise-item {
-  width: 1420px;
+  width: 90vw;
   margin-right: 30px;
   margin-left: 30px;
+  margin-top: 10px;
   padding: 5px 15px;
   transform: translateX(0%);
-  margin-top: 30px;
   background-color: rgb(182, 213, 249); /* Set background */
   color: black; /* Text color */
   font-weight: bold;
@@ -71,4 +74,44 @@ body {
   border: none;
   border-radius: 20px;
   cursor: pointer;
+}
+
+.display-sets {
+  width: 90vw; /* Full width of the viewport */
+  height: 60px;
+  background-color: lightgray; /* Gray background */
+  color: black; /* Adjust text color for better contrast */
+  padding: 20px; /* Optional: Add some padding for spacing */
+  box-sizing: border-box; /* Include padding in width calculations */
+  display: flex; /* Use flexbox for layout */
+  justify-content: flex-start; /* Optional: Add space between items */
+  gap: 200px;
+  align-items: center; /* Align items vertically in the center */
+  border-radius: 20px;
+}
+
+.exercise-list-container {
+  display: flex; /* Enables flexbox */
+  align-items: center; /* Horizontally centers the items */
+  justify-content: center; /* Vertically centers the items if needed */
+}
+
+.exercise-type-container {
+  margin-left: 2vw;
+  font-weight: bolder;
+  margin-bottom: 0;
+}
+
+.exercise-name-buttons-container {
+  display: flex; /* Enables flexbox */
+  align-items: center; /* Horizontally centers the items */
+}
+
+.exercise-button-holder {
+  flex: 1;
+  display: flex; /* Enables flexbox */
+  align-items: center; /* Horizontally centers the items */
+  justify-content: right;
+  gap: 10px;
+  margin-right: 20px;
 }
