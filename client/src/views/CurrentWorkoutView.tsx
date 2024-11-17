@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
+import AddSet from "../components/EditWorkOutPlan/AddSet";
 
 interface CurrentWorkoutProps {
   onAddExercise: () => void;
@@ -9,7 +10,8 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   onAddExercise,
 }) => {
-  const { currentWorkoutExercises } = useContext(AppContext);
+  const { currentWorkoutExercises, addExerciseToCurrentWorkout } =
+    useContext(AppContext);
 
   return (
     <div>
@@ -30,7 +32,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
               <div className="exercise-name-buttons-container">
                 <h2>{exercise.name}</h2>
                 <div className="exercise-button-holder">
-                  <button className="add-set-button">Add Set</button>
+                  <AddSet
+                    exercise={exercise}
+                    onAddSet={onAddSet}
+                  />
                   <button className="delete-exercise-item">Delete</button>
                   <button className="demo-button">Demo</button>
                   <button className="edit-exercise-item">Edit</button>
