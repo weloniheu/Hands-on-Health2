@@ -2,6 +2,9 @@ import { useContext } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
+import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
+import DeleteExerciseType from "../components/EditWorkOutPlan/DeleteExerciseType";
+import { Exercise2 } from "../types/types";
 
 interface CurrentWorkoutProps {
   onAddExercise: () => void;
@@ -10,8 +13,16 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   onAddExercise,
 }) => {
-  const { currentWorkoutExercises, addExerciseToCurrentWorkout } =
+  const { currentWorkoutExercises, setCurrentWorkoutExercises } =
     useContext(AppContext);
+
+  // Function to handle updating exercise sets
+  const handleUpdateExercise = (updatedExercise: Exercise2) => {
+    const updatedExercises = currentWorkoutExercises.map((exercise) =>
+      exercise.name === updatedExercise.name ? updatedExercise : exercise
+    );
+    setCurrentWorkoutExercises(updatedExercises);
+  };
 
   return (
     <div>
@@ -23,32 +34,56 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
         {currentWorkoutExercises.map((exercise, index) => (
           <div
             key={index}
-            className="exercise-item-container"
+            className="exercise-card"
           >
-            <div className="exercise-type-container">
-              <h1>{exercise.type + ":"}</h1>
-            </div>
-            <div className="exercise-item">
-              <div className="exercise-name-buttons-container">
-                <h2>{exercise.name}</h2>
-                <div className="exercise-button-holder">
-                  <AddSet
-                    exercise={exercise}
-                    onAddSet={onAddSet}
-                  />
-                  <button className="delete-exercise-item">Delete</button>
-                  <button className="demo-button">Demo</button>
-                  <button className="edit-exercise-item">Edit</button>
-                </div>
+            <div className="exercise-header">
+              <h2 className="exercise-title">
+                {exercise.name} {/*<span className="dropdown-icon">▼</span>*/}
+              </h2>
+              <div className="exercise-controls">
+                <AddSet
+                  exercise={exercise}
+                  onAddSet={handleUpdateExercise}
+                />
+                <button className="control-button">Demo</button>
+                <button className="control-button">Delete</button>
               </div>
-              {exercise.sets.map((set, setIndex) => (
-                <div key={setIndex}>
-                  <div className="display-sets">
-                    <p>Weight: {set.weight}</p>
-                    <p>Reps: {set.reps}</p>
+            </div>
+
+            <div className="exercise-content">
+              <div className="set-list">
+                {exercise.sets.map((set, setIndex) => (
+                  <div
+                    key={setIndex}
+                    className="set-item"
+                  >
+                    <label>Weight:</label>
+                    <input
+                      type="number"
+                      defaultValue={set.weight}
+                      className="set-input"
+                    />
+                    <label>Reps:</label>
+                    <input
+                      type="number"
+                      defaultValue={set.reps}
+                      className="set-input"
+                    />
+                    <DeleteSet
+                      exercise={exercise}
+                      setIndex={setIndex}
+                      onUpdateExercise={handleUpdateExercise}
+                    />
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="notes-section">
+                <label>Notes:</label>
+                <textarea
+                  className="notes-input"
+                  placeholder="Add any notes here..."
+                />
+              </div>
             </div>
           </div>
         ))}

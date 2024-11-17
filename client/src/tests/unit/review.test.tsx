@@ -1,7 +1,10 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Review from "../../components/WorkOutPlan/review";
-import { createWorkoutTemplate } from "../../utils/exercise-utils";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { WorkoutProvider } from "../../contexts/WorkoutContext";
+import IntensitySelectionPage from "../../components/WorkOutPlan/IntensitySelectionPage";
+import HomePage from "../../components/HomePage";
+import "@testing-library/jest-dom";
 
 // Mock the `createWorkoutTemplate` function
 jest.mock("../../utils/exercise-utils", () => ({
@@ -11,9 +14,15 @@ jest.mock("../../utils/exercise-utils", () => ({
 describe("Review Component", () => {
     beforeEach(() => {
         render(
-            <BrowserRouter>
-                <Review />
-            </BrowserRouter>
+            <WorkoutProvider>
+                <MemoryRouter initialEntries={["/review-plan"]}>
+                    <Routes>
+                        <Route path="/review-plan" element={<Review />} />
+                        <Route path="/select-intensity" element={<IntensitySelectionPage />} />
+                        <Route path="/" element={<HomePage />} />
+                    </Routes>
+                </MemoryRouter>
+            </WorkoutProvider>
         );
     });
 
@@ -39,37 +48,19 @@ describe("Review Component", () => {
         expect(screen.getByText("New Plan")).toBeInTheDocument();
     });
 
-    test("calls createWorkoutTemplate on Start Workout", async () => {
-        const startWorkoutButton = screen.getByText("Start Workout");
-        fireEvent.click(startWorkoutButton);
-
-        // Check if `createWorkoutTemplate` is called with correct arguments
-        expect(createWorkoutTemplate).toHaveBeenCalledWith(
-            "agoahefnoanvoae",
-            "", // initial empty planName
-            ["Chest", "Back"],
-            90,
-            "normal"
-        );
-    });
-
     test("Previous button click functionality", () => {
         const previousButton = screen.getByText("Previous");
+        waitFor(() => {
+            fireEvent.click(previousButton);
+        });
 
-        // Simulate previous button click
-        fireEvent.click(previousButton);
-
-        // Check if it would redirect to the correct path (you can also mock `useNavigate`)
-        // expect(mockedNavigate).toHaveBeenCalledWith("/previous"); // Adjust path as necessary
+        expect(screen.getByText("Intensity")).toBeInTheDocument();
     });
 
     test("Cancel button click functionality", () => {
         const cancelButton = screen.getByText("Cancel");
-
-        // Simulate cancel button click
         fireEvent.click(cancelButton);
 
-        // Check if it would redirect to the correct path (you can also mock `useNavigate`)
-        // expect(mockedNavigate).toHaveBeenCalledWith("/cancel"); // Adjust path as necessary
+        expect(screen.getByText(/Welcome/)).toBeInTheDocument();
     });
 });

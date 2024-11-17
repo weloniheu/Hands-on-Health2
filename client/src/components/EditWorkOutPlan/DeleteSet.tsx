@@ -18,7 +18,7 @@ const DeleteSet: React.FC<DeleteSetProps> = ({ exercise, setIndex, onUpdateExerc
     };
 
     return (
-        <button onClick={handleDeleteSet}>x</button>
+        <button onClick={handleDeleteSet} className="set-delete">x</button>
     );
 };
 

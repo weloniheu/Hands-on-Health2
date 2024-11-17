@@ -19,11 +19,11 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/select-duration" element={<DurationSelectionPage />} />
-                        <Route path="/select-focus" element={<FocusMusclesView duration={30} />} />
+                        <Route path="/select-focus" element={<FocusMusclesView />} />
                         <Route path="/select-intensity" element={<IntensitySelectionPage />} />
                         <Route path="/review-plan" element={<Review />} />
                         {/* <Route path="/review-workout" element={<ReviewWorkoutPage />} /> */}
-                        <Route path="/current-workout" element={<CurrentWorkout_AddExercise_Combined />} />
+                        <Route path="/current-workout" element={<CurrentWorkout_AddExercise_Combined /> }/>
                         {/* <Route path="/focus" element={<FocusPage />} /> */}
                     </Routes>
                 </Router>
@@ -31,5 +31,17 @@ function App() {
         </AppProvider>
     );
 }
+
+
+// function App() {
+//     return (
+//         <div className="App">
+//             <main>
+//                 <CurrentWorkout_AddExercise_Combined/>
+//             </main>
+//         </div>
+//     );
+// }
+
 
 export default App;
