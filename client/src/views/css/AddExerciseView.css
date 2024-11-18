@@ -173,19 +173,36 @@ body {
   background-color: darkgrey; /* Change for hover effect */
 }
 
-.input-fields-AddExInfo label {
-  display: block;
-  margin: 10px 0;
-  text-align: center;
+.input-fields-AddExInfo {
+  display: flex;
+  flex-direction: column; /* Stack input fields vertically */
+  gap: 10px; /* Space between input fields */
+  margin: 20px 0; /* Margin for spacing */
+  font-size: large;
+  text-align: start;
+  color: black;
+}
+
+.input-fields-AddExInfo input {
+  margin-left: 10px;
+  width: 350px;
+  height: 40px;
+  padding: 2px;
+  padding-left: 8px;
+}
+
+.input-fields-AddExInfo input::placeholder {
+  font-size: 18px; /* Adjust to your desired font size */
 }
 
 .exType {
   font-weight: 600;
 }
 
-.exercise-box-button-box {
+.add-exercise-button-box {
   display: flex;
   align-items: end; /* vertically centers items if needed */
   gap: 10px; /* adds space between the button and DeleteExercise component */
   justify-content: center; /* Aligns items to the left; use "center" or "space-between" if needed */
+  margin-left: 20px;
 }
