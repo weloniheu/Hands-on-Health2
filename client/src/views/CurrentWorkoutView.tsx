@@ -6,6 +6,7 @@ import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import DeleteExerciseType from "../components/EditWorkOutPlan/DeleteExerciseType";
 import { Exercise2 } from "../types/types";
 import { fetchCurrentPlan } from "../utils/exercise-utils";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 interface CurrentWorkoutProps {
     onAddExercise: () => void;
@@ -14,6 +15,9 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   onAddExercise,
 }) => {
+
+  const navigate = useNavigate()
+
   const { currentWorkoutExercises, setCurrentWorkoutExercises, deleteExerciseFromCurrentWorkout, AvailableExercises } =
     useContext(AppContext);
 
@@ -22,30 +26,30 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   );
     
   // Get the current workout plan information from backend
-  async function handleDataFetch() {
-    const userId = "Tester";
-    const data = await fetchCurrentPlan(userId);
+  // async function handleDataFetch() {
+  //   const userId = "Tester";
+  //   const data = await fetchCurrentPlan(userId);
 
-    const transformedExercises: Exercise2[] = data.workoutPlan.map((exercise: any) => {
-        const setsArray = Array.from({ length: exercise.sets }, () => ({
-            weight: null,
-            reps: null,
-        }));
+  //   const transformedExercises: Exercise2[] = data.workoutPlan.map((exercise: any) => {
+  //       const setsArray = Array.from({ length: exercise.sets }, () => ({
+  //           weight: null,
+  //           reps: null,
+  //       }));
 
-        return {
-            name: exercise.name,
-            type: exercise.type,
-            sets: setsArray,
-        };
-    });
+  //       return {
+  //           name: exercise.name,
+  //           type: exercise.type,
+  //           sets: setsArray,
+  //       };
+  //   });
 
-     console.log(transformedExercises);
-     setCurrentWorkoutExercises(transformedExercises);
-  }
+  //    console.log(transformedExercises);
+  //    setCurrentWorkoutExercises(transformedExercises);
+  // }
 
-  useEffect(() => {
-     handleDataFetch();
-  }, []);
+  // useEffect(() => {
+  //    handleDataFetch();
+  // }, []);
 
   // Function to handle updating exercise sets
   const handleUpdateExercise = (updatedExercise: Exercise2) => {
@@ -69,11 +73,16 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     setSelectedExercises(updatedSelectedExercises);
   };
 
+  function BackToHome(){
+    navigate("/")
+  }
+
   return (
     <div>
       <div className="header-container">
         <h1 className="header-title">Current Workout</h1>
         <button className="finish-exercise">Finish Workout</button>
+        <button className="back-to-home" onClick={BackToHome}>Home</button>
       </div>
       <div className="exercise-list-container">
         {currentWorkoutExercises.map((exercise, index) => (
