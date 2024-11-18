@@ -9,7 +9,9 @@ interface ExerciseListProps {
   navigateToCurrentWorkout: () => void;
 }
 
-const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }) => {
+const ExerciseList: React.FC<ExerciseListProps> = ({
+  navigateToCurrentWorkout,
+}) => {
   const {
     AvailableExercises,
     SearchedExercises,
@@ -19,7 +21,9 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout })
     addExerciseToCurrentWorkout,
   } = useContext(AppContext);
 
-  const [selectedExercise, setSelectedExercise] = useState<Exercise2 | null>(null);
+  const [selectedExercise, setSelectedExercise] = useState<Exercise2 | null>(
+    null
+  );
 
   if (AvailableExercises.length === 0) {
     setAvailableExercises(defaultAvaliableExercises);
@@ -42,11 +46,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout })
   };
 
   const handleAddExerciseToCW = (event: React.FormEvent<HTMLFormElement>) => {
-    const setsInput = document.getElementById('setsInput') as HTMLInputElement;
-    const repsInput = document.getElementById('repsInput') as HTMLInputElement;
+    const setsInput = document.getElementById("setsInput") as HTMLInputElement;
+    const repsInput = document.getElementById("repsInput") as HTMLInputElement;
 
-    const numSets = parseInt(setsInput?.value || '0');
-    const numReps = parseInt(repsInput?.value || '0');
+    const numSets = parseInt(setsInput?.value || "0");
+    const numReps = parseInt(repsInput?.value || "0");
 
     if (selectedExercise) {
       const newExerciseToAdd: Exercise2 = {
@@ -62,22 +66,32 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout })
   };
 
   return (
-      <ul className="list-availableExercises">
-        {SearchedExercises.map((Exercise) => (
-            <div className="exercise-box" key={Exercise.name}>
-              <h2>{Exercise.name}</h2>
-              <button className="add-new-exType" onClick={() => handleExerciseClick(Exercise)}>Add</button>
-              <DeleteExercise Exercise={Exercise} />
-            </div>
-        ))}
-        {selectedExercise && (
-            <ExerciseModal
-                exercise={selectedExercise}
-                onClose={handleModalClose}
-                onAdd={handleAddExerciseToCW}
-            />
-        )}
-      </ul>
+    <ul className="list-availableExercises">
+      {SearchedExercises.map((Exercise) => (
+        <div
+          className="exercise-box"
+          key={Exercise.name}
+        >
+          <h2>{Exercise.name}</h2>
+          <div className="add-exercise-button-box">
+            <button
+              className="add-new-exType"
+              onClick={() => handleExerciseClick(Exercise)}
+            >
+              Add
+            </button>
+            <DeleteExercise Exercise={Exercise} />
+          </div>
+        </div>
+      ))}
+      {selectedExercise && (
+        <ExerciseModal
+          exercise={selectedExercise}
+          onClose={handleModalClose}
+          onAdd={handleAddExerciseToCW}
+        />
+      )}
+    </ul>
   );
 };
 

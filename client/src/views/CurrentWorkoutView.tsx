@@ -14,14 +14,6 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise }) => {
     const { currentWorkoutExercises, setCurrentWorkoutExercises } = useContext(AppContext);
 
-    // Function to handle updating exercise sets
-    const handleUpdateExercise = (updatedExercise: Exercise2) => {
-        const updatedExercises = currentWorkoutExercises.map((exercise) =>
-            exercise.name === updatedExercise.name ? updatedExercise : exercise
-        );
-        setCurrentWorkoutExercises(updatedExercises);
-    };
-
     // Get the current workout plan information from backend
     async function handleDataFetch() {
         const userId = "Tester";
@@ -47,6 +39,14 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
     useEffect(() => {
         handleDataFetch();
     }, []);
+
+    // Function to handle updating exercise sets
+    const handleUpdateExercise = (updatedExercise: Exercise2) => {
+        const updatedExercises = currentWorkoutExercises.map((exercise) =>
+            exercise.name === updatedExercise.name ? updatedExercise : exercise
+        );
+        setCurrentWorkoutExercises(updatedExercises);
+    };
 
     return (
         <div>

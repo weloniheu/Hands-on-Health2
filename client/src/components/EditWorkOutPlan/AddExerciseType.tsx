@@ -6,12 +6,7 @@ import { Exercise2 } from "../../types/types";
 
 const AddExerciseType = () => {
   // Get the context
-  const {
-    AvailableExercises,
-    SearchedExercises,
-    setSearchedExercises,
-    setAvailableExercises,
-  } = useContext(AppContext);
+  const { AvailableExercises, setAvailableExercises } = useContext(AppContext);
 
   const [newTypeWindowEnable, setNewTypeWindowEnable] = useState(false);
   const newTypeWindowSwitch = (OnOff: boolean) => {
