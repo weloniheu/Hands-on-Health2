@@ -48,7 +48,7 @@ const IntensitySelectionPage: React.FC = () => {
                     </button>
                     <button
                         className="next-button"
-                        onClick={() => navigate("/next-page")}
+                        onClick={() => navigate("/review-plan")}
                         disabled={!isIntensitySelected}
                     >
                         Next
