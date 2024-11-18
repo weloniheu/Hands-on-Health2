@@ -14,6 +14,10 @@ const HomePage: React.FC = () => {
 		navigate("/history");
 	}
 
+	function handleCurrentWorkout() {
+		navigate("/current-workout")
+	}
+
 	return (
 		<div className="home-page">
 			<Header />
@@ -24,7 +28,7 @@ const HomePage: React.FC = () => {
 					New Plan
 				</button>
 
-				<button className="current-workout-button">Current Workout</button>
+				<button className="current-workout-button" onClick={handleCurrentWorkout}>Current Workout</button>
 			</div>
 			<div className="history-button">
 				<button onClick={handleViewHistory}>History</button>

@@ -48,7 +48,7 @@
   /* Vertically center items */
   background-color: lightgrey;
   /* Change to your desired shade of grey */
-  padding: 10px;
+  padding: 1%;
   /* Add some padding for spacing */
   border-radius: 15px;
   /* Optional: rounded corners */
@@ -62,7 +62,7 @@
   /* Additional right padding */
   margin: 10px 20px;
   margin-right: 50px;
-  width: 1400px;
+  width: 1360px;
 }
 
 .add-new-exType {
