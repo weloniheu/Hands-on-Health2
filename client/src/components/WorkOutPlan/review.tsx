@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { createWorkoutTemplate } from "../../utils/exercise-utils";
 import { useNavigate } from "react-router-dom";
-import "../../css/review.css";
 import { useWorkout } from "../../contexts/WorkoutContext";
 
 function Review() {

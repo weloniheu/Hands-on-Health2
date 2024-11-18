@@ -1,63 +1,51 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
-import "../../css/IntensitySelectionPage.css";
+import Header from "./Header";
+import "./css/IntensitySelectionPage.css";
 
 const IntensitySelectionPage: React.FC = () => {
     const { setIntensity } = useWorkout();
     const [selectedIntensity, setSelectedIntensity] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const handleSelect = (intensity: string) => {
+    const handleSelectIntensity = (intensity: string) => {
         setSelectedIntensity(intensity);
         setIntensity(intensity);
     };
 
-    const handleNext = () => {
-        if (selectedIntensity !== null) {
-            navigate("/review-plan");
-        }
-    };
-
-    const handlePrev = () => {
-        navigate("/select-focus");
-    };
-
-    const handleCancel = () => {
-        navigate("/home");
-    };
+    const isIntensitySelected = selectedIntensity !== null;
 
     return (
-        <div className="app">
-            <header className="header">
-                <h1 className="app-title">Hands on Health</h1>
-                <img src="/path/to/logo.png" alt="Logo" className="app-logo" />
-            </header>
-            <div className="main-content">
-                <div className="subtitle-row">
-                    <h2 className="app-subtitle">Choose Your Intensity Level</h2>
-                    <button className="cancel-button" onClick={handleCancel}>
+        <div className="intensity-page-view">
+            <Header />
+            <div className="content-container">
+                <div className="title-and-cancel">
+                    <h3 className="subtitle">Choose Your Workout Intensity</h3>
+                    <button className="cancel-button" onClick={() => navigate(-1)}>
                         Cancel
                     </button>
                 </div>
-                <h3 className="intensity-title">Intensity</h3>
-                <div className="intensity-options">
-                    {["Low", "Normal", "High", "EXTREME"].map((level) => (
+                <h2 className="intensity">Intensity</h2>
+                <div className="intensity-group-container">
+                    {["Low", "Normal", "High", "EXTREME"].map((intensity) => (
                         <button
-                            key={level}
-                            className={`intensity-button ${selectedIntensity === level ? "selected" : ""}`}
-                            onClick={() => handleSelect(level)}
+                            key={intensity}
+                            className={`intensity-button ${selectedIntensity === intensity ? "selected" : ""}`}
+                            onClick={() => handleSelectIntensity(intensity)}
                         >
-                            {level}
+                            {intensity}
                         </button>
                     ))}
-                    <button className="intensity-prev-button" onClick={handlePrev}>
+                </div>
+                <div className="navigation-buttons">
+                    <button className="prev-button" onClick={() => navigate("/select-focus")}>
                         Prev
                     </button>
                     <button
-                        className="intensity-next-button"
-                        onClick={handleNext}
-                        disabled={selectedIntensity === null}
+                        className="next-button"
+                        onClick={() => navigate("/next-page")}
+                        disabled={!isIntensitySelected}
                     >
                         Next
                     </button>

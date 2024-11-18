@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { FocusMuscles } from "../types/types";
+import { FocusMuscles } from "../../types/types";
 import { useNavigate } from "react-router-dom";
-import "./FocusMuscles.css";
-import { useWorkout } from "../contexts/WorkoutContext";
+import "./css/FocusMuscles.css";
+import { useWorkout } from "../../contexts/WorkoutContext";
+import Header from "./Header";
 
 const initialFocusMuscles: FocusMuscles[] = [
     { id: 1, name: "Chest", selected: false },
@@ -40,33 +41,42 @@ const FocusMusclesView: React.FC = () => {
         }
     };
 
+    const isAnyGroupSelected = muscleGroups.some(group => group.selected);
+
     return (
         <div className="focus-muscles-view">
-            <div className="header-container">
-                <h1>Choose Your Workout Plan</h1>
-                <button className="cancel-button" onClick={() => navigate(-1)}>
-                    Cancel
-                </button>
-            </div>
-            <h2>Focus</h2>
-            <div className="muscle-group-container">
-                {muscleGroups.map((group) => (
-                    <button
-                        key={group.id}
-                        onClick={() => toggleMuscleGroup(group.id)}
-                        className={`muscle-group-button ${group.selected ? "selected" : ""}`}
-                    >
-                        {group.name}
+            <Header />
+            <div className="content-container">
+                <div className="title-and-cancel">
+                    <h3 className="subtitle">Choose Your Workout Focus</h3>
+                    <button className="cancel-button" onClick={() => navigate(-1)}>
+                        Cancel
                     </button>
-                ))}
-            </div>
-            <div className="navigation-buttons">
-                <button className="prev-button" onClick={() => navigate("/select-duration")}>
-                    Prev
-                </button>
-                <button className="next-button" onClick={() => navigate("/select-intensity")}>
-                    Next
-                </button>
+                </div>
+                <h2 className="focus">Focus</h2>
+                <div className="muscle-group-container">
+                    {muscleGroups.map((group) => (
+                        <button
+                            key={group.id}
+                            onClick={() => toggleMuscleGroup(group.id)}
+                            className={`muscle-group-button ${group.selected ? "selected" : ""}`}
+                        >
+                            {group.name}
+                        </button>
+                    ))}
+                </div>
+                <div className="navigation-buttons">
+                    <button className="prev-button" onClick={() => navigate("/select-duration")}>
+                        Prev
+                    </button>
+                    <button
+                        className="next-button"
+                        onClick={() => navigate("/select-intensity")}
+                        disabled={!isAnyGroupSelected}  // Disable the button if no groups are selected
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     );
