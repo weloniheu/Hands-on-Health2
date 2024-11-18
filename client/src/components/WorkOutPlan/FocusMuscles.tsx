@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FocusMuscles } from "../../types/types";
 import { useNavigate } from "react-router-dom";
-import "./css/FocusMuscles.css";
+import "./css/WorkoutTemplateOptions.css";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import Header from "./Header";
 
@@ -41,6 +41,10 @@ const FocusMusclesView: React.FC = () => {
         }
     };
 
+    function handleCancelButton() {
+        navigate("/");
+    }
+
     const isAnyGroupSelected = muscleGroups.some(group => group.selected);
 
     return (
@@ -49,7 +53,7 @@ const FocusMusclesView: React.FC = () => {
             <div className="content-container">
                 <div className="title-and-cancel">
                     <h3 className="subtitle">Choose Your Workout Focus</h3>
-                    <button className="cancel-button" onClick={() => navigate(-1)}>
+                    <button className="cancel-button" onClick={handleCancelButton}>
                         Cancel
                     </button>
                 </div>

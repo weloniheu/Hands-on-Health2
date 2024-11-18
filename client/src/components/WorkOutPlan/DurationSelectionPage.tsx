@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import Header from "./Header";
-import "./css/DurationSelectionPage.css";
+import "./css/WorkoutTemplateOptions.css";
 
 const DurationSelectionPage: React.FC = () => {
     const { setDuration } = useWorkout();
@@ -14,6 +14,10 @@ const DurationSelectionPage: React.FC = () => {
         setDuration(duration);
     };
 
+    function handleCancelButton() {
+        navigate("/");
+    }
+
     const isDurationSelected = selectedDuration !== null;
 
     return (
@@ -22,7 +26,7 @@ const DurationSelectionPage: React.FC = () => {
             <div className="content-container">
                 <div className="title-and-cancel">
                     <h3 className="subtitle">Choose Your Workout Duration</h3>
-                    <button className="cancel-button" onClick={() => navigate(-1)}>
+                    <button className="cancel-button" onClick={handleCancelButton}>
                         Cancel
                     </button>
                 </div>
@@ -39,7 +43,7 @@ const DurationSelectionPage: React.FC = () => {
                     ))}
                 </div>
                 <div className="navigation-buttons">
-                    <button className="prev-button" onClick={() => navigate("/previous-page")}>
+                    <button className="prev-button" onClick={handleCancelButton}>
                         Prev
                     </button>
                     <button

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import Header from "./Header";
-import "./css/IntensitySelectionPage.css";
+import "./css/WorkoutTemplateOptions.css";
 
 const IntensitySelectionPage: React.FC = () => {
     const { setIntensity } = useWorkout();
@@ -16,13 +16,17 @@ const IntensitySelectionPage: React.FC = () => {
 
     const isIntensitySelected = selectedIntensity !== null;
 
+    function handleCancelButton() {
+        navigate("/");
+    }
+
     return (
         <div className="intensity-page-view">
             <Header />
             <div className="content-container">
                 <div className="title-and-cancel">
                     <h3 className="subtitle">Choose Your Workout Intensity</h3>
-                    <button className="cancel-button" onClick={() => navigate(-1)}>
+                    <button className="cancel-button" onClick={handleCancelButton}>
                         Cancel
                     </button>
                 </div>
