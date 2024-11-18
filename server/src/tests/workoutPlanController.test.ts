@@ -1,4 +1,4 @@
-import { getCurrentWorkoutPlan } from "../controllers/workoutPlanController";
+import { getAllWorkoutPlans, getCurrentWorkoutPlan } from "../controllers/workoutPlanController";
 import { Request, Response } from "express";
 import client from "../config/db";
 import { jest } from "@jest/globals";
@@ -27,7 +27,7 @@ describe("Workout Plan Controller", () => {
         jest.clearAllMocks();
     });
 
-    it("should return an error if required fields are missing", async () => {
+    it("getCurrentWorkoutPlan -- should return an error if required fields are missing", async () => {
         mockRequest.params.userId = null;
 
         await getCurrentWorkoutPlan(mockRequest as Request, mockResponse as Response);
@@ -36,7 +36,7 @@ describe("Workout Plan Controller", () => {
         expect(mockResponse.json).toHaveBeenCalledWith({ error: "Missing required fields" });
     });
 
-    it("should handle database errors", async () => {
+    it("getCurrentWorkoutPlan -- should handle database errors", async () => {
         (client.db as jest.Mock).mockReturnValue({
             collection: jest.fn().mockReturnValue({
                 find: jest.fn().mockReturnValue({
@@ -51,7 +51,36 @@ describe("Workout Plan Controller", () => {
 
         expect(mockResponse.status).toHaveBeenCalledWith(500);
         expect(mockResponse.json).toHaveBeenCalledWith({
-            message: "Error fetching exercises",
+            message: "Error fetching workout plan",
+            error: expect.any(Error),
+        });
+    });
+
+    it("getAllWorkoutPlans -- should return an error if required fields are missing", async () => {
+        mockRequest.params.userId = null;
+
+        await getAllWorkoutPlans(mockRequest as Request, mockResponse as Response);
+
+        expect(mockResponse.status).toHaveBeenCalledWith(400);
+        expect(mockResponse.json).toHaveBeenCalledWith({ error: "Missing required fields" });
+    });
+
+    it("getAllWorkoutPlans -- should handle database errors", async () => {
+        (client.db as jest.Mock).mockReturnValue({
+            collection: jest.fn().mockReturnValue({
+                find: jest.fn().mockReturnValue({
+                    toArray: jest.fn().mockImplementationOnce(() => {
+                        return Promise.reject(new Error("Database error"));
+                    }),
+                }),
+            }),
+        });
+
+        await getAllWorkoutPlans(mockRequest as Request, mockResponse as Response);
+
+        expect(mockResponse.status).toHaveBeenCalledWith(500);
+        expect(mockResponse.json).toHaveBeenCalledWith({
+            message: "Error fetching workout plans",
             error: expect.any(Error),
         });
     });
