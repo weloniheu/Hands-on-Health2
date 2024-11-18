@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 const router = Router();
 
-// Get exercises by types
+// Create Workout Template
 router.post("/", (req: Request, res: Response) => {
 	createWorkoutTemplate(req, res);
 });
