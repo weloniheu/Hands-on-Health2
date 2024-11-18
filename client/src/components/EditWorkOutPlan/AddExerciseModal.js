@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 const ExerciseModal = ({ exercise, onClose, onAdd }) => {
   const [sets, setSets] = useState("");
   const [reps, setReps] = useState("");
@@ -17,7 +16,7 @@ const ExerciseModal = ({ exercise, onClose, onAdd }) => {
         <p className="exType">Exercise Type: {exercise.type}</p>
         <div className="input-fields-AddExInfo">
           <label>
-            Sets:
+            Sets:&nbsp;
             <input
               id="setsInput"
               name="inputSetsNo"
@@ -40,8 +39,18 @@ const ExerciseModal = ({ exercise, onClose, onAdd }) => {
           </label>
         </div>
         <div className="button-container-AET">
-          <button onClick={handleAdd} className="modal-button-AET">Add</button>
-          <button onClick={onClose} className="modal-button-AET">Cancel</button>
+          <button
+            onClick={handleAdd}
+            className="modal-button-AET"
+          >
+            Add
+          </button>
+          <button
+            onClick={onClose}
+            className="modal-button-AET"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
