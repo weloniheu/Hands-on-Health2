@@ -44,13 +44,14 @@
 }
 
 .exercise-card {
-  background-color: rgb(220, 235, 245);
-  border: 2px solid rgb(180, 190, 230);
-  border-radius: 10px;
+  background-color: rgb(182, 213, 249);
+  border: none;
+  border-radius: 15px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 1420px;
 }
 
 .exercise-header {
@@ -74,7 +75,7 @@
 }
 
 .control-button {
-  background-color: rgb(182, 213, 249);
+  background-color: lightgray;
   color: black;
   font-weight: bold;
   border: none;
@@ -84,7 +85,7 @@
 }
 
 .control-button:hover {
-  background-color: rgb(162, 193, 229);
+  background-color: darkgray;
 }
 
 .exercise-content {
@@ -104,9 +105,11 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: rgb(200, 220, 240);
+  background-color: lightgray;
+  border: darkgray;
   padding: 5px;
   border-radius: 5px;
+  width: 500px;
 }
 
 .set-item p {
@@ -157,8 +160,8 @@
 }
 
 .add-exercise-button {
-  width: 100%;
-  max-width: 800px;
+  /* width: 100%; */
+  width: 1450px;
   height: 50px;
   margin-top: 20px;
   background-color: rgb(182, 213, 249);
@@ -166,11 +169,19 @@
   font-weight: bold;
   font-size: large;
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   cursor: pointer;
   text-align: center;
 }
 
 .add-exercise-button:hover {
   background-color: rgb(162, 193, 229);
+}
+
+.dropdown-icon {
+  background: none;
+  border: none;
+  font-size: 25px;
+  font-weight: 600;
+  width: fit-content;
 }
