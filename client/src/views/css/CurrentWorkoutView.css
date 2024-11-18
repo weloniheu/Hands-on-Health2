@@ -184,3 +184,11 @@ body {
 .add-exercise-button:hover {
   background-color: rgb(162, 193, 229);
 }
+
+.dropdown-icon {
+  background: none;
+  border: none;
+  font-size: 25px;
+  font-weight: 600;
+  width: fit-content;
+}

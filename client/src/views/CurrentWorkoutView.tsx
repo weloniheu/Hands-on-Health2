@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
@@ -13,8 +13,12 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   onAddExercise,
 }) => {
-  const { currentWorkoutExercises, setCurrentWorkoutExercises, deleteExerciseFromCurrentWorkout } =
+  const { currentWorkoutExercises, setCurrentWorkoutExercises, deleteExerciseFromCurrentWorkout, AvailableExercises } =
     useContext(AppContext);
+
+  const [selectedExercises, setSelectedExercises] = useState(
+    currentWorkoutExercises.map((exercise) => exercise.name)
+  );
 
   // Function to handle updating exercise sets
   const handleUpdateExercise = (updatedExercise: Exercise2) => {
@@ -28,11 +32,21 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     deleteExerciseFromCurrentWorkout(exToDelete);
   };
 
+  const handleSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    index: number
+  ) => {
+    const selectedName = event.target.value;
+    const updatedSelectedExercises = [...selectedExercises];
+    updatedSelectedExercises[index] = selectedName;
+    setSelectedExercises(updatedSelectedExercises);
+  };
+
   return (
     <div>
       <div className="header-container">
         <h1 className="header-title">Current Workout</h1>
-        <button className="finish-exercise">Finish Exercise</button>
+        <button className="finish-exercise">Finish Workout</button>
       </div>
       <div className="exercise-list-container">
         {currentWorkoutExercises.map((exercise, index) => (
@@ -42,7 +56,19 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
           >
             <div className="exercise-header">
               <h2 className="exercise-title">
-                {exercise.name} {/*<span className="dropdown-icon">▼</span>*/}
+              {/*selectedExercises[index] || "Select an exercise"*/}
+                <select 
+                  className="dropdown-icon" 
+                  value={selectedExercises[index] || ""} 
+                  onChange={(event) => handleSelectChange(event, index)}
+                  >
+                  {AvailableExercises.map((exercise, index) => (
+                    <option key={index} value={exercise.name}>
+                      {exercise.name}
+                    </option>
+                  ))}
+                  </select>
+                  {/* <span className="dropdown-arrow">▼</span> */}
               </h2>
               <div className="exercise-controls">
                 <AddSet
