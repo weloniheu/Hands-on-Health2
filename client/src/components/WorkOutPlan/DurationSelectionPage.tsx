@@ -1,56 +1,59 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
-import "../../css/DurationSelectionPage.css";
+import Header from "./Header";
+import "./css/WorkoutTemplateOptions.css";
 
 const DurationSelectionPage: React.FC = () => {
     const { setDuration } = useWorkout();
     const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
     const navigate = useNavigate();
 
-    const handleSelect = (duration: number) => {
+    const handleSelectDuration = (duration: number) => {
         setSelectedDuration(duration);
         setDuration(duration);
     };
 
-    const handleNext = () => {
-        if (selectedDuration !== null) {
-            navigate("/select-focus");
-        }
-    };
+    function handleCancelButton() {
+        navigate("/");
+    }
 
-    const handleCancel = () => {
-        navigate("/home"); // to Home Page
-    };
+    const isDurationSelected = selectedDuration !== null;
 
     return (
-        <div className="app">
-            <header className="header">
-                <h1 className="app-title">Hands on Health</h1>
-                <img src="/path/to/logo.png" alt="Logo" className="app-logo" />
-            </header>
-            <div className="main-content">
-                <div className="subtitle-row">
-                    <h2 className="subtitle">Choose Your Workout Plan</h2>
-                    <button className="cancel-button" onClick={handleCancel}>
+        <div className="duration-page-view">
+            <Header />
+            <div className="content-container">
+                <div className="title-and-cancel">
+                    <h3 className="subtitle">Choose Your Workout Duration</h3>
+                    <button className="cancel-button" onClick={handleCancelButton}>
                         Cancel
                     </button>
                 </div>
-                <h3 className="duration-title">Duration</h3>
-                <div className="duration-options">
-                    {[30, 60, 90, 120].map((min) => (
+                <h2 className="duration">Duration</h2>
+                <div className="duration-group-container">
+                    {[30, 60, 90, 120].map((duration) => (
                         <button
-                            key={min}
-                            className={`duration-button ${selectedDuration === min ? "selected" : ""}`}
-                            onClick={() => handleSelect(min)}
+                            key={duration}
+                            className={`duration-button ${selectedDuration === duration ? "selected" : ""}`}
+                            onClick={() => handleSelectDuration(duration)}
                         >
-                            {min} min
+                            {duration} min
                         </button>
                     ))}
                 </div>
-                <button className="duration-next-button" onClick={handleNext} disabled={selectedDuration === null}>
-                    Next
-                </button>
+                <div className="navigation-buttons">
+                    <button className="prev-button" onClick={handleCancelButton}>
+                        Prev
+                    </button>
+                    <button
+                        className="next-button"
+                        onClick={() => navigate("/select-focus")}
+                        disabled={!isDurationSelected}
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     );

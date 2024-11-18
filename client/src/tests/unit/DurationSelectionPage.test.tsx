@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import DurationSelectionPage from "../../components/WorkOutPlan/DurationSelectionPage";
 import { WorkoutProvider } from "../../contexts/WorkoutContext";
 import HomePage from "../../components/HomePage";
-import FocusMusclesView from "../../views/FocusMuscles";
+import FocusMusclesView from "../../components/WorkOutPlan/FocusMuscles";
 import "@testing-library/jest-dom";
 
 test("renders DurationSelectionPage and selects duration", () => {

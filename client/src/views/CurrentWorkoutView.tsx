@@ -1,13 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import DeleteExerciseType from "../components/EditWorkOutPlan/DeleteExerciseType";
 import { Exercise2 } from "../types/types";
+import { fetchCurrentPlan } from "../utils/exercise-utils";
 
 interface CurrentWorkoutProps {
-  onAddExercise: () => void;
+    onAddExercise: () => void;
 }
 
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
@@ -19,6 +20,32 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   const [selectedExercises, setSelectedExercises] = useState(
     currentWorkoutExercises.map((exercise) => exercise.name)
   );
+    
+  // Get the current workout plan information from backend
+  async function handleDataFetch() {
+    const userId = "Tester";
+    const data = await fetchCurrentPlan(userId);
+
+    const transformedExercises: Exercise2[] = data.workoutPlan.map((exercise: any) => {
+        const setsArray = Array.from({ length: exercise.sets }, () => ({
+            weight: null,
+            reps: null,
+        }));
+
+        return {
+            name: exercise.name,
+            type: exercise.type,
+            sets: setsArray,
+        };
+    });
+
+     console.log(transformedExercises);
+     setCurrentWorkoutExercises(transformedExercises);
+  }
+
+  useEffect(() => {
+     handleDataFetch();
+  }, []);
 
   // Function to handle updating exercise sets
   const handleUpdateExercise = (updatedExercise: Exercise2) => {
@@ -78,54 +105,37 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
                 <button className="control-button">Demo</button>
                 <button className="control-button" onClick={() => handleDeleteExercise(exercise.name)}>Delete</button>
               </div>
-            </div>
+             </div>
 
-            <div className="exercise-content">
-              <div className="set-list">
-                {exercise.sets.map((set, setIndex) => (
-                  <div
-                    key={setIndex}
-                    className="set-item"
-                  >
-                    <label>Weight:</label>
-                    <input
-                      type="number"
-                      defaultValue={set.weight}
-                      className="set-input"
-                    />
-                    <label>Reps:</label>
-                    <input
-                      type="number"
-                      defaultValue={set.reps}
-                      className="set-input"
-                    />
-                    <DeleteSet
-                      exercise={exercise}
-                      setIndex={setIndex}
-                      onUpdateExercise={handleUpdateExercise}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="notes-section">
-                <label>Notes:</label>
-                <textarea
-                  className="notes-input"
-                  placeholder="Add any notes here..."
-                />
-              </div>
+             <div className="exercise-content">
+                <div className="set-list">
+                    {exercise.sets.map((set, setIndex) => (
+                        <div key={setIndex} className="set-item">
+                            <label>Weight:</label>
+                            <input type="number" defaultValue={set.weight} className="set-input" />
+                            <label>Reps:</label>
+                            <input type="number" defaultValue={set.reps} className="set-input" />
+                            <DeleteSet
+                                exercise={exercise}
+                                setIndex={setIndex}
+                                onUpdateExercise={handleUpdateExercise}
+                            />
+                        </div>
+                    ))}
+                </div>
+                <div className="notes-section">
+                    <label>Notes:</label>
+                    <textarea className="notes-input" placeholder="Add any notes here..." />
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div>
-        <button
-          className="add-exercise-button"
-          onClick={onAddExercise}
-        >
-          Add Exercise
-        </button>
-      </div>
-    </div>
-  );
+        </div>
+    ))}
+            </div>
+            <div>
+                <button className="add-exercise-button" onClick={onAddExercise}>
+                    Add Exercise
+                </button>
+            </div>
+        </div>
+    );
 };
