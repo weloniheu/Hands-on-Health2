@@ -46,6 +46,7 @@ body {
   padding-right: 20px; /* Additional right padding */
   margin: 10px 20px;
   margin-right: 50px;
+  width: 1400px;
 }
 
 .add-new-exType {
@@ -58,6 +59,7 @@ body {
   flex-grow: 1; /* Let the search bar grow */
   max-width: calc(100% - 150px); /* Limit max width if needed */
   margin-right: 0px; /* Adjust spacing by moving the right side slightly inward */
+  width: 1450px;
 }
 
 .search-container input {
