@@ -1,0 +1,30 @@
+body {
+  background-color: rgb(241, 255, 250);
+}
+.header-container {
+  display: flex;
+  justify-content: center; /* Center the header */
+  align-items: center; /* Vertically center items */
+  position: relative; /* Allow absolute positioning of button */
+  margin: 20px 0; /* Optional: adds some space around the header */
+  font-size: x-large;
+}
+
+.header-title {
+  margin: 0; /* Remove default margin from the h1 */
+}
+/* Container for the video */
+.video-container {
+  display: flex;
+  justify-content: center; /* Center the video horizontally */
+  align-items: center; /* Center the video vertically (if needed) */
+  width: 100vw; /* Ensure the container spans the full width */
+  text-align: center;
+}
+
+/* Responsive iframe (YouTube video) */
+.video-container iframe {
+  width: 90%; /* Set video width to 90% of the viewport width */
+  height: calc(90vw * 9 / 16); /* Maintain 16:9 aspect ratio */
+  border: none; /* Remove border */
+}
