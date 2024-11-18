@@ -9,13 +9,13 @@ function Review() {
     const navigate = useNavigate();
     const [planName, setPlanName] = useState("Workout 1");
     const [editPlanName, setEditPlanName] = useState(false);
-    const userId = "agoahefnoanvoae";
+    const userId = "Tester";
 
     async function handleStartWorkout() {
         const data = await createWorkoutTemplate(userId, planName, focus, duration, intensity);
         console.log(data);
 
-        navigate("/");
+        navigate("/current-workout");
     }
 
     // Navigate to the prevous page
