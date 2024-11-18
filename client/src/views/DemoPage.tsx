@@ -14,13 +14,15 @@ const DemoPlayer = () => {
         <h1 className="header-title">Workout Demo</h1>
         <button className="finish-exercise">Exit Demo</button>
       </div>
-      <div className="video-container">
-        <iframe
-          src={videoUrl}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+      <div className="video-surround">
+        <div className="video-container">
+          <iframe
+            src={videoUrl}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
       </div>
     </div>
   );
