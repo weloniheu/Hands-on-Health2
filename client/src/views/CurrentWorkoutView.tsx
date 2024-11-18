@@ -13,7 +13,7 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   onAddExercise,
 }) => {
-  const { currentWorkoutExercises, setCurrentWorkoutExercises } =
+  const { currentWorkoutExercises, setCurrentWorkoutExercises, deleteExerciseFromCurrentWorkout } =
     useContext(AppContext);
 
   // Function to handle updating exercise sets
@@ -22,6 +22,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
       exercise.name === updatedExercise.name ? updatedExercise : exercise
     );
     setCurrentWorkoutExercises(updatedExercises);
+  };
+
+  const handleDeleteExercise = (exToDelete: String) => {
+    deleteExerciseFromCurrentWorkout(exToDelete);
   };
 
   return (
@@ -46,7 +50,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
                   onAddSet={handleUpdateExercise}
                 />
                 <button className="control-button">Demo</button>
-                <button className="control-button">Delete</button>
+                <button className="control-button" onClick={() => handleDeleteExercise(exercise.name)}>Delete</button>
               </div>
             </div>
 
