@@ -6,7 +6,9 @@ html {
     overflow-x: hidden;
 }
 
-.focus-muscles-view {
+.focus-muscles-view,
+.duration-page-view,
+.intensity-page-view {
     font-family: 'Arial', sans-serif;
     text-align: center;
     padding: 0px;
@@ -29,20 +31,30 @@ html {
     padding-bottom: 40px;
 }
 
-.muscle-group-container {
+.muscle-group-container,
+.duration-group-container,
+.intensity-group-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     max-width: 600px;
     margin: 0 auto;
     padding-bottom: 20px;
 }
 
-.focus {
+.muscle-group-container {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.focus,
+.duration,
+.intensity {
     font-size: 35px;
 }
 
-.muscle-group-button {
+.muscle-group-button,
+.duration-button,
+.intensity-button {
     background-color: #f0f0f0;
     border: none;
     border-radius: 20px;
@@ -55,7 +67,11 @@ html {
 }
 
 .muscle-group-button:hover,
-.muscle-group-button.selected {
+.muscle-group-button.selected,
+.duration-button:hover,
+.duration-button.selected,
+.intensity-button:hover,
+.intensity-button.selected {
     background-color: #007bff;
     color: white;
     transform: scale(1.05);
