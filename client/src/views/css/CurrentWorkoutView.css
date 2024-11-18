@@ -73,6 +73,7 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+  margin-right: 10px;
 }
 
 .exercise-controls {
@@ -143,7 +144,6 @@ body {
   color: slategray; /* Optional hover color for effect */
 }
 
-
 .notes-section {
   display: flex;
   flex-direction: column;
@@ -164,7 +164,7 @@ body {
 }
 
 .add-exercise-button {
-  width: 90%;
+  width: 100%;
   max-width: 800px;
   height: 50px;
   margin-top: 20px;
