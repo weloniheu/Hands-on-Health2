@@ -7,10 +7,10 @@ import "./App.css";
 import { AppProvider } from "./contexts/AppContext";
 import Login from "./components//Login/Login";
 import Signup from "./components/Login/Signup";
-import FocusMusclesView from "./views/FocusMuscles";
+import FocusMusclesView from "./components/WorkOutPlan/FocusMuscles";
 import Review from "./components/WorkOutPlan/review";
 import CurrentWorkout_AddExercise_Combined from "./views/CurrentWorkOut_AddExercise_CombinedView";
-import DemoPlayer from "./views/DemoPage";
+import HistoryPage from "./components/HistoryPage";
 
 function App() {
   return (
@@ -43,11 +43,11 @@ function App() {
               path="/current-workout"
               element={<CurrentWorkout_AddExercise_Combined />}
             />
-            {/* <Route path="/focus" element={<FocusPage />} /> */}
             <Route
-              path="/workout-demo"
-              element={<DemoPlayer />}
+              path="/history"
+              element={<HistoryPage />}
             />
+            {/* <Route path="/focus" element={<FocusPage />} /> */}
           </Routes>
         </Router>
       </WorkoutProvider>

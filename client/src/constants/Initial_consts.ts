@@ -21,3 +21,5 @@ export const defaultAvaliableExercises = [
   { name: "Calf Raises", type: "Legs", sets: defaultSets },
   { name: "Deadlifts", type: "Back", sets: defaultSets },
 ];
+
+export const API_BASE_URL = "http://localhost:8080";

@@ -4,13 +4,17 @@ import { useState, createContext, ReactNode } from "react";
 interface AppContextType {
     AvailableExercises: Exercise2[];
     setAvailableExercises: React.Dispatch<React.SetStateAction<Exercise2[]>>;
+
     SearchedExercises: Exercise2[];
     setSearchedExercises: React.Dispatch<React.SetStateAction<Exercise2[]>>;
+
     noSearchResult: boolean;
     setNoSearchResult: React.Dispatch<React.SetStateAction<boolean>>;
+
     currentWorkoutExercises: Exercise2[];
     setCurrentWorkoutExercises: React.Dispatch<React.SetStateAction<Exercise2[]>>; // Added here
     addExerciseToCurrentWorkout: (exercise: Exercise2) => void;
+    deleteExerciseFromCurrentWorkout: (exerciseName: String) => void;
 }
 
 const initialState: AppContextType = {
@@ -23,6 +27,7 @@ const initialState: AppContextType = {
     currentWorkoutExercises: [],
     setCurrentWorkoutExercises: () => {}, // Added here
     addExerciseToCurrentWorkout: () => {},
+    deleteExerciseFromCurrentWorkout: () => {}
 };
 
 export const AppContext = createContext<AppContextType>(initialState);
@@ -48,6 +53,10 @@ export const AppProvider = (props: AppProviderProps) => {
     const addExerciseToCurrentWorkout = (exercise: Exercise2) => {
         setCurrentWorkoutExercises((prevExercises) => [...prevExercises, exercise]);
     };
+    const deleteExerciseFromCurrentWorkout = (exerciseName: String) => {
+        setCurrentWorkoutExercises((prevExercises) =>
+            prevExercises.filter((ex) => ex.name !== exerciseName));
+    };
 
     return (
         <AppContext.Provider
@@ -61,6 +70,7 @@ export const AppProvider = (props: AppProviderProps) => {
                 currentWorkoutExercises,
                 setCurrentWorkoutExercises, // Provided here
                 addExerciseToCurrentWorkout,
+                deleteExerciseFromCurrentWorkout
             }}
         >
             {props.children}
