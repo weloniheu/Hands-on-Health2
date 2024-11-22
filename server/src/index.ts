@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import workoutTemplateRoute from "./routes/workoutTemplateRoute";
 import workoutPlanRoute from "./routes/workoutPlanRoute";
-import authRoutes from "./routes/auth";
+import authRoutes from "./routes/authRoute";
 
 const app = express();
 const port = 8080;

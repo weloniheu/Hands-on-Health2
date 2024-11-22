@@ -12,13 +12,14 @@ import client from "../config/db";
 
 // Create workout template by getting from database and generating the workout
 export async function createWorkoutTemplate(req: Request, res: Response) {
-    const { userId, planName, exerciseTypes, duration, intensity } = req.body as {
-        userId: string;
+    const { planName, exerciseTypes, duration, intensity } = req.body as {
         planName: string;
         exerciseTypes: string[];
         duration: number;
         intensity: string;
     };
+    const { userId } = req.body.user as { userId: string };
+    
     if (!userId || !exerciseTypes || !duration || !intensity) {
         return res.status(400).json({ error: "Missing required fields" });
     }

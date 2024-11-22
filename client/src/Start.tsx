@@ -29,19 +29,17 @@ function Start() {
     };
 
     // Render the login or signup page if the user is not logged in
-    if (!token) {
-        return (
-            <div>
-                {showSignup ? (
-                    <Signup onSignupSuccess={handleLoginSuccess} />
-                ) : (
-                    <Login onLoginSuccess={handleLoginSuccess} />
-                )}
-                <button onClick={() => setShowSignup(!showSignup)}>
-                    {showSignup ? "Already have an account? Login" : "Don't have an account? Create Account"}
-                </button>
-            </div>
-        );
-    }
+    return (
+        <div>
+            {showSignup ? (
+                <Signup onSignupSuccess={handleLoginSuccess} />
+            ) : (
+                <Login onLoginSuccess={handleLoginSuccess} />
+            )}
+            <button onClick={() => setShowSignup(!showSignup)}>
+                {showSignup ? "Already have an account? Login" : "Don't have an account? Create Account"}
+            </button>
+        </div>
+    );
 }
 export default Start;
