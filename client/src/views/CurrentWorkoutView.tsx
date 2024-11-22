@@ -28,6 +28,8 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     currentWorkoutExercises.map((exercise) => exercise.name)
   );
 
+  console.log(currentWorkoutExercises);
+
   // Get the current workout plan information from backend
   // async function handleDataFetch() {
   //   const userId = "Tester";
@@ -80,9 +82,9 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     navigate("/");
   }
 
-  function GoToDemo() {
-    navigate("/workout-demo");
-  }
+  const GoToDemo = (exerciseName: string) => {
+    navigate(`/workout-demo/${exerciseName}`);
+  };
   return (
     <div>
       <div className="header-container">
@@ -125,7 +127,12 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
                   exercise={exercise}
                   onAddSet={handleUpdateExercise}
                 />
-                <button className="control-button">Demo</button>
+                <button
+                  className="control-button"
+                  onClick={() => GoToDemo(exercise.name)}
+                >
+                  Demo
+                </button>
                 <button
                   className="control-button"
                   onClick={() => handleDeleteExercise(exercise.name)}

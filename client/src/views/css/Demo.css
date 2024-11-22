@@ -8,6 +8,7 @@ body {
   position: relative; /* Allow absolute positioning of button */
   margin: 20px 0; /* Optional: adds some space around the header */
   font-size: x-large;
+  margin-bottom: 50px;
 }
 
 .header-title {
@@ -42,6 +43,6 @@ body {
   border-radius: 12px; /* Rounds the corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
   background-color: #f9f9f9; /* Light background for contrast */
-  width: 90%; /* Ensures a responsive width */
-  max-width: 800px; /* Sets a maximum width */
+  max-width: 80vw; /* Sets a maximum width */
+  max-height: calc(90vw * 9 / 16);
 }

@@ -49,7 +49,7 @@ function App() {
               element={<HistoryPage />}
             />
             <Route
-              path="/workout-demo"
+              path="/workout-demo/:exerciseName"
               element={<DemoPlayer />}
             />
             {/* <Route path="/focus" element={<FocusPage />} /> */}
