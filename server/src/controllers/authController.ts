@@ -22,11 +22,14 @@ export async function register(req: Request, res: Response) {
             return res.status(400).json({ message: "Email is already registered" });
         }
 
-        // Create the user
+        // Create the user and insert into database
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = { email: email, password: hashedPassword, firstName: firstName, lastName: lastName };
-        await client.db("main").collection("users").insertOne(user);
-        res.status(200).json({ message: "Registration successful" });
+        const insertResult = await client.db("main").collection("users").insertOne(user);
+
+        // Use the userId to create token
+        const token = jwt.sign({ userId: insertResult.insertedId }, key, { expiresIn: "1 hour" });
+        res.status(200).json({ message: "Registration successful", token });
     } catch (error) {
         res.status(400).json({ message: "Failed to register", error });
     }
@@ -52,7 +55,7 @@ export async function login(req: Request, res: Response) {
         }
 
         const token = jwt.sign({ userId: user._id }, key, { expiresIn: "1 hour" });
-        res.status(200).json({ token });
+        res.status(200).json({ message: "Login successful", token });
     } catch (error) {
         res.status(400).json({ message: "Failed to login", error });
     }

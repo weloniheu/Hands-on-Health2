@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/workout-template", workoutTemplateRoute);
 app.use("/workout-plan", workoutPlanRoute);
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/test", (req, res) => {
 	res.send("Test route working!");

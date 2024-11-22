@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { WorkoutProvider } from "./contexts/WorkoutContext";
 import HomePage from "./components/HomePage";
 import DurationSelectionPage from "./components/WorkOutPlan/DurationSelectionPage";
@@ -11,25 +11,38 @@ import FocusMusclesView from "./components/WorkOutPlan/FocusMuscles";
 import Review from "./components/WorkOutPlan/review";
 import CurrentWorkout_AddExercise_Combined from "./views/CurrentWorkOut_AddExercise_CombinedView";
 import HistoryPage from "./components/HistoryPage";
-import Start from "./Start";
+import { useAuth } from "./contexts/AuthContext";
+import { useEffect } from "react";
 
 function App() {
+    const { token, setToken } = useAuth();
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("authToken");
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, [setToken]);
+
     return (
         <AppProvider>
             <WorkoutProvider>
                 <Router>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
+                        <Route path="/" element={token ? <Navigate to="/home" /> : <Navigate to="/login" />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Signup />} />
+                        <Route path="/home" element={<HomePage />} />
+
+                        {/* Workout Plan Template */}
                         <Route path="/select-duration" element={<DurationSelectionPage />} />
                         <Route path="/select-focus" element={<FocusMusclesView />} />
                         <Route path="/select-intensity" element={<IntensitySelectionPage />} />
                         <Route path="/review-plan" element={<Review />} />
-                        {/* <Route path="/review-workout" element={<ReviewWorkoutPage />} /> */}
+
+                        {/* Current Workout */}
                         <Route path="/current-workout" element={<CurrentWorkout_AddExercise_Combined />} />
                         <Route path="/history" element={<HistoryPage />} />
-                        {/* <Route path="/focus" element={<FocusPage />} /> */}
-
-                        <Route path="/start" element={<Start />} />
                     </Routes>
                 </Router>
             </WorkoutProvider>
