@@ -5,6 +5,7 @@ import { WorkoutProvider } from "../../contexts/WorkoutContext";
 import IntensitySelectionPage from "../../components/WorkOutPlan/IntensitySelectionPage";
 import HomePage from "../../components/HomePage";
 import "@testing-library/jest-dom";
+import { AuthProvider } from "../../contexts/AuthContext";
 
 // Mock the `createWorkoutTemplate` function
 jest.mock("../../utils/exercise-utils", () => ({
@@ -14,15 +15,17 @@ jest.mock("../../utils/exercise-utils", () => ({
 describe("Review Component", () => {
     beforeEach(() => {
         render(
-            <WorkoutProvider>
-                <MemoryRouter initialEntries={["/review-plan"]}>
-                    <Routes>
-                        <Route path="/review-plan" element={<Review />} />
-                        <Route path="/select-intensity" element={<IntensitySelectionPage />} />
-                        <Route path="/" element={<HomePage />} />
-                    </Routes>
-                </MemoryRouter>
-            </WorkoutProvider>
+            <AuthProvider>
+                <WorkoutProvider>
+                    <MemoryRouter initialEntries={["/review-plan"]}>
+                        <Routes>
+                            <Route path="/review-plan" element={<Review />} />
+                            <Route path="/select-intensity" element={<IntensitySelectionPage />} />
+                            <Route path="/" element={<HomePage />} />
+                        </Routes>
+                    </MemoryRouter>
+                </WorkoutProvider>
+            </AuthProvider>
         );
     });
 
