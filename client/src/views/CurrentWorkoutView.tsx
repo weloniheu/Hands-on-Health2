@@ -9,22 +9,27 @@ import { fetchCurrentPlan } from "../utils/exercise-utils";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 interface CurrentWorkoutProps {
-    onAddExercise: () => void;
+  onAddExercise: () => void;
 }
 
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
   onAddExercise,
 }) => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const { currentWorkoutExercises, setCurrentWorkoutExercises, deleteExerciseFromCurrentWorkout, AvailableExercises } =
-    useContext(AppContext);
+  const {
+    currentWorkoutExercises,
+    setCurrentWorkoutExercises,
+    deleteExerciseFromCurrentWorkout,
+    AvailableExercises,
+  } = useContext(AppContext);
 
   const [selectedExercises, setSelectedExercises] = useState(
     currentWorkoutExercises.map((exercise) => exercise.name)
   );
-    
+
+  console.log(currentWorkoutExercises);
+
   // Get the current workout plan information from backend
   // async function handleDataFetch() {
   //   const userId = "Tester";
@@ -73,16 +78,24 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     setSelectedExercises(updatedSelectedExercises);
   };
 
-  function BackToHome(){
-    navigate("/")
+  function BackToHome() {
+    navigate("/");
   }
 
+  const GoToDemo = (exerciseName: string) => {
+    navigate(`/workout-demo/${exerciseName}`);
+  };
   return (
     <div>
       <div className="header-container">
         <h1 className="header-title">Current Workout</h1>
         <button className="finish-exercise">Finish Workout</button>
-        <button className="back-to-home" onClick={BackToHome}>Home</button>
+        <button
+          className="back-to-home"
+          onClick={BackToHome}
+        >
+          Home
+        </button>
       </div>
       <div className="exercise-list-container">
         {currentWorkoutExercises.map((exercise, index) => (
@@ -92,59 +105,89 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
           >
             <div className="exercise-header">
               <h2 className="exercise-title">
-              {/*selectedExercises[index] || "Select an exercise"*/}
-                <select 
-                  className="dropdown-icon" 
-                  value={selectedExercises[index] || ""} 
+                {/*selectedExercises[index] || "Select an exercise"*/}
+                <select
+                  className="dropdown-icon"
+                  value={selectedExercises[index] || ""}
                   onChange={(event) => handleSelectChange(event, index)}
-                  >
+                >
                   {AvailableExercises.map((exercise, index) => (
-                    <option key={index} value={exercise.name}>
+                    <option
+                      key={index}
+                      value={exercise.name}
+                    >
                       {exercise.name}
                     </option>
                   ))}
-                  </select>
-                  {/* <span className="dropdown-arrow">▼</span> */}
+                </select>
+                {/* <span className="dropdown-arrow">▼</span> */}
               </h2>
               <div className="exercise-controls">
                 <AddSet
                   exercise={exercise}
                   onAddSet={handleUpdateExercise}
                 />
-                <button className="control-button">Demo</button>
-                <button className="control-button" onClick={() => handleDeleteExercise(exercise.name)}>Delete</button>
-              </div>
-             </div>
-
-             <div className="exercise-content">
-                <div className="set-list">
-                    {exercise.sets.map((set, setIndex) => (
-                        <div key={setIndex} className="set-item">
-                            <label>Weight:</label>
-                            <input type="number" defaultValue={set.weight} className="set-input" />
-                            <label>Reps:</label>
-                            <input type="number" defaultValue={set.reps} className="set-input" />
-                            <DeleteSet
-                                exercise={exercise}
-                                setIndex={setIndex}
-                                onUpdateExercise={handleUpdateExercise}
-                            />
-                        </div>
-                    ))}
-                </div>
-                <div className="notes-section">
-                    <label>Notes:</label>
-                    <textarea className="notes-input" placeholder="Add any notes here..." />
-                </div>
-            </div>
-        </div>
-    ))}
-            </div>
-            <div>
-                <button className="add-exercise-button" onClick={onAddExercise}>
-                    Add Exercise
+                <button
+                  className="control-button"
+                  onClick={() => GoToDemo(exercise.name)}
+                >
+                  Demo
                 </button>
+                <button
+                  className="control-button"
+                  onClick={() => handleDeleteExercise(exercise.name)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-        </div>
-    );
+
+            <div className="exercise-content">
+              <div className="set-list">
+                {exercise.sets.map((set, setIndex) => (
+                  <div
+                    key={setIndex}
+                    className="set-item"
+                  >
+                    <label>Weight:</label>
+                    <input
+                      type="number"
+                      defaultValue={set.weight}
+                      className="set-input"
+                    />
+                    <label>Reps:</label>
+                    <input
+                      type="number"
+                      defaultValue={set.reps}
+                      className="set-input"
+                    />
+                    <DeleteSet
+                      exercise={exercise}
+                      setIndex={setIndex}
+                      onUpdateExercise={handleUpdateExercise}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="notes-section">
+                <label>Notes:</label>
+                <textarea
+                  className="notes-input"
+                  placeholder="Add any notes here..."
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div>
+        <button
+          className="add-exercise-button"
+          onClick={onAddExercise}
+        >
+          Add Exercise
+        </button>
+      </div>
+    </div>
+  );
 };
