@@ -11,6 +11,7 @@ import FocusMusclesView from "./components/WorkOutPlan/FocusMuscles";
 import Review from "./components/WorkOutPlan/review";
 import CurrentWorkout_AddExercise_Combined from "./views/CurrentWorkOut_AddExercise_CombinedView";
 import HistoryPage from "./components/HistoryPage";
+import DemoPlayer from "./views/DemoPage";
 import { useAuth } from "./contexts/AuthContext";
 import { useEffect } from "react";
 
@@ -43,6 +44,7 @@ function App() {
                         {/* Current Workout */}
                         <Route path="/current-workout" element={<CurrentWorkout_AddExercise_Combined />} />
                         <Route path="/history" element={<HistoryPage />} />
+                        <Route path="/workout-demo/:exerciseName" element={<DemoPlayer />} />
                     </Routes>
                 </Router>
             </WorkoutProvider>
