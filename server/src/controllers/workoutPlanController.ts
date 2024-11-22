@@ -3,10 +3,7 @@ import client from "../config/db";
 
 // Get the current (most recent) workout plan by user
 export async function getCurrentWorkoutPlan(req: Request, res: Response) {
-    const { userId } = req.params as { userId: string };
-    if (!userId) {
-        return res.status(400).json({ error: "Missing required fields" });
-    }
+    const { userId } = req.body.user as { userId: string };
 
     try {
         const currentPlan = await client
@@ -22,10 +19,7 @@ export async function getCurrentWorkoutPlan(req: Request, res: Response) {
 
 // Get all workout plans by user
 export async function getAllWorkoutPlans(req: Request, res: Response) {
-    const { userId } = req.params as { userId: string };
-    if (!userId) {
-        return res.status(400).json({ error: "Missing required fields" });
-    }
+    const { userId } = req.body.user as { userId: string };
 
     try {
         const allPlans = await client

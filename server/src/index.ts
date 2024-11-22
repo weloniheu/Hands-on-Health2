@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import workoutTemplateRoute from "./routes/workoutTemplateRoute";
 import workoutPlanRoute from "./routes/workoutPlanRoute";
-import authRoutes from "./routes/auth";
+import authRoutes from "./routes/authRoute";
 
 const app = express();
 const port = 8080;
@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/workout-template", workoutTemplateRoute);
 app.use("/workout-plan", workoutPlanRoute);
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/test", (req, res) => {
 	res.send("Test route working!");
