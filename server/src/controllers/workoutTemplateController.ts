@@ -3,7 +3,6 @@ import client from "../config/db";
 
 // JSON from frontend
 // {
-//     userId: userId
 //     planName: "Upper Body Workout"
 //     exerciseTypes: ["Chest", "Back"],
 //     duration: "30",
@@ -19,8 +18,8 @@ export async function createWorkoutTemplate(req: Request, res: Response) {
         intensity: string;
     };
     const { userId } = req.body.user as { userId: string };
-    
-    if (!userId || !exerciseTypes || !duration || !intensity) {
+
+    if (!exerciseTypes || !duration || !intensity) {
         return res.status(400).json({ error: "Missing required fields" });
     }
 

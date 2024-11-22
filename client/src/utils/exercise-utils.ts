@@ -2,7 +2,7 @@ import { API_BASE_URL } from "../constants/Initial_consts";
 
 // Function to create workout template in the backend. Method: POST
 export async function createWorkoutTemplate(
-    userId: string,
+    token: string | null,
     planName: string,
     exerciseTypes: string[],
     duration: number,
@@ -12,10 +12,10 @@ export async function createWorkoutTemplate(
         const response = await fetch(`${API_BASE_URL}/workout-template`, {
             method: "POST",
             headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                userId,
                 planName,
                 exerciseTypes,
                 duration,
@@ -23,13 +23,16 @@ export async function createWorkoutTemplate(
             }),
         });
 
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
         if (!response.ok) {
             throw new Error("Failed to fetch workout template");
         }
 
         // Wait for the response to be parsed as JSON
         const jsonResponse = await response.json();
-        console.log("Data from fetchWorkoutTemplate", jsonResponse);
         return jsonResponse;
     } catch (error) {
         console.error("Error in createWorkoutTemplate", error);
@@ -38,9 +41,14 @@ export async function createWorkoutTemplate(
 }
 
 // Function to get the current workout plan from the backend. Method: GET
-export async function fetchCurrentPlan(userId: string) {
+export async function fetchCurrentPlan(token: string | null) {
     try {
-        const response = await fetch(`${API_BASE_URL}/workout-plan`);
+        const response = await fetch(`${API_BASE_URL}/workout-plan`, { headers: { Authorization: `Bearer ${token}` } });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
         if (!response.ok) {
             throw new Error("Failed to fetch current plan");
         }
