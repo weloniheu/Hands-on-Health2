@@ -11,6 +11,7 @@ import FocusMusclesView from "./components/WorkOutPlan/FocusMuscles";
 import Review from "./components/WorkOutPlan/review";
 import CurrentWorkout_AddExercise_Combined from "./views/CurrentWorkOut_AddExercise_CombinedView";
 import HistoryPage from "./components/HistoryPage";
+import DemoPlayer from "./views/DemoPage";
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
             <Route
               path="/history"
               element={<HistoryPage />}
+            />
+            <Route
+              path="/workout-demo"
+              element={<DemoPlayer />}
             />
             {/* <Route path="/focus" element={<FocusPage />} /> */}
           </Routes>
