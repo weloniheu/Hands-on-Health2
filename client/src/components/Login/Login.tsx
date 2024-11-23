@@ -1,57 +1,71 @@
 import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../utils/auth-utils";
+import Header from "../WorkOutPlan/Header";
+import "./css/Login.css";
 
-const Login = ({
-	onLoginSuccess,
-}: {
-	onLoginSuccess: (token: string) => void;
-}) => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
+function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const { setToken, setIsGuest, setUser } = useAuth();
+    const navigate = useNavigate();
 
-	const handleLogin = async (e: React.FormEvent) => {
-		e.preventDefault();
-		try {
-			const response = await fetch(
-				"http://localhost:8080/api/auth/login",
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ username, password }),
-				},
-			);
+    async function handleLogin(event: any) {
+        event.preventDefault();
+        try {
+            const data = await login(email, password);
 
-			if (response.ok) {
-				const data = await response.json();
-				onLoginSuccess(data.token); // Pass the token to App component or save it
-			} else {
-				const errorData = await response.json();
-				setError(errorData.message || "Login failed");
-			}
-		} catch (err) {
-			setError("Error occurred during login");
-		}
-	};
+            if (data.result) {
+                setToken(data.token);
+                setUser(email);
+                localStorage.setItem("authToken", data.token);  // Save the token in localStorage
+                setIsGuest(false);
+                navigate("/home");
+            } else {
+                setError(data.message || "Invalid login credentials");
+            }
+        } catch (error) {
+            setError("Login failed. Please try again.");
+        }
+    }
 
-	return (
-		<form onSubmit={handleLogin}>
-			<h2>Login</h2>
-			{error && <p style={{ color: "red" }}>{error}</p>}
-			<input
-				type="text"
-				placeholder="Username"
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-			/>
-			<input
-				type="password"
-				placeholder="Password"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<button type="submit">Login</button>
-		</form>
-	);
-};
+    function handleGuestLogin() {
+        setIsGuest(true);
+        setToken(null);
+        navigate("/home");
+    }
+
+    return (
+        <div className="login">
+            <Header />
+            <h1>Login</h1>
+            <form onSubmit={handleLogin}>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <div className="form-group">
+                    <h2>Username:</h2>
+                    <input type="text" placeholder="Username" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <h2>Password:</h2>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <p onClick={() => navigate("/register")} className="register-button">Register for account</p>
+                </div>
+                <div className="form-group submit"><button type="submit">Login</button></div>
+                <div className="form-group guest">
+                    <p onClick={handleGuestLogin} className="guest-login">Continue as guest</p>
+                </div>
+            </form>
+        </div>
+    );
+}
 
 export default Login;

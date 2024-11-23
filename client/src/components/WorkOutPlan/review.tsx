@@ -2,19 +2,25 @@ import { useState } from "react";
 import { createWorkoutTemplate } from "../../utils/exercise-utils";
 import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Review() {
     const { duration, focus, intensity } = useWorkout();
+    const { token, logout } = useAuth();
     const navigate = useNavigate();
     const [planName, setPlanName] = useState("Workout 1");
     const [editPlanName, setEditPlanName] = useState(false);
-    const userId = "agoahefnoanvoae";
 
     async function handleStartWorkout() {
-        const data = await createWorkoutTemplate(userId, planName, focus, duration, intensity);
+        const data = await createWorkoutTemplate(token, planName, focus, duration, intensity);
         console.log(data);
 
-        navigate("/");
+        if (data.logout) {
+            logout();
+            navigate("/login");
+        }
+
+        navigate("/current-workout");
     }
 
     // Navigate to the prevous page
