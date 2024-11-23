@@ -1,0 +1,55 @@
+body,
+html {
+    background-color: #f9fafc;
+    width: 100%;
+    position: relative;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.register {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 0px;
+    background-color: #f9fafc;
+}
+
+.back-to-login-button {
+    position: absolute;
+    top: 100px;
+    left: 450px;
+}
+
+.register h1 {
+    color: black;
+    font-size: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.register h2 {
+    font-size: 20px;
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.form-group {
+    width: 40%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.register input[type="text"],
+.register input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
