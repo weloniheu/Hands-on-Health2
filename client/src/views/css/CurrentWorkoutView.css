@@ -1,86 +1,92 @@
-/* Page Container */
+/* General Page Styling */
 .page--current-workout {
   font-family: 'Arial', sans-serif;
   background-color: #f9fafc;
+  padding-right: 20px;
+  margin: 0;
+  min-height: 100vh; /* Ensure the page fills at least the height of the viewport */
+  box-sizing: border-box;
+  overflow-y:visible;
+}
+
+.container--header-action {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 20px;
+  gap: 10px;
+  margin-top: 20px; /* Add spacing from the top */
 }
 
-/* Header Section */
-.container--header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 800px;
-  position: relative;
-  margin-bottom: 20px;
-}
-
+/* Header Title */
 .text--header-title {
-  font-size: 2rem;
-  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
+/* Finish Workout Button */
 .button--action-finish {
-  position: fixed;
-  top: 20px;
-  right: 20px;
   background-color: #007bff;
   color: white;
-  font-weight: bold;
   border: none;
   border-radius: 10px;
-  padding: 8px 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .button--action-finish:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
 }
 
+/* Home Button */
 .button--action-home {
-  position: fixed;
-  top: 20px;
-  left: 20px;
   background-color: #007bff;
   color: white;
-  font-weight: bold;
   border: none;
+  position: fixed; /* Fix Home button to the top-left corner */
+  top: 20px;
+  left: 20px;
   border-radius: 10px;
-  padding: 8px 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
+  z-index: 1000; /* Ensure it's above all other content */
 }
 
 .button--action-home:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Exercise List Section */
 .container--exercise-list {
+  margin-top: 20px; /* Add space to avoid overlap with the header */
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 100%;
-  max-width: 800px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20px;
 }
 
 /* Exercise Card */
 .card--exercise {
-  background-color: #f0f0f0;
-  border: none;
+  background-color: #f0f0f0; /* Light gray background for cards */
+  border: 2px solid #007bff; /* Primary blue border for consistency */
   border-radius: 15px;
-  padding: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  max-width: 800px;
+
 }
 
 /* Exercise Header */
@@ -90,126 +96,143 @@
   align-items: center;
 }
 
-.text--exercise-title {
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+/* Exercise Name */
+.text--exercise-name {
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
-/* Controls */
+/* Dropdown */
+.select--dropdown {
+  background-color: #ffffff; /* White background for readability */
+  border: 1px solid #007bff; /* Match the primary blue color */
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.select--dropdown:focus {
+  outline: none;
+  border-color: #0056b3; /* Darker blue when focused */
+}
+
+/* Controls Section */
 .container--controls {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .button--control {
-  background-color: #e0e0e0;
-  color: black;
-  font-weight: bold;
+  background-color: #007bff;
+  color: white;
   border: none;
+  padding: 5px 15px;
   border-radius: 5px;
-  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .button--control:hover {
-  background-color: #b0b0b0;
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
-/* Exercise Content */
 .container--exercise-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Align set-list and notes side by side */
+  align-items: flex-start;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Set List */
+/* Set List Section */
 .container--set-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  flex: 1;
+  gap: 5px;
 }
 
 .item--set {
+  font-weight: bold;
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: #e9ecef;
-  border-radius: 5px;
-  padding: 5px;
+  background-color: #e9ecef; /* Subtle light gray for individual sets */
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .input--set {
   width: 50px;
-  padding: 4px;
+  padding: 5px;
+  border: 1px solid #007bff;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  text-align: center;
 }
 
-/* Set Delete */
+/* Delete Set Button */
 .button--set-delete {
+  background-color: #e9ecef;
+  font-size: 14px;
   font-weight: bold;
-  font-size: 1rem;
   color: black;
-  background: none;
   border: none;
+  border-radius: 5px;
+  padding: 5px 8px;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
-  line-height: 1;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .button--set-delete:hover {
-  color: #6c757d;
+  background-color: #b71c1c; /* Darker red on hover */
+  color: white;
+  transform: scale(1.05);
 }
 
 /* Notes Section */
 .container--notes {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  width: 100%;
+  gap: 10px;
+  flex: 1; /* Allow it to flexibly grow within the container */
+  max-width: 100%; /* Prevent it from exceeding the container width */
+  margin-right: 25px;
 }
+
 
 .input--notes {
   width: 100%;
   height: 100px;
   padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #007bff;
+  border-radius: 10px;
   resize: none;
+  background-color: #ffffff;
 }
+
 
 /* Add Exercise Button */
 .button--add-exercise {
   width: 100%;
-  max-width: 800px;
+  max-width: 300px;
   height: 50px;
-  margin-top: 20px;
   background-color: #007bff;
   color: white;
-  font-weight: bold;
-  font-size: large;
   border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.2s;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 auto 20px;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .button--add-exercise:hover {
   background-color: #0056b3;
-}
-
-/* Dropdown */
-.select--dropdown {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
+  transform: scale(1.05);
 }

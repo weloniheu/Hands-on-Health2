@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { Exercise2 } from "./../types/types";
-import { defaultExercises } from "./../constants/Initial_consts";
+import { Exercise2 } from "../types/types";
+import { defaultExercises } from "../constants/Initial_consts";
 import { EditAddExercise } from "./AddExerciseView";
-import { AppContext, AppProvider } from "./../contexts/AppContext";
+import { AppContext, AppProvider } from "../contexts/AppContext";
 import { CurrentWorkout } from "./CurrentWorkoutView";
 
 function CurrentWorkout_AddExercise_Combined() {
