@@ -23,7 +23,12 @@ const HomePage: React.FC = () => {
         navigate("/quick-workouts");
     }
 
-    const { user, isGuest } = useAuth();
+    function handleLogout() {
+        logout();
+        navigate("/login");
+    }
+
+    const { user, isGuest, logout } = useAuth();
 
     return (
         <div className="home-page">
@@ -48,6 +53,9 @@ const HomePage: React.FC = () => {
                     <button onClick={handleViewHistory}>History</button>
                 </div>
             )}
+            <button className="logout-button" onClick={handleLogout}>
+                {isGuest ? "Exit Guest" : "Log Out"}
+            </button>
         </div>
     );
 };
