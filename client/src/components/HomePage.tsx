@@ -1,40 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { fetchCurrentPlan } from "../utils/exercise-utils";
 import Header from "./WorkOutPlan/Header";
 import "./HomePage.css";
 
 const HomePage: React.FC = () => {
+
     const navigate = useNavigate();
+    const { user, isGuest, logout, isLoggedIn } = useAuth();
+    const [hasCurrentWorkout, setHasCurrentWorkout] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const data = await fetchCurrentPlan(token);
+                if (data && data.workoutPlan && data.workoutPlan.length > 0) {
+                    setHasCurrentWorkout(true);
+                } else {
+                    setHasCurrentWorkout(false);
+                }
+            } else {
+                setHasCurrentWorkout(false);
+            }
+        };
+
+        if (isLoggedIn) {
+            fetchData();
+        } else {
+            setHasCurrentWorkout(false);
+        }
+    }, [isLoggedIn]);
+
+    function handleCurrentWorkout() {
+        if (hasCurrentWorkout) {
+            navigate("/current-workout");
+        } else {
+            alert("No active workout found!");
+        }
+    }
 
     function handleStartTemplate() {
         navigate("/select-duration");
-    }
-
-    function handleCurrentWorkout() {
-        navigate("/current-workout");
     }
 
     function handleViewHistory() {
         navigate("/history");
     }
 
+    function handleQuickWorkouts() {
+        navigate("/quick-workouts");
+    }
+
+    function handleLogout() {
+        logout();
+        navigate("/login");
+    }
+
     return (
         <div className="home-page">
             <Header />
-            <h1>Welcome to Hands on Health</h1>
+            <h1>Welcome {isGuest ? "to Hands on Health" : `back to Hands on Health, ${user}`}</h1>
             <h2>Start your workout journey here!</h2>
             <div className="buttons-group">
                 <button className="new-plan-button" onClick={handleStartTemplate}>
                     New Plan
                 </button>
 
-                <button className="current-workout-button" onClick={handleCurrentWorkout}>
+                <button className="current-workout-button" onClick={handleCurrentWorkout} disabled={!hasCurrentWorkout}>
                     Current Workout
                 </button>
+
+                <button className="quick-workouts-button" onClick={handleQuickWorkouts}>
+                    Quick Workouts
+                </button>
             </div>
-            <div className="history-button">
-                <button onClick={handleViewHistory}>History</button>
-            </div>
+            {!isGuest && (
+                <div className="history-button">
+                    <button onClick={handleViewHistory}>History</button>
+                </div>
+            )}
+            <button className="logout-button" onClick={handleLogout}>
+                {isGuest ? "Exit Guest" : "Log Out"}
+            </button>
         </div>
     );
 };

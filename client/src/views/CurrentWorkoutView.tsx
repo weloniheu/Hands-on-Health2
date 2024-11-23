@@ -5,7 +5,7 @@ import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import { Exercise2 } from "../types/types";
 import { fetchCurrentPlan } from "../utils/exercise-utils";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/WorkOutPlan/Header";
 
@@ -27,9 +27,11 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         currentWorkoutExercises.map((exercise) => exercise.name)
     );
 
-    // Fetch workout data from backend
-    async function handleDataFetch() {
-        const data = await fetchCurrentPlan(token);
+  console.log(currentWorkoutExercises);
+
+  // Get the current workout plan information from backend
+  async function handleDataFetch() {
+    const data = await fetchCurrentPlan(token);
 
         if (data.logout) {
             logout();
@@ -49,12 +51,13 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             };
         });
 
-        setCurrentWorkoutExercises(transformedExercises);
-    }
+    console.log(transformedExercises);
+    setCurrentWorkoutExercises(transformedExercises);
+  }
 
-    useEffect(() => {
-        handleDataFetch();
-    }, []);
+  useEffect(() => {
+    handleDataFetch();
+  }, []);
 
     // Update exercise sets
     const handleUpdateExercise = (updatedExercise: Exercise2) => {
@@ -84,14 +87,18 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
     return (
         <div className="page--current-workout">
             <Header />
-            <div className="container--header-action">
-                <h1 className="text--header-title">Current Workout</h1>
-                <button className="button--action-finish" onClick={navigateHome}>
-                    Finish Workout
-                </button>
+            <div className="container--navigation-buttons">
                 <button className="button--action-home" onClick={navigateHome}>
                     Home
                 </button>
+                <button className="button--action-finish" onClick={navigateHome}>
+                    Finish Workout
+                </button>
+            </div>
+            <div className="container--header-action">
+                <h1 className="text--header-title">Current Workout</h1>
+
+
             </div>
             <div className="container--exercise-list">
                 {currentWorkoutExercises.map((exercise, index) => (
@@ -162,11 +169,9 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                     </div>
                 ))}
             </div>
-            <div>
-                <button className="button--add-exercise" onClick={onAddExercise}>
-                    Add Exercise
-                </button>
-            </div>
+            <button className="button--add-exercise" onClick={onAddExercise}>
+                Add Exercise
+            </button>
         </div>
     );
 };

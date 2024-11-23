@@ -1,12 +1,20 @@
+body,
+html {
+  background-color: #f9fafc;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
 /* General Page Styling */
 .page--current-workout {
   font-family: 'Arial', sans-serif;
   background-color: #f9fafc;
-  padding-right: 20px;
-  margin: 0;
   min-height: 100vh; /* Ensure the page fills at least the height of the viewport */
   box-sizing: border-box;
-  overflow-y:visible;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
 }
 
 .container--header-action {
@@ -14,14 +22,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 20px; /* Add spacing from the top */
+  margin-top: -40px;
 }
 
 /* Header Title */
 .text--header-title {
-  font-size: 1.5em;
+  font-size: 1.9em;
   font-weight: bold;
+}
+
+/* Navigation Buttons Container */
+.container--navigation-buttons {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between; /* Push Home to the left and Finish to the right */
+  align-items: center; /* Align buttons vertically */
+  padding: 20px 20px; /* Add some padding around the buttons */
+  z-index: 1000; /* Ensure it stays above all other elements */
+}
+
+/* Home Button */
+.button--action-home {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.button--action-home:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Finish Workout Button */
@@ -42,31 +78,10 @@
   transform: scale(1.05);
 }
 
-/* Home Button */
-.button--action-home {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  position: fixed; /* Fix Home button to the top-left corner */
-  top: 20px;
-  left: 20px;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-  z-index: 1000; /* Ensure it's above all other content */
-}
-
-.button--action-home:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
 
 /* Exercise List Section */
 .container--exercise-list {
-  margin-top: 20px; /* Add space to avoid overlap with the header */
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -78,8 +93,8 @@
 
 /* Exercise Card */
 .card--exercise {
-  background-color: #f0f0f0; /* Light gray background for cards */
-  border: 2px solid #007bff; /* Primary blue border for consistency */
+  background-color: #f0f0f0;
+  border: 2px solid #007bff;
   border-radius: 15px;
   padding-left: 10px;
   padding-right: 10px;
@@ -229,7 +244,10 @@
   font-size: 16px;
   font-weight: bold;
   margin: 0 auto 20px;
+  position: sticky;
   transition: background-color 0.2s, transform 0.2s;
+  bottom: 10px;
+  z-index: 10;
 }
 
 .button--add-exercise:hover {
