@@ -30,7 +30,8 @@ html {
 }
 
 .new-plan-button,
-.current-workout-button {
+.current-workout-button,
+.quick-workouts-button {
     margin: 0 10px;
     width: 230px;
 }

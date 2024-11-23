@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import Header from "./WorkOutPlan/Header";
 import "./HomePage.css";
 
@@ -18,10 +19,16 @@ const HomePage: React.FC = () => {
         navigate("/history");
     }
 
+    function handleQuickWorkouts() {
+        navigate("/quick-workouts");
+    }
+
+    const { user, isGuest } = useAuth();
+
     return (
         <div className="home-page">
             <Header />
-            <h1>Welcome to Hands on Health</h1>
+            <h1>Welcome {isGuest ? "to Hands on Health" : `back to Hands on Health, ${user}`}</h1>
             <h2>Start your workout journey here!</h2>
             <div className="buttons-group">
                 <button className="new-plan-button" onClick={handleStartTemplate}>
@@ -31,10 +38,16 @@ const HomePage: React.FC = () => {
                 <button className="current-workout-button" onClick={handleCurrentWorkout}>
                     Current Workout
                 </button>
+
+                <button className="quick-workouts-button" onClick={handleQuickWorkouts}>
+                    Quick Workouts
+                </button>
             </div>
-            <div className="history-button">
-                <button onClick={handleViewHistory}>History</button>
-            </div>
+            {!isGuest && (
+                <div className="history-button">
+                    <button onClick={handleViewHistory}>History</button>
+                </div>
+            )}
         </div>
     );
 };
