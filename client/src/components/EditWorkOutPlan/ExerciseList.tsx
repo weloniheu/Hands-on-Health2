@@ -80,7 +80,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
             >
               Add
             </button>
-            <DeleteExercise Exercise={Exercise} />
+            {/*for now we don't want users to delete the basic exercise in the list*/}
+            {/*<DeleteExercise Exercise={Exercise} />*/}
           </div>
         </div>
       ))}
