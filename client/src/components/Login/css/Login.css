@@ -65,16 +65,17 @@ html {
 .guest-login,
 .register-button {
     display: block;
-    width: 80%;
+    width: 100%;
     background: none;
     color: #555;
-    padding: 12px 20px;
-    text-decoration: underline;
+    padding: 15px 0px;
     cursor: pointer;
     border: none;
+    margin-top: 0px;
 }
 
 .guest-login:hover,
 .register-button:hover {
     color: #000;
+    text-decoration: underline;
 }

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { register } from "../../utils/auth-utils";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Header from "../WorkOutPlan/Header";
+import "./css/Signup.css";
 
 function Signup() {
     const [email, setEmail] = useState("");
@@ -26,32 +28,45 @@ function Signup() {
     }
 
     return (
-        <div>
+        <div className="register">
+            <Header />
+            <h1>Sign Up</h1>
+            <div className="back-to-login-button"><button onClick={() => navigate("/login")}>Back to Login</button></div>
             <form onSubmit={handleSignup}>
-                <h2>Sign Up</h2>
                 {error && <p style={{ color: "red" }}>{error}</p>}
-                <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-                <button type="submit">Create Account</button>
+                <div className="form-group">
+                    <h2>Email:</h2>
+                    <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <h2>Password:</h2>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <h2>First Name:</h2>
+                    <input
+                        type="text"
+                        placeholder="First Name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <h2>Last Name:</h2>
+                    <input
+                        type="text"
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                </div>
+                <div className="submit"><button type="submit">Create Account</button></div>
             </form>
-            <button onClick={() => navigate("/login")}>Go to Login</button>
         </div>
     );
 }
