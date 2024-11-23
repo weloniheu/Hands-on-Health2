@@ -1,41 +1,68 @@
-.current-workout-container {
+/* Page Container */
+.page--current-workout {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
   padding: 20px;
-  width: 100%;
-  max-width: 80%;
-  box-sizing: border-box;
 }
 
-.header-title {
+/* Header Section */
+.container--header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.text--header-title {
   font-size: 2rem;
   text-align: center;
-  margin: 20px 0;
 }
 
-/* Position the button at the top right of the page */
-.finish-exercise {
+.button--action-finish {
   position: fixed;
-  /* Fixes the button to the viewport */
   top: 20px;
   right: 20px;
-  background-color: rgb(182, 213, 249);
-  color: black;
+  background-color: #007bff;
+  color: white;
   font-weight: bold;
   border: none;
   border-radius: 10px;
   padding: 8px 12px;
   cursor: pointer;
-  z-index: 10;
-  /* Ensures it stays above other elements */
+  transition: background-color 0.2s;
 }
 
-.finish-exercise:hover {
-  background-color: rgb(162, 193, 229);
+.button--action-finish:hover {
+  background-color: #0056b3;
 }
 
-.exercise-list-container {
+.button--action-home {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button--action-home:hover {
+  background-color: #0056b3;
+}
+
+/* Exercise List Section */
+.container--exercise-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -43,89 +70,88 @@
   max-width: 800px;
 }
 
-.exercise-card {
-  background-color: rgb(182, 213, 249);
+/* Exercise Card */
+.card--exercise {
+  background-color: #f0f0f0;
   border: none;
   border-radius: 15px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 1420px;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 100%;
+  max-width: 800px;
 }
 
-.exercise-header {
+/* Exercise Header */
+.container--exercise-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
-.exercise-title {
+.text--exercise-title {
   font-size: 1.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-right: 10px;
 }
 
-.exercise-controls {
+/* Controls */
+.container--controls {
   display: flex;
   gap: 10px;
 }
 
-.control-button {
-  background-color: lightgray;
+.button--control {
+  background-color: #e0e0e0;
   color: black;
   font-weight: bold;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.control-button:hover {
-  background-color: darkgray;
+.button--control:hover {
+  background-color: #b0b0b0;
 }
 
-.exercise-content {
+/* Exercise Content */
+.container--exercise-content {
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-.set-list {
+/* Set List */
+.container--set-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   flex: 1;
 }
 
-.set-item {
+.item--set {
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: lightgray;
-  border: darkgray;
-  padding: 5px;
+  background-color: #e9ecef;
   border-radius: 5px;
-  width: 500px;
+  padding: 5px;
 }
 
-.set-item p {
-  margin: 0;
-}
-
-.set-input {
+.input--set {
   width: 50px;
   padding: 4px;
   border-radius: 5px;
-  border: 1px solid rgb(150, 150, 150);
+  border: 1px solid #ccc;
 }
 
-.set-delete {
+/* Set Delete */
+.button--set-delete {
   font-weight: bold;
   font-size: 1rem;
   color: black;
@@ -137,69 +163,53 @@
   line-height: 1;
 }
 
-.set-delete:hover {
-  color: slategray;
-  /* Optional hover color for effect */
+.button--set-delete:hover {
+  color: #6c757d;
 }
 
-.notes-section {
+/* Notes Section */
+.container--notes {
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
-.notes-input {
+.input--notes {
   width: 100%;
   height: 100px;
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid rgb(150, 150, 150);
+  border: 1px solid #ccc;
   resize: none;
-  box-sizing: border-box;
 }
 
-.add-exercise-button {
-  /* width: 100%; */
-  width: 1450px;
+/* Add Exercise Button */
+.button--add-exercise {
+  width: 100%;
+  max-width: 800px;
   height: 50px;
   margin-top: 20px;
-  background-color: rgb(182, 213, 249);
-  color: black;
+  background-color: #007bff;
+  color: white;
   font-weight: bold;
   font-size: large;
   border: none;
   border-radius: 15px;
   cursor: pointer;
   text-align: center;
-  margin-left: 20px;
+  transition: background-color 0.2s;
 }
 
-.add-exercise-button:hover {
-  background-color: rgb(162, 193, 229);
+.button--add-exercise:hover {
+  background-color: #0056b3;
 }
 
-.dropdown-icon {
+/* Dropdown */
+.select--dropdown {
   background: none;
   border: none;
-  font-size: 25px;
+  font-size: 1rem;
   font-weight: 600;
-  width: fit-content;
-}
-
-.back-to-home {
-  position: fixed;
-  /* Fixes the button to the viewport */
-  top: 20px;
-  left: 20px;
-  background-color: rgb(182, 213, 249);
-  color: black;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 12px;
   cursor: pointer;
-  z-index: 10;
 }

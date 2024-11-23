@@ -90,9 +90,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     <div>
       <div className="header-container">
         <h1 className="header-title">Current Workout</h1>
-          {/*add functionality that will add curr workout to history in database when finished*/}
-
-          <button className="finish-exercise">Finish Workout</button>
+        <button className="finish-exercise">Finish Workout</button>
         <button
           className="back-to-home"
           onClick={BackToHome}
