@@ -32,29 +32,29 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({
     const data = await fetchCurrentPlan(token);
 
     if (data.logout) {
-        logout();
-        navigate("/login");
+      logout();
+      navigate("/login");
     }
 
     const transformedExercises: Exercise2[] = data.workoutPlan.map((exercise: any) => {
-        const setsArray = Array.from({ length: exercise.sets }, () => ({
-            weight: null,
-            reps: null,
-        }));
+      const setsArray = Array.from({ length: exercise.sets }, () => ({
+        weight: null,
+        reps: null,
+      }));
 
-        return {
-            name: exercise.name,
-            type: exercise.type,
-            sets: setsArray,
-        };
+      return {
+        name: exercise.name,
+        type: exercise.type,
+        sets: setsArray,
+      };
     });
 
-     console.log(transformedExercises);
-     setCurrentWorkoutExercises(transformedExercises);
+    console.log(transformedExercises);
+    setCurrentWorkoutExercises(transformedExercises);
   }
 
   useEffect(() => {
-     handleDataFetch();
+    handleDataFetch();
   }, []);
 
   // Function to handle updating exercise sets

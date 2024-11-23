@@ -1,18 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { fetchCurrentPlan } from "../utils/exercise-utils";
 import Header from "./WorkOutPlan/Header";
 import "./HomePage.css";
 
 const HomePage: React.FC = () => {
+
     const navigate = useNavigate();
+    const { user, isGuest, logout, isLoggedIn } = useAuth();
+    const [hasCurrentWorkout, setHasCurrentWorkout] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const data = await fetchCurrentPlan(token);
+                if (data && data.workoutPlan && data.workoutPlan.length > 0) {
+                    setHasCurrentWorkout(true);
+                } else {
+                    setHasCurrentWorkout(false);
+                }
+            } else {
+                setHasCurrentWorkout(false);
+            }
+        };
+
+        if (isLoggedIn) {
+            fetchData();
+        } else {
+            setHasCurrentWorkout(false);
+        }
+    }, [isLoggedIn]);
+
+    function handleCurrentWorkout() {
+        if (hasCurrentWorkout) {
+            navigate("/current-workout");
+        } else {
+            alert("No active workout found!");
+        }
+    }
 
     function handleStartTemplate() {
         navigate("/select-duration");
-    }
-
-    function handleCurrentWorkout() {
-        navigate("/current-workout");
     }
 
     function handleViewHistory() {
@@ -28,8 +58,6 @@ const HomePage: React.FC = () => {
         navigate("/login");
     }
 
-    const { user, isGuest, logout } = useAuth();
-
     return (
         <div className="home-page">
             <Header />
@@ -40,7 +68,7 @@ const HomePage: React.FC = () => {
                     New Plan
                 </button>
 
-                <button className="current-workout-button" onClick={handleCurrentWorkout}>
+                <button className="current-workout-button" onClick={handleCurrentWorkout} disabled={!hasCurrentWorkout}>
                     Current Workout
                 </button>
 
