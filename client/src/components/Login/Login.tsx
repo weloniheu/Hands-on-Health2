@@ -14,6 +14,11 @@ function Login() {
 
     async function handleLogin(event: any) {
         event.preventDefault();
+
+        if (!email || !password) {
+            setError("Please fill all fields");
+        }
+
         try {
             const data = await login(email, password);
 
@@ -40,7 +45,7 @@ function Login() {
     return (
         <div className="login">
             <Header />
-            <h1>Login</h1>
+            <h1 data-testid="loginHeader">Login</h1>
             <form onSubmit={handleLogin}>
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 <div className="form-group">
@@ -59,7 +64,7 @@ function Login() {
                 <div className="form-group">
                     <p onClick={() => navigate("/register")} className="register-button">Register for account</p>
                 </div>
-                <div className="form-group submit"><button type="submit">Login</button></div>
+                <div className="form-group submit"><button type="submit" data-testid="loginButton">Login</button></div>
                 <div className="form-group guest">
                     <p onClick={handleGuestLogin} className="guest-login">Continue as guest</p>
                 </div>
