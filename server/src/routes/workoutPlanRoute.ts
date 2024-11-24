@@ -10,7 +10,7 @@ router.get("/", authenticate, (req: Request, res: Response) => {
     getCurrentWorkoutPlan(req, res);
 });
 
-// Get all workout plans
+// Get all workout plans: history
 router.get("/all", authenticate, (req: Request, res: Response) => {
     getAllWorkoutPlans(req, res);
 })
