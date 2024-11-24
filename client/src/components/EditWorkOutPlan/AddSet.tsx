@@ -19,7 +19,7 @@ const AddSet: React.FC<AddSetProps> = ({ exercise, onAddSet }) => {
         onAddSet(updatedExercise);
     };
 
-    return <button onClick={handleAddSet} className="control-button">Add Set</button>;
+    return <button onClick={handleAddSet} className="button--control">Add Set</button>;
 };
 
 export default AddSet;
