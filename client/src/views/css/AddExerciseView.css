@@ -1,4 +1,4 @@
-.header-container {
+.header-container-addExercise {
   display: flex;
   justify-content: center;
   /* Center the header */
@@ -23,9 +23,9 @@
   right: 20px;
   /* Move it a little from the right */
   padding: 5px 15px;
-  background-color: lightgray;
+  background-color: #007bff;
   /* Set background to grey */
-  color: black;
+  color: white;
   /* Text color */
   font-weight: bold;
   border: none;
@@ -35,8 +35,8 @@
 }
 
 .back-button:hover {
-  background-color: darkgrey;
-  /* Change for hover effect */
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .exercise-box {
@@ -174,7 +174,7 @@
 
 /* Modal button styling */
 .modal-button-AET {
-  background-color: grey;
+  background-color: #007bff;
   /* Grey background for buttons */
   color: white;
   /* White text */
@@ -191,8 +191,8 @@
 }
 
 .modal-button-AET:hover {
-  background-color: darkgrey;
-  /* Darker grey on hover */
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .search-add-container {
@@ -217,8 +217,8 @@
 }
 
 .new-button:hover {
-  background-color: darkgrey;
-  /* Change for hover effect */
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .input-fields-AddExInfo label {

@@ -14,7 +14,7 @@ export const EditAddExercise: React.FC<EditAddExerciseProps> = ({ onBack, naviga
   return (
     <div>
         < Header/>
-      <div className="header-container">
+      <div className="header-container-addExercise">
         <h1 className="header-title">Add Exercise</h1>
         <button
           className="back-button"
