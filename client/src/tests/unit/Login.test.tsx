@@ -41,7 +41,7 @@ describe("Login Component", () => {
 
     test("Should correctly show page when rendered", () => {
         expect(screen.getByTestId("loginHeader")).toBeInTheDocument();
-        expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
+        expect(screen.getByPlaceholderText(/email/i)).toBeInTheDocument();
         expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
         expect(screen.getByText(/register for account/i)).toBeInTheDocument();
         expect(screen.getByTestId("loginButton")).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe("Login Component", () => {
     test("Should show the correct error message when user is not found", async () => {
         (login as jest.Mock).mockResolvedValueOnce({ result: false, message: "User not found" });
 
-        fireEvent.change(screen.getByPlaceholderText(/username/i), { target: { value: "testUser" } });
+        fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: "testUser" } });
         fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: "testPass" } });
         fireEvent.click(screen.getByTestId("loginButton"));
 
@@ -61,7 +61,7 @@ describe("Login Component", () => {
     test("Should show the correct error message when password is incorrect", async () => {
         (login as jest.Mock).mockResolvedValueOnce({ result: false, message: "Incorrect Password" });
 
-        fireEvent.change(screen.getByPlaceholderText(/username/i), { target: { value: "testUser" } });
+        fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: "testUser" } });
         fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: "testPass" } });
         fireEvent.click(screen.getByTestId("loginButton"));
 
@@ -77,7 +77,7 @@ describe("Login Component", () => {
     test("Should throw error when server fails to login", async () => {
         (login as jest.Mock).mockRejectedValueOnce(new Error("Server error"));
 
-        fireEvent.change(screen.getByPlaceholderText(/username/i), { target: { value: "testUser" } });
+        fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: "testUser" } });
         fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: "testPass" } });
         fireEvent.click(screen.getByTestId("loginButton"));
 
@@ -87,7 +87,7 @@ describe("Login Component", () => {
     test("Should successfully login and navigate to home page when button clicked and authenticated", async () => {
         (login as jest.Mock).mockResolvedValueOnce({ result: true, token: "mockToken" });
 
-        fireEvent.change(screen.getByPlaceholderText(/username/i), { target: { value: "testUser" } });
+        fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: "testUser" } });
         fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: "testPass" } });
         fireEvent.click(screen.getByTestId("loginButton"));
 
