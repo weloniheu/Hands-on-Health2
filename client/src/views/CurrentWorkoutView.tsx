@@ -4,7 +4,7 @@ import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan } from "../utils/exercise-utils";
+import { fetchCurrentPlan, finishCurrentWorkout } from "../utils/exercise-utils";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/WorkOutPlan/Header";
@@ -27,37 +27,30 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         currentWorkoutExercises.map((exercise) => exercise.name)
     );
 
-  console.log(currentWorkoutExercises);
+    console.log(currentWorkoutExercises);
 
-  // Get the current workout plan information from backend
-  async function handleDataFetch() {
-    const data = await fetchCurrentPlan(token);
+    // Get the current workout plan information from backend
+    async function handleDataFetch() {
+        const data = await fetchCurrentPlan(token);
 
         if (data.logout) {
             logout();
             navigate("/login");
         }
 
-        const transformedExercises: Exercise2[] = data.workoutPlan.map((exercise: any) => {
-            const setsArray = Array.from({ length: exercise.sets }, () => ({
-                weight: null,
-                reps: null,
-            }));
+        if (data.notActive) {
+            navigate("/home");
+        }
 
-            return {
-                name: exercise.name,
-                type: exercise.type,
-                sets: setsArray,
-            };
-        });
+        console.log(data.workoutPlan);
+        setCurrentWorkoutExercises(data.workoutPlan);
+    }
 
-    console.log(transformedExercises);
-    setCurrentWorkoutExercises(transformedExercises);
-  }
-
-  useEffect(() => {
-    handleDataFetch();
-  }, []);
+    useEffect(() => {
+        if (token) {
+            handleDataFetch();
+        }
+    }, [token]);
 
     // Update exercise sets
     const handleUpdateExercise = (updatedExercise: Exercise2) => {
@@ -80,6 +73,16 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         setSelectedExercises(updatedSelectedExercises);
     };
 
+    // Finish Workout
+    async function handleFinishWorkout() {
+        const data = await finishCurrentWorkout(token);
+        if (data.logout) {
+            logout();
+            navigate("/login");
+        }
+        navigate("/home");
+    }
+
     // Navigation functions
     const navigateHome = () => navigate("/");
     const navigateToDemo = (exerciseName: string) => navigate(`/workout-demo/${exerciseName}`);
@@ -91,14 +94,12 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                 <button className="button--action-home" onClick={navigateHome}>
                     Home
                 </button>
-                <button className="button--action-finish" onClick={navigateHome}>
+                <button className="button--action-finish" onClick={handleFinishWorkout}>
                     Finish Workout
                 </button>
             </div>
             <div className="container--header-action">
                 <h1 className="text--header-title">Current Workout</h1>
-
-
             </div>
             <div className="container--exercise-list">
                 {currentWorkoutExercises.map((exercise, index) => (
@@ -119,16 +120,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </h2>
                             <div className="container--controls">
                                 <AddSet exercise={exercise} onAddSet={handleUpdateExercise} />
-                                <button
-                                    className="button--control"
-                                    onClick={() => navigateToDemo(exercise.name)}
-                                >
+                                <button className="button--control" onClick={() => navigateToDemo(exercise.name)}>
                                     Demo
                                 </button>
-                                <button
-                                    className="button--control"
-                                    onClick={() => handleDeleteExercise(exercise.name)}
-                                >
+                                <button className="button--control" onClick={() => handleDeleteExercise(exercise.name)}>
                                     Delete
                                 </button>
                             </div>
@@ -139,17 +134,9 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                                 {exercise.sets.map((set, setIndex) => (
                                     <div key={setIndex} className="item--set">
                                         <label>Weight:</label>
-                                        <input
-                                            type="number"
-                                            defaultValue={set.weight}
-                                            className="input--set"
-                                        />
+                                        <input type="number" defaultValue={set.weight} className="input--set" />
                                         <label>Reps:</label>
-                                        <input
-                                            type="number"
-                                            defaultValue={set.reps}
-                                            className="input--set"
-                                        />
+                                        <input type="number" defaultValue={set.reps} className="input--set" />
                                         <DeleteSet
                                             exercise={exercise}
                                             setIndex={setIndex}
@@ -160,10 +147,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </div>
                             <div className="container--notes">
                                 <label>Notes:</label>
-                                <textarea
-                                    className="input--notes"
-                                    placeholder="Add any notes here..."
-                                />
+                                <textarea className="input--notes" placeholder="Add any notes here..." />
                             </div>
                         </div>
                     </div>

@@ -49,6 +49,10 @@ export async function fetchCurrentPlan(token: string | null) {
             return { logout: true };
         }
 
+        if (response.status == 204) {
+            return { notActive: true };
+        }
+
         if (!response.ok) {
             throw new Error("Failed to fetch current plan");
         }
@@ -58,6 +62,28 @@ export async function fetchCurrentPlan(token: string | null) {
         return jsonResponse;
     } catch (error) {
         console.error("Error in fetchCurrentPlan", error);
+        throw error;
+    }
+}
+
+export async function finishCurrentWorkout(token: string | null) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/workout-plan/deactivate`, {
+            method: "PATCH",
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to finish workout");
+        }
+
+        return { logout: false };
+    } catch (error) {
+        console.log("Error in finishCurrentWorkout", error);
         throw error;
     }
 }
