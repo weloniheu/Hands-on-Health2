@@ -1,17 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../contexts/AppContext";
-import { defaultAvaliableExercises } from "../../constants/Initial_consts";
-import DeleteExercise from "./DeleteExerciseType";
+import { fetchExercises } from "../../utils/exercise-utils";
 import { Exercise2 } from "../../types/types";
 import ExerciseModal from "./AddExerciseModal";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface ExerciseListProps {
   navigateToCurrentWorkout: () => void;
 }
 
-const ExerciseList: React.FC<ExerciseListProps> = ({
-  navigateToCurrentWorkout,
-}) => {
+const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout }) => {
   const {
     AvailableExercises,
     SearchedExercises,
@@ -21,21 +20,37 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     addExerciseToCurrentWorkout,
   } = useContext(AppContext);
 
-  const [selectedExercise, setSelectedExercise] = useState<Exercise2 | null>(
-    null
-  );
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
 
-  if (AvailableExercises.length === 0) {
-    setAvailableExercises(defaultAvaliableExercises);
-  }
+  const [selectedExercise, setSelectedExercise] = useState<Exercise2 | null>(null);
 
-  if (!noSearchResult && SearchedExercises.length === 0) {
-    setSearchedExercises(AvailableExercises);
+  async function handleExercisesFetch(){
+    const exercises = await fetchExercises(token);
+
+    if (exercises.logout) {
+      logout();
+      navigate("/login");
+    }
+
+    if (exercises.notActive) {
+      navigate("/home");
+    }
+
+    setAvailableExercises(exercises);
   }
 
   useEffect(() => {
-    setSearchedExercises(AvailableExercises);
-  }, [AvailableExercises]);
+    if (token) {
+        handleExercisesFetch();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (!noSearchResult && SearchedExercises.length === 0) {
+      setSearchedExercises(AvailableExercises);
+    }
+  }, [AvailableExercises, noSearchResult, SearchedExercises.length, setSearchedExercises]);
 
   const handleExerciseClick = (exercise: Exercise2) => {
     setSelectedExercise(exercise);
@@ -68,10 +83,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
   return (
     <ul className="list-availableExercises">
       {SearchedExercises.map((Exercise) => (
-        <div
-          className="exercise-box"
-          key={Exercise.name}
-        >
+        <div className="exercise-box" key={Exercise.name}>
           <h2>{Exercise.name}</h2>
           <div className="add-exercise-button-box">
             <button
@@ -80,8 +92,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
             >
               Add
             </button>
-            {/*for now we don't want users to delete the basic exercise in the list*/}
-            {/*<DeleteExercise Exercise={Exercise} />*/}
           </div>
         </div>
       ))}

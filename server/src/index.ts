@@ -12,6 +12,7 @@ app.use(express.json());
 app.use("/workout-template", workoutTemplateRoute);
 app.use("/workout-plan", workoutPlanRoute);
 app.use("/auth", authRoutes);
+app.use("/exercises", workoutPlanRoute)
 
 app.get("/test", (req, res) => {
 	res.send("Test route working!");

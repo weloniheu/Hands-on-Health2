@@ -1,19 +1,28 @@
 import { FormEvent, useContext, useState } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { Exercise2 } from "../../types/types";
+import { useAuth } from "../../contexts/AuthContext";
+import { addExerciseToDatabase } from "../../utils/exercise-utils";
 
 const AddExerciseType = () => {
   const { AvailableExercises, setAvailableExercises } = useContext(AppContext);
   const [newTypeWindowEnable, setNewTypeWindowEnable] = useState(false);
 
+  const { token } = useAuth()
+
   const newTypeWindowSwitch = (OnOff: boolean) => {
     setNewTypeWindowEnable(OnOff);
   };
 
-  const handleAddNewExerciseType = (event: FormEvent<HTMLFormElement>) => {
+  const handleAddNewExerciseType = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const exerciseName = event.currentTarget.addExerciseName.value;
     const category = event.currentTarget.addExerciseCategory.value;
+
+    if (!exerciseName || !category) {
+      alert("Both Exercise Name and Category are required!");
+      return;
+    }
 
     const newExercise: Exercise2 = {
       name: exerciseName,
@@ -21,8 +30,18 @@ const AddExerciseType = () => {
       sets: [], // Empty sets; these will be added via the modal
     };
 
-    setAvailableExercises([...AvailableExercises, newExercise]);
-    newTypeWindowSwitch(false);
+    console.log("Adding new exercise:", { name: exerciseName, type: category });
+
+    try {
+      const result = await addExerciseToDatabase(token, exerciseName, category);
+      if (result.success) {
+        setAvailableExercises([...AvailableExercises, { name: exerciseName, type: category, sets: [] }]);
+      } 
+    } catch (error) {
+      console.error("Failed to add exercise:", error);
+    } finally {
+      newTypeWindowSwitch(false)
+    }
   };
 
   return (

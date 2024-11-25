@@ -4,8 +4,8 @@ import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan, finishCurrentWorkout } from "../utils/exercise-utils";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { fetchCurrentPlan, finishCurrentWorkout, saveCurrentWorkout } from "../utils/exercise-utils";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/WorkOutPlan/Header";
 
@@ -80,8 +80,20 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             logout();
             navigate("/login");
         }
+        // Save the workout plan to the backend
+        await saveCurrentWorkout(token, currentWorkoutExercises);
+
         navigate("/home");
     }
+
+    useEffect(() => {
+        return () => {
+            // Call the function to save the workout if needed
+            if (currentWorkoutExercises.length > 0) {
+                saveCurrentWorkout(token, currentWorkoutExercises);
+            }
+        };
+    }, [currentWorkoutExercises, token]);
 
     // Navigation functions
     const navigateHome = () => navigate("/");

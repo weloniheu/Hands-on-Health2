@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { finishCurrentWorkout, getAllWorkoutPlans, getCurrentWorkoutPlan } from "../controllers/workoutPlanController";
+import { finishCurrentWorkout, getAllExercises, getAllWorkoutPlans, getCurrentWorkoutPlan, addNewExercise, saveCurrentWorkout } from "../controllers/workoutPlanController";
 import { authenticate } from "../controllers/authController";
 import client from "../config/db";
 import { ObjectId } from "mongodb"; // update
@@ -43,6 +43,21 @@ router.delete("/:id", authenticate, async (req: Request, res: Response) => {
     }
 });
 */
+
+// Get all exercises
+router.get("/exercises", authenticate, (req: Request, res: Response) => {
+    getAllExercises(req, res);
+});
+
+// Add a new exercise
+router.post("/exercises", authenticate, (req: Request, res: Response) => {
+    addNewExercise(req, res);
+});
+
+// Save current workout
+router.post("/current-workout/save", authenticate, (req: Request, res: Response) => {
+    saveCurrentWorkout(req, res);
+});
 
 
 export default router;
