@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import { useAuth } from "../../contexts/AuthContext";
 import "./css/review.css";
+import Header from "./Header";
 
 function Review() {
     const { duration, focus, intensity } = useWorkout();
@@ -36,6 +37,7 @@ function Review() {
 
     return (
         <div>
+            < Header/>
             <div className="navbar-space"></div> {/* Placeholder space for future navbar */}
             <div className="top-nav-buttons">
                 <button className="previous-button" onClick={handlePrevious}>Previous</button>
@@ -56,8 +58,10 @@ function Review() {
                             <strong>{planName}</strong>
                         )}
                     </p>
-                    <p className="plan-detail">Duration: {duration}</p>
-                    <p className="plan-detail">Focus: {focus}</p>
+                    <p className="plan-detail">Duration: {duration} min</p>
+                    <p className="plan-detail">
+                        Focus: {focus.length > 1 ? focus.join(", ") : focus[0] || "None"}
+                    </p>
                     <p className="plan-detail">Intensity: {intensity}</p>
                 </div>
                 <div className="edit-buttons">
