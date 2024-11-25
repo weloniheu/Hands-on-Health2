@@ -3,6 +3,7 @@ import { createWorkoutTemplate } from "../../utils/exercise-utils";
 import { useNavigate } from "react-router-dom";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import { useAuth } from "../../contexts/AuthContext";
+import "./css/review.css";
 
 function Review() {
     const { duration, focus, intensity } = useWorkout();
@@ -37,8 +38,8 @@ function Review() {
         <div>
             <div className="navbar-space"></div> {/* Placeholder space for future navbar */}
             <div className="top-nav-buttons">
-                <button onClick={handlePrevious}>Previous</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <button className="previous-button" onClick={handlePrevious}>Previous</button>
+                <button className="cancel-button" onClick={handleCancel}>Cancel</button>
             </div>
             <div className="workout-plan-container">
                 <div className="plan-detail-container">
