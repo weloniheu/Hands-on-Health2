@@ -73,7 +73,7 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: numb
         case "High":
             setsPerExercise = 4;
             break;
-        case "Extreme":
+        case "EXTREME":
             setsPerExercise = 5;
             break;
         default:
