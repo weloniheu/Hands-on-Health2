@@ -6,20 +6,18 @@ import Header from "./WorkOutPlan/Header";
 import "./HomePage.css";
 
 const HomePage: React.FC = () => {
-
     const navigate = useNavigate();
-    const { user, isGuest, logout, isLoggedIn } = useAuth();
+    const { token, user, isGuest, logout, isLoggedIn } = useAuth();
     const [hasCurrentWorkout, setHasCurrentWorkout] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem("authToken");
             if (token) {
                 const data = await fetchCurrentPlan(token);
-                if (data && data.workoutPlan && data.workoutPlan.length > 0) {
-                    setHasCurrentWorkout(true);
-                } else {
+                if (data.notActive) {
                     setHasCurrentWorkout(false);
+                } else {
+                    setHasCurrentWorkout(true);
                 }
             } else {
                 setHasCurrentWorkout(false);

@@ -23,7 +23,7 @@ function App() {
         if (storedToken) {
             setToken(storedToken);
         }
-    }, [setToken]);
+    }, []);
 
     return (
         <AppProvider>
