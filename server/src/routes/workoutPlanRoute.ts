@@ -1,9 +1,6 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import {
-  getAllWorkoutPlans,
-  getCurrentWorkoutPlan
-} from "../controllers/workoutPlanController";
+import { finishCurrentWorkout, getAllWorkoutPlans, getCurrentWorkoutPlan } from "../controllers/workoutPlanController";
 import { authenticate } from "../controllers/authController";
 import client from "../config/db";
 import { ObjectId } from "mongodb"; // update
@@ -16,7 +13,11 @@ router.get("/", authenticate, (req: Request, res: Response) => {
     getCurrentWorkoutPlan(req, res);
 });
 
-// Get all workout plans
+router.patch("/deactivate", authenticate, (req: Request, res: Response) => {
+    finishCurrentWorkout(req, res);
+});
+
+// Get all workout plans: history
 router.get("/all", authenticate, (req: Request, res: Response) => {
     getAllWorkoutPlans(req, res);
 });
@@ -42,5 +43,6 @@ router.delete("/:id", authenticate, async (req: Request, res: Response) => {
     }
 });
 */
+
 
 export default router;
