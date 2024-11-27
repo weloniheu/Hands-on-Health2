@@ -98,6 +98,33 @@ export async function saveCurrentPlan(token: string | null, workoutPlan: Exercis
     }
 }
 
+//Function to get all workout plans for history. Method: GET
+export async function fetchAllPlans(token: string | null) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/workout-plan/all`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch current plan");
+        }
+
+        if (response.status == 204) {
+            return;
+        }
+
+        const jsonResponse = await response.json();
+        return jsonResponse;
+    } catch (error) {
+        console.error("Error in fetchAllPlans", error);
+        throw error;
+    }
+}
+
 // Function to finish the current workout. Method: PATCH
 export async function finishCurrentWorkout(token: string | null) {
     try {
