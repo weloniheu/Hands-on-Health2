@@ -70,6 +70,9 @@ export async function getAllWorkoutPlans(req: Request, res: Response) {
             .find({ userId: userId })
             .sort({ createdAt: -1 })
             .toArray();
+        if (!allPlans) {
+            return res.status(204).send();
+        }
 
         res.status(200).json(allPlans);
     } catch (error) {

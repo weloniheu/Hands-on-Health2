@@ -8,6 +8,7 @@ const mockExercise: Exercise2 = {
     name: "Push Ups",
     type: "Strength",
     sets: [{ reps: null, weight: null }],
+    notes: "",
 };
 
 describe("AddSet Component", () => {

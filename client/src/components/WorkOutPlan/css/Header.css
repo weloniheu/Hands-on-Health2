@@ -14,6 +14,7 @@
     padding-left: 20px;
     font-size: 24px;
     font-weight: normal;
+    cursor: pointer;
 }
 
 .header-logo img {
@@ -22,4 +23,25 @@
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px; /* Adjust based on your logo size */
+    right: 10px;
+    background-color: #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: #0056b3;
+    border-radius: 8px;
 }

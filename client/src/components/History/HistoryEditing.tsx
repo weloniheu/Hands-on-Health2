@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../WorkOutPlan/Header";
 import "../WorkOutPlan/css/WorkoutTemplateOptions.css";
 import "./HistoryEditing.css";
+import { useAuth } from "../../contexts/AuthContext";
+import { fetchAllPlans } from "../../utils/exercise-utils";
+import { Exercise2 } from "../../types/types";
 
 interface WorkoutPlan {
     _id: string;
@@ -11,30 +14,30 @@ interface WorkoutPlan {
     exerciseTypes: string[];
     intensity: string;
     createdAt: string;
+    workoutPlan: Exercise2[]
 }
 
 const HistoryEditing: React.FC = () => {
     const navigate = useNavigate();
-    // dummy data
-    const [workoutHistory, setWorkoutHistory] = useState<WorkoutPlan[]>([
-        {
-            _id: "1",
-            planName: "Morning Yoga",
-            duration: 30,
-            exerciseTypes: ["Yoga"],
-            intensity: "Low",
-            createdAt: "2024-11-23T14:20:02.000Z",
-        },
-        {
-            _id: "2",
-            planName: "Evening Cardio",
-            duration: 45,
-            exerciseTypes: ["Cardio"],
-            intensity: "High",
-            createdAt: "2024-11-22T18:15:30.000Z",
-        },
-    ]);
+    const { token, logout } = useAuth();
+    const [workoutHistory, setWorkoutHistory] = useState<WorkoutPlan[]>([]);
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        async function getPlans() {
+            const workoutPlans = await fetchAllPlans(token);
+            if (workoutPlans.logout) {
+                logout();
+                navigate("/login");
+            }
+
+            setWorkoutHistory(workoutPlans);
+        }
+
+        if (token) {
+            getPlans();
+        }
+    }, [token]);
 
     const handleDeleteWorkout = (planId: string) => {
         setWorkoutHistory((prev) => prev.filter((plan) => plan._id !== planId));
@@ -51,7 +54,7 @@ const HistoryEditing: React.FC = () => {
             </div>
 
             <div className="history-container">
-                {workoutHistory.length > 0 ? (
+                {workoutHistory && workoutHistory.length > 0 ? (
                     workoutHistory.map((plan) => (
                         <div key={plan._id} className="workout-item">
                             <div className="workout-info">
@@ -62,10 +65,7 @@ const HistoryEditing: React.FC = () => {
                                 </p>
                             </div>
                             {isEditing && (
-                                <button
-                                    className="delete-button"
-                                    onClick={() => handleDeleteWorkout(plan._id)}
-                                >
+                                <button className="delete-button" onClick={() => handleDeleteWorkout(plan._id)}>
                                     Delete
                                 </button>
                             )}
@@ -78,17 +78,11 @@ const HistoryEditing: React.FC = () => {
 
             <div className="navigation-buttons">
                 {isEditing ? (
-                    <button
-                        className="next-button"
-                        onClick={() => setIsEditing(false)}
-                    >
+                    <button className="next-button" onClick={() => setIsEditing(false)}>
                         Finish Editing
                     </button>
                 ) : (
-                    <button
-                        className="next-button"
-                        onClick={() => setIsEditing(true)}
-                    >
+                    <button className="next-button" onClick={() => setIsEditing(true)}>
                         Edit History
                     </button>
                 )}

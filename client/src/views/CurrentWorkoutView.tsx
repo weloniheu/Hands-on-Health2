@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
 import { Exercise2 } from "../types/types";
-import {fetchCurrentPlan, finishCurrentWorkout, getDefaultExercises, saveCurrentPlan} from "../utils/exercise-utils";
+import { fetchCurrentPlan, finishCurrentWorkout, getCustomExercises, getDefaultExercises, saveCurrentPlan } from "../utils/exercise-utils";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/WorkOutPlan/Header";
@@ -32,33 +32,54 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
     // New state container for the current exercise types
     const [currentExerciseTypes, setCurrentExerciseTypes] = useState<string[]>([]);
 
-    // Get the default exercises from the backend and filter only those in the current workout types
+    console.log(currentWorkoutExercises);
+
+    // Get the default and custom exercises from the backend
     useEffect(() => {
         async function getData() {
-            try {
-                // Fetch all available exercises from the backend
-                const data = await getDefaultExercises();
-
-                // Use the currentExerciseTypes container to filter exercises
-                const filteredExercises = data.filter((exercise: Exercise2) =>
-                    currentExerciseTypes.includes(exercise.type)
-                );
-
-                // Update the state with the filtered exercises, but only if it's the initial load
-                if (isInitialLoad) {
-                    setAvailableExercises(filteredExercises.length > 0 ? filteredExercises : data);
-                    setIsInitialLoad(false); // Set to false to prevent future fetching
-                }
-            } catch (error) {
-                console.error("Error fetching exercises:", error);
+            const [defaultExercises, customExercises] = await Promise.all([
+                getDefaultExercises(),
+                getCustomExercises(token),
+            ]);
+            if (customExercises) {
+                setAvailableExercises([...defaultExercises, ...customExercises]);
+            } else {
+                setAvailableExercises(defaultExercises);
             }
         }
 
-        // Fetch available exercises only if we have exercise types
-        if (currentExerciseTypes.length > 0 && isInitialLoad) {
+        if (token) {
             getData();
         }
-    }, [currentExerciseTypes, setAvailableExercises]);
+    }, [token]);
+
+    // Get the default exercises from the backend and filter only those in the current workout types
+    // useEffect(() => {
+    //     async function getData() {
+    //         try {
+    //             // Fetch all available exercises from the backend
+    //             const data = await getDefaultExercises();
+
+    //             // Use the currentExerciseTypes container to filter exercises
+    //             const filteredExercises = data.filter((exercise: Exercise2) =>
+    //                 currentExerciseTypes.includes(exercise.type)
+    //             );
+
+    //             // Update the state with the filtered exercises, but only if it's the initial load
+    //             if (isInitialLoad) {
+    //                 setAvailableExercises(filteredExercises.length > 0 ? filteredExercises : data);
+    //                 setIsInitialLoad(false); // Set to false to prevent future fetching
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching exercises:", error);
+    //         }
+    //     }
+
+    //     // Fetch available exercises only if we have exercise types
+    //     if (currentExerciseTypes.length > 0 && isInitialLoad) {
+    //         getData();
+    //     }
+    // }, [currentExerciseTypes, setAvailableExercises]);
 
     // Get the current workout plan information from the backend and set the exercise types
     useEffect(() => {
@@ -79,7 +100,9 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                 setCurrentWorkoutExercises(data.workoutPlan);
 
                 // Extract unique exercise types from the current workout and set them
-                const types = Array.from(new Set(data.workoutPlan.map((exercise: Exercise2) => exercise.type))) as string[];
+                const types = Array.from(
+                    new Set(data.workoutPlan.map((exercise: Exercise2) => exercise.type))
+                ) as string[];
                 setCurrentExerciseTypes(types);
             } catch (error) {
                 console.error("Error fetching current workout plan:", error);
@@ -137,17 +160,17 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         const updatedExercises = currentWorkoutExercises.map((exercise) =>
             exercise.name === exerciseName
                 ? {
-                    ...exercise,
-                    sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: value } : set)),
-                }
+                      ...exercise,
+                      sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: value } : set)),
+                  }
                 : exercise
         );
         setCurrentWorkoutExercises(updatedExercises);
     };
 
     // Delete an exercise
-    const handleDeleteExercise = (exerciseName: string) => {
-        deleteExerciseFromCurrentWorkout(exerciseName);
+    const handleDeleteExercise = (index: number) => {
+        setCurrentWorkoutExercises(currentWorkoutExercises.filter((exercise, i) => index !== i));
     };
 
     // Update selected exercises
@@ -208,7 +231,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                                 <button className="button--control" onClick={() => navigateToDemo(exercise.name)}>
                                     Demo
                                 </button>
-                                <button className="button--control" onClick={() => handleDeleteExercise(exercise.name)}>
+                                <button className="button--control" onClick={() => handleDeleteExercise(index)}>
                                     Delete
                                 </button>
                             </div>
@@ -256,7 +279,12 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </div>
                             <div className="container--notes">
                                 <label>Notes:</label>
-                                <textarea className="input--notes" placeholder="Add any notes here..." />
+                                <textarea
+                                    className="input--notes"
+                                    placeholder="Add any notes here..."
+                                    value={exercise.notes}
+                                    onChange={(e) => (exercise.notes = e.target.value)}
+                                />
                             </div>
                         </div>
                     </div>
