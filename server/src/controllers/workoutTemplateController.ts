@@ -10,30 +10,6 @@ import { ObjectId } from "mongodb";
 //     intensity: "normal"
 // }
 
-// Exported function to get exercises by types
-export async function getExercisesByTypes(req: Request, res: Response) {
-    const { types } = req.query;
-
-    if (!types) {
-        return res.status(400).json({ error: "Missing 'types' query parameter" });
-    }
-
-    // Split the types into an array
-    const exerciseTypes = Array.isArray(types) ? types : (types as string).split(",");
-
-    try {
-        const exercises = await client
-            .db("main")
-            .collection("exercises")
-            .find({ type: { $in: exerciseTypes } })
-            .toArray();
-
-        res.status(200).json(exercises);
-    } catch (error) {
-        console.error("Error fetching exercises:", error);
-        res.status(500).json({ message: "Error fetching exercises", error });
-    }
-}
 
 // Create workout template by getting from database and generating the workout
 export async function createWorkoutTemplate(req: Request, res: Response) {
