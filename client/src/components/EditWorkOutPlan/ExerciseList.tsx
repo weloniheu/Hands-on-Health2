@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { defaultAvaliableExercises } from "../../constants/Initial_consts";
 import DeleteExercise from "./DeleteExerciseType";
-import { Exercise2 } from "../../types/types";
+import { Exercise, Exercise2 } from "../../types/types";
 import ExerciseModal from "./AddExerciseModal";
 import { saveCurrentPlan } from "../../utils/exercise-utils";
 import { useAuth } from "../../contexts/AuthContext";
@@ -25,23 +25,12 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout })
 
     const [selectedExercise, setSelectedExercise] = useState<Exercise2 | null>(null);
 
-    if (AvailableExercises.length === 0) {
-        setAvailableExercises(defaultAvaliableExercises);
-    }
-
-    if (!noSearchResult && SearchedExercises.length === 0) {
-        setSearchedExercises(AvailableExercises);
-    }
-
-    useEffect(() => {
-        setSearchedExercises(AvailableExercises);
-    }, [AvailableExercises]);
-
-    const handleExerciseClick = async (exercise: Exercise2) => {
+    const handleExerciseClick = async (exercise: Exercise) => {
         const newExerciseToAdd: Exercise2 = {
             name: exercise.name,
             type: exercise.type,
             sets: [{ weight: null, reps: null }],
+            notes: "",
         };
 
         const newWorkoutExercises = [...currentWorkoutExercises, newExerciseToAdd];
@@ -81,7 +70,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout })
 
     return (
         <ul className="list-availableExercises">
-            {SearchedExercises.map((Exercise) => (
+            {AvailableExercises.map((Exercise) => (
                 <div className="exercise-box" key={Exercise.name}>
                     <h2>{Exercise.name}</h2>
                     <div className="add-exercise-button-box">

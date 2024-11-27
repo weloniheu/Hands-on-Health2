@@ -30,6 +30,7 @@ export async function register(req: Request, res: Response) {
             firstName: firstName,
             lastName: lastName,
             activeWorkout: false,
+            customExercises: [],
         };
         const insertResult = await client.db("main").collection("users").insertOne(user);
 

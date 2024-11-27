@@ -4,7 +4,13 @@ import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan, finishCurrentWorkout, getDefaultExercises, saveCurrentPlan } from "../utils/exercise-utils";
+import {
+    fetchCurrentPlan,
+    finishCurrentWorkout,
+    getCustomExercises,
+    getDefaultExercises,
+    saveCurrentPlan,
+} from "../utils/exercise-utils";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/WorkOutPlan/Header";
@@ -32,15 +38,24 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
 
     console.log(currentWorkoutExercises);
 
-    // Get the default exercises from the backend
+    // Get the default and custom exercises from the backend
     useEffect(() => {
         async function getData() {
-            const data = await getDefaultExercises();
-            setAvailableExercises(data);
+            const [defaultExercises, customExercises] = await Promise.all([
+                getDefaultExercises(),
+                getCustomExercises(token),
+            ]);
+            if (customExercises) {
+                setAvailableExercises([...defaultExercises, ...customExercises]);
+            } else {
+                setAvailableExercises(defaultExercises);
+            }
         }
 
-        getData();
-    }, []);
+        if (token) {
+            getData();
+        }
+    }, [token]);
 
     // Get the current workout plan information from backend
     useEffect(() => {
@@ -118,8 +133,8 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
     };
 
     // Delete an exercise
-    const handleDeleteExercise = (exerciseName: string) => {
-        deleteExerciseFromCurrentWorkout(exerciseName);
+    const handleDeleteExercise = (index: number) => {
+        setCurrentWorkoutExercises(currentWorkoutExercises.filter((exercise, i) => index !== i));
     };
 
     // Update selected exercises
@@ -180,7 +195,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                                 <button className="button--control" onClick={() => navigateToDemo(exercise.name)}>
                                     Demo
                                 </button>
-                                <button className="button--control" onClick={() => handleDeleteExercise(exercise.name)}>
+                                <button className="button--control" onClick={() => handleDeleteExercise(index)}>
                                     Delete
                                 </button>
                             </div>
@@ -228,7 +243,12 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </div>
                             <div className="container--notes">
                                 <label>Notes:</label>
-                                <textarea className="input--notes" placeholder="Add any notes here..." />
+                                <textarea
+                                    className="input--notes"
+                                    placeholder="Add any notes here..."
+                                    value={exercise.notes}
+                                    onChange={(e) => (exercise.notes = e.target.value)}
+                                />
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../constants/Initial_consts";
-import { Exercise2 } from "../types/types";
+import { Exercise, Exercise2 } from "../types/types";
 
 // Function to create workout template in the backend. Method: POST
 export async function createWorkoutTemplate(
@@ -134,6 +134,65 @@ export async function getDefaultExercises() {
         return jsonResponse;
     } catch (error) {
         console.log("Error in getDefaultExercises", error);
+        throw error;
+    }
+}
+
+// Function to get custom exercises. Method: GET
+export async function getCustomExercises(token: string | null) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/exercise/custom`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (response.status == 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to get custom exercises");
+        }
+
+        if (response.status == 204) {
+            return;
+        }
+
+        const jsonResponse = await response.json();
+        return jsonResponse;
+    } catch (error) {
+        console.log("Error in getCustomeExercises", error);
+        throw error;
+    }
+}
+
+// Function to set custome exercise. Method: POST
+export async function setCustomExercise(token: string | null, customExercise: Exercise) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/exercise/custom`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                customExercise,
+            }),
+        });
+
+        if (response.status == 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to set custom exercise");
+        }
+
+        return { logout: false };
+    } catch (error) {
+        console.log("Error in setCustomExercise", error);
         throw error;
     }
 }
