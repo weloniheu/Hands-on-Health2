@@ -192,6 +192,7 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: numb
                     reps: null,
                 }));
                 delete selectedExercise.priority; // Remove the priority field
+                delete selectedExercise._id;
                 workoutPlan.push(selectedExercise);
             }
         }
