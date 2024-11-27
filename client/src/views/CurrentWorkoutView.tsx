@@ -2,7 +2,13 @@ import { useContext, useEffect, useRef, useState } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
 import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan, finishCurrentWorkout, getCustomExercises, getDefaultExercises, saveCurrentPlan } from "../utils/exercise-utils";
+import {
+    fetchCurrentPlan,
+    finishCurrentWorkout,
+    getCustomExercises,
+    getDefaultExercises,
+    saveCurrentPlan,
+} from "../utils/exercise-utils";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/WorkOutPlan/Header";
@@ -23,6 +29,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         deleteExerciseFromCurrentWorkout,
         AvailableExercises,
         setAvailableExercises,
+        setSearchedExercises,
     } = useContext(AppContext);
 
     const isFirstRender = useRef(true);
@@ -43,8 +50,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             ]);
             if (customExercises) {
                 setAvailableExercises([...defaultExercises, ...customExercises]);
+                setSearchedExercises([...defaultExercises, ...customExercises]);
             } else {
                 setAvailableExercises(defaultExercises);
+                setSearchedExercises(defaultExercises);
             }
         }
 
