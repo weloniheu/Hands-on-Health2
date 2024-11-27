@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../constants/Initial_consts";
+import { Exercise2 } from "../types/types";
 
 // Function to create workout template in the backend. Method: POST
 export async function createWorkoutTemplate(
@@ -43,7 +44,9 @@ export async function createWorkoutTemplate(
 // Function to get the current workout plan from the backend. Method: GET
 export async function fetchCurrentPlan(token: string | null) {
     try {
-        const response = await fetch(`${API_BASE_URL}/workout-plan`, { headers: { Authorization: `Bearer ${token}` } });
+        const response = await fetch(`${API_BASE_URL}/workout-plan`, {
+            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        });
 
         if (response.status === 401) {
             return { logout: true };
@@ -66,6 +69,36 @@ export async function fetchCurrentPlan(token: string | null) {
     }
 }
 
+// Function to save the current workout plan to the backend. Method: PATCH
+export async function saveCurrentPlan(token: string | null, workoutPlan: Exercise2[]) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/workout-plan`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                workoutPlan,
+            }),
+        });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to save current plan");
+        }
+
+        return { logout: false };
+    } catch (error) {
+        console.error("Error in saveCurrentPlan", error);
+        throw error;
+    }
+}
+
+// Function to finish the current workout. Method: PATCH
 export async function finishCurrentWorkout(token: string | null) {
     try {
         const response = await fetch(`${API_BASE_URL}/workout-plan/deactivate`, {
