@@ -27,6 +27,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
 
     const isFirstRender = useRef(true);
     const currentWorkoutExercisesRef = useRef(currentWorkoutExercises);
+    const [isInitialLoad, setIsInitialLoad] = useState(true); // Track if this is the initial load
 
     // New state container for the current exercise types
     const [currentExerciseTypes, setCurrentExerciseTypes] = useState<string[]>([]);
@@ -43,15 +44,18 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                     currentExerciseTypes.includes(exercise.type)
                 );
 
-                // Update the state with the filtered exercises
-                setAvailableExercises(filteredExercises);
+                // Update the state with the filtered exercises, but only if it's the initial load
+                if (isInitialLoad) {
+                    setAvailableExercises(filteredExercises.length > 0 ? filteredExercises : data);
+                    setIsInitialLoad(false); // Set to false to prevent future fetching
+                }
             } catch (error) {
                 console.error("Error fetching exercises:", error);
             }
         }
 
         // Fetch available exercises only if we have exercise types
-        if (currentExerciseTypes.length > 0) {
+        if (currentExerciseTypes.length > 0 && isInitialLoad) {
             getData();
         }
     }, [currentExerciseTypes, setAvailableExercises]);
