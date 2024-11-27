@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan, finishCurrentWorkout } from "../utils/exercise-utils";
+import { fetchCurrentPlan, finishCurrentWorkout, getDefaultExercises, saveCurrentPlan } from "../utils/exercise-utils";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/WorkOutPlan/Header";
@@ -21,7 +21,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         setCurrentWorkoutExercises,
         deleteExerciseFromCurrentWorkout,
         AvailableExercises,
+        setAvailableExercises,
     } = useContext(AppContext);
+    const isFirstRender = useRef(true);
+    const currentWorkoutExercisesRef = useRef(currentWorkoutExercises);
 
     const [selectedExercises, setSelectedExercises] = useState(
         currentWorkoutExercises.map((exercise) => exercise.name)
@@ -29,33 +32,87 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
 
     console.log(currentWorkoutExercises);
 
-    // Get the current workout plan information from backend
-    async function handleDataFetch() {
-        const data = await fetchCurrentPlan(token);
-
-        if (data.logout) {
-            logout();
-            navigate("/login");
-        }
-
-        if (data.notActive) {
-            navigate("/home");
-        }
-
-        console.log(data.workoutPlan);
-        setCurrentWorkoutExercises(data.workoutPlan);
-    }
-
+    // Get the default exercises from the backend
     useEffect(() => {
+        async function getData() {
+            const data = await getDefaultExercises();
+            setAvailableExercises(data);
+        }
+
+        getData();
+    }, []);
+
+    // Get the current workout plan information from backend
+    useEffect(() => {
+        async function handleDataFetch() {
+            const data = await fetchCurrentPlan(token);
+
+            if (data.logout) {
+                logout();
+                navigate("/login");
+            }
+
+            if (data.notActive) {
+                navigate("/home");
+            }
+
+            console.log(data.workoutPlan);
+            setCurrentWorkoutExercises(data.workoutPlan);
+        }
+
         if (token) {
             handleDataFetch();
         }
     }, [token]);
 
+    // Update the reference so that it can be used on unmount
+    useEffect(() => {
+        currentWorkoutExercisesRef.current = currentWorkoutExercises;
+    }, [currentWorkoutExercises]);
+
+    // Send the current workout plan information to backend when currentWorkoutExercises updates or on demount
+    const handleDataSave = async () => {
+        const data = await saveCurrentPlan(token, currentWorkoutExercisesRef.current);
+        if (data.logout) {
+            logout();
+            navigate("/login");
+        }
+    };
+    // Before component unmounts
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        } else {
+            return () => {
+                handleDataSave();
+            };
+        }
+    }, []);
+    // Before page reloads
+    useEffect(() => {
+        window.addEventListener("beforeunload", handleDataSave);
+        return () => {
+            window.removeEventListener("beforeunload", handleDataSave);
+        };
+    });
+
     // Update exercise sets
     const handleUpdateExercise = (updatedExercise: Exercise2) => {
         const updatedExercises = currentWorkoutExercises.map((exercise) =>
             exercise.name === updatedExercise.name ? updatedExercise : exercise
+        );
+        setCurrentWorkoutExercises(updatedExercises);
+    };
+
+    // Update the sets values: weight and reps
+    const handleSetChange = (exerciseName: string, setIndex: number, field: "weight" | "reps", value: number) => {
+        const updatedExercises = currentWorkoutExercises.map((exercise) =>
+            exercise.name === exerciseName
+                ? {
+                      ...exercise,
+                      sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: value } : set)),
+                  }
+                : exercise
         );
         setCurrentWorkoutExercises(updatedExercises);
     };
@@ -67,10 +124,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
 
     // Update selected exercises
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-        const selectedName = event.target.value;
-        const updatedSelectedExercises = [...selectedExercises];
-        updatedSelectedExercises[index] = selectedName;
-        setSelectedExercises(updatedSelectedExercises);
+        const currExercise = event.target.value;
+        const updatedExercises = [...currentWorkoutExercises];
+        updatedExercises[index] = { ...updatedExercises[index], name: currExercise };
+        setCurrentWorkoutExercises(updatedExercises);
     };
 
     // Finish Workout
@@ -108,7 +165,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             <h2 className="text--exercise-name">
                                 <select
                                     className="select--dropdown"
-                                    value={selectedExercises[index] || ""}
+                                    value={exercise.name}
                                     onChange={(event) => handleSelectChange(event, index)}
                                 >
                                     {AvailableExercises.map((exerciseOption, idx) => (
@@ -134,9 +191,33 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                                 {exercise.sets.map((set, setIndex) => (
                                     <div key={setIndex} className="item--set">
                                         <label>Weight:</label>
-                                        <input type="number" defaultValue={set.weight} className="input--set" />
+                                        <input
+                                            type="number"
+                                            value={set.weight || ""}
+                                            className="input--set"
+                                            onChange={(e) =>
+                                                handleSetChange(
+                                                    exercise.name,
+                                                    setIndex,
+                                                    "weight",
+                                                    parseInt(e.target.value)
+                                                )
+                                            }
+                                        />
                                         <label>Reps:</label>
-                                        <input type="number" defaultValue={set.reps} className="input--set" />
+                                        <input
+                                            type="number"
+                                            value={set.reps || ""}
+                                            className="input--set"
+                                            onChange={(e) =>
+                                                handleSetChange(
+                                                    exercise.name,
+                                                    setIndex,
+                                                    "reps",
+                                                    parseInt(e.target.value)
+                                                )
+                                            }
+                                        />
                                         <DeleteSet
                                             exercise={exercise}
                                             setIndex={setIndex}
