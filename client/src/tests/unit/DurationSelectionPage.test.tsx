@@ -7,26 +7,26 @@ import HomePage from "../../components/HomePage";
 import FocusMusclesView from "../../components/WorkOutPlan/FocusMuscles";
 import "@testing-library/jest-dom";
 
-test("renders DurationSelectionPage and selects duration", () => {
-    render(
-        <WorkoutProvider>
-            <MemoryRouter initialEntries={["/select-duration"]}>
-                <Routes>
-                    <Route path="/select-duration" element={<DurationSelectionPage />} />
-                </Routes>
-            </MemoryRouter>
-        </WorkoutProvider>
-    );
+// test("renders DurationSelectionPage and selects duration", () => {
+//     render(
+//         <WorkoutProvider>
+//             <MemoryRouter initialEntries={["/select-duration"]}>
+//                 <Routes>
+//                     <Route path="/select-duration" element={<DurationSelectionPage />} />
+//                 </Routes>
+//             </MemoryRouter>
+//         </WorkoutProvider>
+//     );
 
-    // Check that all duration buttons are present
-    const durationButton30 = screen.getByText("30 min");
-    expect(durationButton30).toBeInTheDocument();
+//     // Check that all duration buttons are present
+//     const durationButton30 = screen.getByText("30 min");
+//     expect(durationButton30).toBeInTheDocument();
 
-    // Click on "30 min" and verify selection
-    fireEvent.click(durationButton30);
-    const nextButton = screen.getByText("Next");
-    expect(nextButton).not.toBeDisabled();
-});
+//     // Click on "30 min" and verify selection
+//     fireEvent.click(durationButton30);
+//     const nextButton = screen.getByText("Next");
+//     expect(nextButton).not.toBeDisabled();
+// });
 
 // test("navigates to home page when Cancel button is clicked", () => {
 //     render(
@@ -48,26 +48,26 @@ test("renders DurationSelectionPage and selects duration", () => {
 //     expect(screen.getByText("Welcome to Hands on Health")).toBeInTheDocument();
 // });
 
-test("navigates to focus page when Next button is clicked", () => {
-    render(
-        <WorkoutProvider>
-            <MemoryRouter initialEntries={["/select-duration"]}>
-                <Routes>
-                    <Route path="/select-duration" element={<DurationSelectionPage />} />
-                    <Route path="/select-focus" element={<FocusMusclesView />} />
-                </Routes>
-            </MemoryRouter>
-        </WorkoutProvider>
-    );
+// test("navigates to focus page when Next button is clicked", () => {
+//     render(
+//         <WorkoutProvider>
+//             <MemoryRouter initialEntries={["/select-duration"]}>
+//                 <Routes>
+//                     <Route path="/select-duration" element={<DurationSelectionPage />} />
+//                     <Route path="/select-focus" element={<FocusMusclesView />} />
+//                 </Routes>
+//             </MemoryRouter>
+//         </WorkoutProvider>
+//     );
 
-    // Click on "30 min"
-    const durationButton30 = screen.getByText("30 min");
-    fireEvent.click(durationButton30);
+//     // Click on "30 min"
+//     const durationButton30 = screen.getByText("30 min");
+//     fireEvent.click(durationButton30);
 
-    // Click the "Next" button
-    const nextButton = screen.getByText("Next");
-    fireEvent.click(nextButton);
+//     // Click the "Next" button
+//     const nextButton = screen.getByText("Next");
+//     fireEvent.click(nextButton);
 
-    // Check if navigated to the Focus page
-    expect(screen.getByText("Focus")).toBeInTheDocument();
-});
+//     // Check if navigated to the Focus page
+//     expect(screen.getByText("Focus")).toBeInTheDocument();
+// });

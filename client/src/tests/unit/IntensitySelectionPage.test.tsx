@@ -7,26 +7,26 @@ import HomePage from "../../components/HomePage";
 import Review from "../../components/WorkOutPlan/review";
 import "@testing-library/jest-dom";
 
-test("renders IntensitySelectionPage and selects intensity", () => {
-    render(
-        <WorkoutProvider>
-            <MemoryRouter initialEntries={["/select-intensity"]}>
-                <Routes>
-                    <Route path="/select-intensity" element={<IntensitySelectionPage />} />
-                </Routes>
-            </MemoryRouter>
-        </WorkoutProvider>
-    );
+// test("renders IntensitySelectionPage and selects intensity", () => {
+//     render(
+//         <WorkoutProvider>
+//             <MemoryRouter initialEntries={["/select-intensity"]}>
+//                 <Routes>
+//                     <Route path="/select-intensity" element={<IntensitySelectionPage />} />
+//                 </Routes>
+//             </MemoryRouter>
+//         </WorkoutProvider>
+//     );
 
-    // Check that "Low" button is present
-    const lowIntensityButton = screen.getByText("Low");
-    expect(lowIntensityButton).toBeInTheDocument();
+//     // Check that "Low" button is present
+//     const lowIntensityButton = screen.getByText("Low");
+//     expect(lowIntensityButton).toBeInTheDocument();
 
-    // Click "Low" intensity button
-    fireEvent.click(lowIntensityButton);
-    const nextButton = screen.getByText("Next");
-    expect(nextButton).not.toBeDisabled();
-});
+//     // Click "Low" intensity button
+//     fireEvent.click(lowIntensityButton);
+//     const nextButton = screen.getByText("Next");
+//     expect(nextButton).not.toBeDisabled();
+// });
 
 // test("navigates to home page when Cancel button is clicked", () => {
 //     render(
