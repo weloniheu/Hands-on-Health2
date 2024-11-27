@@ -120,3 +120,20 @@ export async function finishCurrentWorkout(token: string | null) {
         throw error;
     }
 }
+
+// Function to get the default exercises. Method: GET
+export async function getDefaultExercises() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/exercise`, { method: "GET" });
+
+        if (!response.ok) {
+            throw new Error("Failed to get exercises");
+        }
+
+        const jsonResponse = await response.json();
+        return jsonResponse;
+    } catch (error) {
+        console.log("Error in getDefaultExercises", error);
+        throw error;
+    }
+}

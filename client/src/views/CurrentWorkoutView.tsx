@@ -4,7 +4,7 @@ import { AppContext } from "../contexts/AppContext";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
 import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan, finishCurrentWorkout, saveCurrentPlan } from "../utils/exercise-utils";
+import { fetchCurrentPlan, finishCurrentWorkout, getDefaultExercises, saveCurrentPlan } from "../utils/exercise-utils";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Header from "../components/WorkOutPlan/Header";
@@ -21,6 +21,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         setCurrentWorkoutExercises,
         deleteExerciseFromCurrentWorkout,
         AvailableExercises,
+        setAvailableExercises,
     } = useContext(AppContext);
     const isFirstRender = useRef(true);
     const currentWorkoutExercisesRef = useRef(currentWorkoutExercises);
@@ -30,6 +31,16 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
     );
 
     console.log(currentWorkoutExercises);
+
+    // Get the default exercises from the backend
+    useEffect(() => {
+        async function getData() {
+            const data = await getDefaultExercises();
+            setAvailableExercises(data);
+        }
+
+        getData();
+    }, []);
 
     // Get the current workout plan information from backend
     useEffect(() => {
@@ -113,10 +124,10 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
 
     // Update selected exercises
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-        const selectedName = event.target.value;
-        const updatedSelectedExercises = [...selectedExercises];
-        updatedSelectedExercises[index] = selectedName;
-        setSelectedExercises(updatedSelectedExercises);
+        const currExercise = event.target.value;
+        const updatedExercises = [...currentWorkoutExercises];
+        updatedExercises[index] = { ...updatedExercises[index], name: currExercise };
+        setCurrentWorkoutExercises(updatedExercises);
     };
 
     // Finish Workout
@@ -154,7 +165,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             <h2 className="text--exercise-name">
                                 <select
                                     className="select--dropdown"
-                                    value={selectedExercises[index] || ""}
+                                    value={exercise.name}
                                     onChange={(event) => handleSelectChange(event, index)}
                                 >
                                     {AvailableExercises.map((exerciseOption, idx) => (
