@@ -70,7 +70,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ navigateToCurrentWorkout })
 
     return (
         <ul className="list-availableExercises">
-            {AvailableExercises.map((Exercise) => (
+            {SearchedExercises.map((Exercise) => (
                 <div className="exercise-box" key={Exercise.name}>
                     <h2>{Exercise.name}</h2>
                     <div className="add-exercise-button-box">
