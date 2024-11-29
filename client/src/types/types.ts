@@ -9,6 +9,7 @@ export type Exercise2 = {
   name: string;
   type: string;
   sets: Set[];
+  notes: string;
 };
 
 export type Set = {
