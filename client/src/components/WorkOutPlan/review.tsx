@@ -8,9 +8,9 @@ import Header from "./Header";
 
 function Review() {
     const { duration, focus, intensity } = useWorkout();
-    const { token, logout } = useAuth();
+    const { token, user, logout } = useAuth();
     const navigate = useNavigate();
-    const [planName, setPlanName] = useState("Workout 1");
+    const [planName, setPlanName] = useState(`${user?.split(" ")[0]}'s ${focus.join(", ")} Workout`);
     const [editPlanName, setEditPlanName] = useState(false);
 
     async function handleStartWorkout() {

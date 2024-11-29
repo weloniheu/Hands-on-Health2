@@ -17,6 +17,11 @@ function CurrentWorkout_AddExercise_Combined() {
         // setCurrentWorkoutExercises((prevExercises) => [...prevExercises, exercise]);
     };
 
+    // Scroll to the top whenever the view changes
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [view]);
+
     const showAddExerciseView = () => setView("addExercise");
     const showCurrentWorkoutView = () => setView("currentWorkout");
 
