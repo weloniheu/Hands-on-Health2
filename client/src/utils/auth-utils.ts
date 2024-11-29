@@ -39,7 +39,7 @@ export async function login(email: String, password: String) {
             return { result: false, message: jsonResponse.message };
         }
         console.log("Login successful:", jsonResponse);
-        return { result: true, token: jsonResponse.token };
+        return { result: true, token: jsonResponse.token, firstName: jsonResponse.firstName };
     } catch (error) {
         console.error("Error in login", error);
         throw error;
