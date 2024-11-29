@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { finishCurrentWorkout, getAllWorkoutPlans, getCurrentWorkoutPlan, saveCurrentWorkoutPlan } from "../controllers/workoutPlanController";
+import { addNewExercise, finishCurrentWorkout, getAllExercises, getAllWorkoutPlans, getCurrentWorkoutPlan, saveCurrentWorkout, saveCurrentWorkoutPlan } from "../controllers/workoutPlanController";
 import { authenticate } from "../controllers/authController";
 import client from "../config/db";
 import { ObjectId } from "mongodb"; // update
