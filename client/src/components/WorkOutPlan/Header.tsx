@@ -14,6 +14,7 @@ const Header = () => {
     };
 
     const isLoginPage = pathname === "/login";
+    const isRegisterPage = pathname === "/register";
 
     return (
         <div className="header">
@@ -21,7 +22,7 @@ const Header = () => {
                 Hands on Health
             </div>
             <div className="header-controls">
-                {!isLoginPage && (
+                {!isLoginPage && !isRegisterPage && (
                     <button className="logout-button-header" onClick={handleLogout}>
                         {isGuest ? "Exit Guest" : "Log Out"}
                     </button>
