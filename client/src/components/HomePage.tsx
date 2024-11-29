@@ -7,7 +7,7 @@ import "./HomePage.css";
 
 const HomePage: React.FC = () => {
     const navigate = useNavigate();
-    const { token, user, isGuest, logout, isLoggedIn } = useAuth();
+    const { token, user, isGuest, isLoggedIn } = useAuth();
     const [hasCurrentWorkout, setHasCurrentWorkout] = useState(false);
 
     useEffect(() => {
@@ -51,11 +51,6 @@ const HomePage: React.FC = () => {
         navigate("/quick-workouts");
     }
 
-    function handleLogout() {
-        logout();
-        navigate("/login");
-    }
-
     return (
         <div className="home-page">
             <Header />
@@ -79,9 +74,6 @@ const HomePage: React.FC = () => {
                     <button onClick={handleViewHistory}>History</button>
                 </div>
             )}
-            <button className="logout-button" onClick={handleLogout}>
-                {isGuest ? "Exit Guest" : "Log Out"}
-            </button>
         </div>
     );
 };
