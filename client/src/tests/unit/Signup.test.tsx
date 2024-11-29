@@ -12,7 +12,7 @@ jest.mock("../../utils/auth-utils", () => ({
 // Mock navigate and Location
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
-    useLocation: jest.fn(() => ({ pathname: '/register' })),
+    useLocation: () => ({ pathname: '/register' })
 }));
 
 // Mock auth context
