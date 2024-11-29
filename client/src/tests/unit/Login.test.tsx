@@ -6,7 +6,8 @@ import { login } from "../../utils/auth-utils";
 
 // Mock login function
 jest.mock("../../utils/auth-utils", () => ({
-    login: jest.fn(),
+    login: jest.fn(() => Promise.resolve({ result: true, token: "mockToken", firstName: "MockFirstName" })),
+    register: jest.fn(),
 }));
 
 // Mock navigate and Location
@@ -25,16 +26,19 @@ describe("Login Component", () => {
     const mockSetIsGuest = jest.fn();
     const mockSetUser = jest.fn();
     const mockNavigate = jest.fn();
+    const mockSetFirstName = jest.fn();
 
     beforeEach(() => {
         mockSetToken.mockReset();
         mockSetIsGuest.mockReset();
         mockSetUser.mockReset();
+        mockSetFirstName.mockReset();
         mockNavigate.mockReset();
         (useAuth as jest.Mock).mockReturnValue({
             setToken: mockSetToken,
             setIsGuest: mockSetIsGuest,
             setUser: mockSetUser,
+            setFirstName: mockSetFirstName,
         });
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
         render(<Login />);
@@ -95,6 +99,7 @@ describe("Login Component", () => {
         await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/home"));
         expect(mockSetToken).toHaveBeenCalledWith("mockToken");
         expect(mockSetUser).toHaveBeenCalledWith("testUser");
+        expect(mockSetFirstName).toHaveBeenCalledWith("MockFirstName");
     });
 
     test("Should navigate to signup page when button is clicked", async () => {
