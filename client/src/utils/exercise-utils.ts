@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../constants/Initial_consts";
-import { Exercise2 } from "../types/types";
+import { Exercise, Exercise2 } from "../types/types";
 
 // Function to create workout template in the backend. Method: POST
 export async function createWorkoutTemplate(
@@ -44,7 +44,9 @@ export async function createWorkoutTemplate(
 // Function to get the current workout plan from the backend. Method: GET
 export async function fetchCurrentPlan(token: string | null) {
     try {
-        const response = await fetch(`${API_BASE_URL}/workout-plan`, { headers: { Authorization: `Bearer ${token}` } });
+        const response = await fetch(`${API_BASE_URL}/workout-plan`, {
+            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        });
 
         if (response.status === 401) {
             return { logout: true };
@@ -67,6 +69,63 @@ export async function fetchCurrentPlan(token: string | null) {
     }
 }
 
+// Function to save the current workout plan to the backend. Method: PATCH
+export async function saveCurrentPlan(token: string | null, workoutPlan: Exercise2[]) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/workout-plan`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                workoutPlan,
+            }),
+        });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to save current plan");
+        }
+
+        return { logout: false };
+    } catch (error) {
+        console.error("Error in saveCurrentPlan", error);
+        throw error;
+    }
+}
+
+//Function to get all workout plans for history. Method: GET
+export async function fetchAllPlans(token: string | null) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/workout-plan/all`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch current plan");
+        }
+
+        if (response.status == 204) {
+            return;
+        }
+
+        const jsonResponse = await response.json();
+        return jsonResponse;
+    } catch (error) {
+        console.error("Error in fetchAllPlans", error);
+        throw error;
+    }
+}
+
+// Function to finish the current workout. Method: PATCH
 export async function finishCurrentWorkout(token: string | null) {
     try {
         const response = await fetch(`${API_BASE_URL}/workout-plan/deactivate`, {
@@ -89,73 +148,78 @@ export async function finishCurrentWorkout(token: string | null) {
     }
 }
 
-// Function to fetch all exercises from the backend
-export async function fetchExercises(token: string | null) {
+// Function to get the default exercises. Method: GET
+export async function getDefaultExercises() {
     try {
-        const response = await fetch(`${API_BASE_URL}/workout-plan/exercises`, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response.status === 401) {
-            return { logout: true };
-        }
+        const response = await fetch(`${API_BASE_URL}/exercise`, { method: "GET" });
 
         if (!response.ok) {
-            throw new Error("Failed to fetch exercises");
+            throw new Error("Failed to get exercises");
         }
-        
-        const exercises = await response.json();
-        return exercises;
+
+        const jsonResponse = await response.json();
+        return jsonResponse;
     } catch (error) {
-        console.error("Error in fetchExercises", error);
+        console.log("Error in getDefaultExercises", error);
         throw error;
     }
 }
 
-// Function to add new exercise to database
-export async function addExerciseToDatabase(token: string | null, name: string, type: string) {
+// Function to get custom exercises. Method: GET
+export async function getCustomExercises(token: string | null) {
     try {
-        const response = await fetch(`${API_BASE_URL}/workout-plan/exercises`, {
-            method: "POST",
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-            body: JSON.stringify({ name, type }),
-        });
-
-        if (response.status === 401) {
-            return { logout: true };
-        }
-
-        if (!response.ok) {
-            throw new Error("Failed to add exercise");
-        }
-
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        console.error("Error adding exercise to the database", error);
-        throw error;
-    }
-}
-
-// Function to save current workout
-export async function saveCurrentWorkout(token: string | null, exercises: Exercise2[]) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/workout-plan/save`, {
-            method: "POST",
+        const response = await fetch(`${API_BASE_URL}/exercise/custom`, {
+            method: "GET",
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ exercises }),
         });
 
-        if (!response.ok) {
-            throw new Error("Failed to save current workout");
+        if (response.status == 401) {
+            return { logout: true };
         }
 
-        const result = await response.json();
-        console.log("Current workout saved successfully", result);
+        if (!response.ok) {
+            throw new Error("Failed to get custom exercises");
+        }
+
+        if (response.status == 204) {
+            return;
+        }
+
+        const jsonResponse = await response.json();
+        return jsonResponse;
     } catch (error) {
-        console.error("Error saving current workout", error);
+        console.log("Error in getCustomeExercises", error);
+        throw error;
+    }
+}
+
+// Function to set custome exercise. Method: POST
+export async function setCustomExercise(token: string | null, customExercise: Exercise) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/exercise/custom`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                customExercise,
+            }),
+        });
+
+        if (response.status == 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to set custom exercise");
+        }
+
+        return { logout: false };
+    } catch (error) {
+        console.log("Error in setCustomExercise", error);
+        throw error;
     }
 }

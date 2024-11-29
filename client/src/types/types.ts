@@ -1,8 +1,6 @@
 export type Exercise = {
   name: string;
   type: string;
-  sets: number;
-  reps: number;
 };
 
 export type Exercise2 = {
@@ -14,8 +12,8 @@ export type Exercise2 = {
 
 export type Set = {
   // sets: number
-  reps: number;
-  weight: number;
+  reps: number | null;
+  weight: number | null;
 };
 
 export type FocusMuscles = {

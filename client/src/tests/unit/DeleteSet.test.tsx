@@ -11,6 +11,7 @@ const mockExercise: Exercise2 = {
         { reps: 10, weight: 0 },
         { reps: 12, weight: 0 },
     ],
+    notes: "",
 };
 
 describe("DeleteSet Component", () => {

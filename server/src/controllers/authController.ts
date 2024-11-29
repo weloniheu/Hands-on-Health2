@@ -30,6 +30,7 @@ export async function register(req: Request, res: Response) {
             firstName: firstName,
             lastName: lastName,
             activeWorkout: false,
+            customExercises: [],
         };
         const insertResult = await client.db("main").collection("users").insertOne(user);
 
@@ -66,7 +67,7 @@ export async function login(req: Request, res: Response) {
         const token = jwt.sign({ userId: user._id, firstName: user.firstName, lastName: user.lastName }, key, {
             expiresIn: "1 hour",
         });
-        res.status(200).json({ message: "Login successful", token });
+        res.status(200).json({ message: "Login successful", token, firstName: user.firstName });
     } catch (error) {
         res.status(400).json({ message: "Failed to login", error });
     }

@@ -10,6 +10,7 @@ import { ObjectId } from "mongodb";
 //     intensity: "normal"
 // }
 
+
 // Create workout template by getting from database and generating the workout
 export async function createWorkoutTemplate(req: Request, res: Response) {
     const { planName, exerciseTypes, duration, intensity } = req.body as {
@@ -73,7 +74,7 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: numb
         case "High":
             setsPerExercise = 4;
             break;
-        case "Extreme":
+        case "EXTREME":
             setsPerExercise = 5;
             break;
         default:
@@ -166,7 +167,9 @@ function generateWorkout(exercises: any[], numberOfTypes: number, duration: numb
                     weight: null,
                     reps: null,
                 }));
+                selectedExercise.notes = "";
                 delete selectedExercise.priority; // Remove the priority field
+                delete selectedExercise._id;
                 workoutPlan.push(selectedExercise);
             }
         }
