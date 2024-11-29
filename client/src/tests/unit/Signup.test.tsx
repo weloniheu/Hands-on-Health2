@@ -9,9 +9,10 @@ jest.mock("../../utils/auth-utils", () => ({
     register: jest.fn(),
 }));
 
-// Mock navigate
+// Mock navigate and Location
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
+    useLocation: () => ({ pathname: '/mock-path' })
 }));
 
 // Mock auth context
