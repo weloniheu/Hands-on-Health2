@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FocusMuscles } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import "./css/WorkoutTemplateOptions.css";
@@ -16,9 +16,23 @@ const initialFocusMuscles: FocusMuscles[] = [
 
 const FocusMusclesView: React.FC = () => {
     // Now accepts duration as a prop
-    const { duration, setFocus } = useWorkout();
+    const { duration, setFocus, cancel } = useWorkout();
     const [muscleGroups, setMuscleGroups] = useState<FocusMuscles[]>(initialFocusMuscles);
     const navigate = useNavigate();
+
+    // Redirect to home page on reload
+    useEffect(() => {
+        const isReloaded = sessionStorage.getItem("reloadFocus");
+        if (isReloaded) {
+            navigate("/");
+        } else {
+            sessionStorage.setItem("reloadFocus", "true");
+        }
+
+        return () => {
+            sessionStorage.removeItem("reloadFocus");
+        };
+    }, [navigate]);
 
     const toggleMuscleGroup = (id: number) => {
         const updatedMuscleGroups = muscleGroups.map((group) => ({
@@ -42,10 +56,11 @@ const FocusMusclesView: React.FC = () => {
     };
 
     function handleCancelButton() {
+        cancel();
         navigate("/");
     }
 
-    const isAnyGroupSelected = muscleGroups.some(group => group.selected);
+    const isAnyGroupSelected = muscleGroups.some((group) => group.selected);
 
     return (
         <div className="focus-muscles-view">
@@ -76,7 +91,7 @@ const FocusMusclesView: React.FC = () => {
                     <button
                         className="next-button"
                         onClick={() => navigate("/select-intensity")}
-                        disabled={!isAnyGroupSelected}  // Disable the button if no groups are selected
+                        disabled={!isAnyGroupSelected} // Disable the button if no groups are selected
                     >
                         Next
                     </button>

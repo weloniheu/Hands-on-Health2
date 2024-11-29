@@ -197,20 +197,8 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             logout();
             navigate("/login");
         }
-        // Save the workout plan to the backend
-        await saveCurrentWorkout(token, currentWorkoutExercises);
-
         navigate("/home");
     }
-
-    useEffect(() => {
-        return () => {
-            // Call the function to save the workout if needed
-            if (currentWorkoutExercises.length > 0) {
-                saveCurrentWorkout(token, currentWorkoutExercises);
-            }
-        };
-    }, [currentWorkoutExercises, token]);
 
     // Navigation functions
     const navigateHome = () => navigate("/");

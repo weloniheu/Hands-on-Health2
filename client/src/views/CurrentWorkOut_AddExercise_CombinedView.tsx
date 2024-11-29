@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Exercise2 } from "../types/types";
 import { EditAddExercise } from "./AddExerciseView";
