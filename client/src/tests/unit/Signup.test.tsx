@@ -6,7 +6,8 @@ import Signup from "../../components/Login/Signup";
 
 // Mock signup function
 jest.mock("../../utils/auth-utils", () => ({
-    register: jest.fn(),
+    login: jest.fn(),
+    register: jest.fn(() => Promise.resolve({ result: true, token: "mockToken" })),
 }));
 
 // Mock navigate and Location
@@ -24,14 +25,17 @@ describe("Signup Component", () => {
     const mockSetToken = jest.fn();
     const mockSetUser = jest.fn();
     const mockNavigate = jest.fn();
+    const mockSetFirstName = jest.fn();
 
     beforeEach(() => {
         mockSetToken.mockReset();
         mockSetUser.mockReset();
+        mockSetFirstName.mockReset();
         mockNavigate.mockReset();
         (useAuth as jest.Mock).mockReturnValue({
             setToken: mockSetToken,
             setUser: mockSetUser,
+            setFirstName: mockSetFirstName,
         });
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
         render(<Signup />);
