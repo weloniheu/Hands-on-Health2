@@ -11,7 +11,7 @@ function Signup() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [error, setError] = useState("");
-    const { setToken, setUser } = useAuth();
+    const { setToken, setUser, setFirstName: setContextFirstName } = useAuth();
     const navigate = useNavigate();
 
     async function handleSignup(event: any) {
@@ -27,7 +27,9 @@ function Signup() {
             if (data.result) {
                 setUser(email);
                 setToken(data.token);
+                setContextFirstName(firstName);
                 localStorage.setItem("authToken", data.token);
+                localStorage.setItem("firstName", firstName);
                 navigate("/home");
             } else {
                 setError(data.message);
