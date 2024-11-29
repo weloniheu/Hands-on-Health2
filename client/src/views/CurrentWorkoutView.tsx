@@ -288,16 +288,17 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </div>
                             <div className="container--notes">
                                 <label>Notes:</label>
-                                <textarea 
-                                    className="input--notes" 
-                                    placeholder="Add any notes here..." 
+                                <textarea
+                                    className="input--notes"
+                                    placeholder="Add any notes here..."
                                     value={exercise.notes || ""}
                                     onChange={(e) => {
                                         const updatedExercises = currentWorkoutExercises.map((ex, i) =>
-                                        i === index ? { ...ex, notes: e.target.value } : ex
-                                        );
+                                            i === index ? { ...ex, notes: e.target.value } : ex
+                                          );
                                         setCurrentWorkoutExercises(updatedExercises);
-                                    }}/>
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
