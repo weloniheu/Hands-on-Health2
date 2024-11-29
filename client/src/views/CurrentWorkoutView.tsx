@@ -197,8 +197,20 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             logout();
             navigate("/login");
         }
+        // Save the workout plan to the backend
+        await saveCurrentWorkout(token, currentWorkoutExercises);
+
         navigate("/home");
     }
+
+    useEffect(() => {
+        return () => {
+            // Call the function to save the workout if needed
+            if (currentWorkoutExercises.length > 0) {
+                saveCurrentWorkout(token, currentWorkoutExercises);
+            }
+        };
+    }, [currentWorkoutExercises, token]);
 
     // Navigation functions
     const navigateHome = () => navigate("/");
@@ -288,12 +300,16 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </div>
                             <div className="container--notes">
                                 <label>Notes:</label>
-                                <textarea
-                                    className="input--notes"
-                                    placeholder="Add any notes here..."
-                                    value={exercise.notes}
-                                    onChange={(e) => (exercise.notes = e.target.value)}
-                                />
+                                <textarea 
+                                    className="input--notes" 
+                                    placeholder="Add any notes here..." 
+                                    value={exercise.notes || ""}
+                                    onChange={(e) => {
+                                        const updatedExercises = currentWorkoutExercises.map((ex, i) =>
+                                        i === index ? { ...ex, notes: e.target.value } : ex
+                                        );
+                                        setCurrentWorkoutExercises(updatedExercises);
+                                    }}/>
                             </div>
                         </div>
                     </div>
