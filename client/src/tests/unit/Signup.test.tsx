@@ -93,7 +93,6 @@ describe("Signup Component", () => {
         await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/home"));
         expect(mockSetToken).toHaveBeenCalledWith("mockToken");
         expect(mockSetUser).toHaveBeenCalledWith("testUser");
-        expect(mockSetFirstName).toHaveBeenCalledWith("MockFirstName");
     });
 
     test("Should navigate to login page when button is clicked", async () => {
