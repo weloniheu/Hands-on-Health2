@@ -17,8 +17,28 @@ const initialFocusMuscles: FocusMuscles[] = [
 const FocusMusclesView: React.FC = () => {
     // Now accepts duration as a prop
     const { duration, setFocus, cancel } = useWorkout();
-    const [muscleGroups, setMuscleGroups] = useState<FocusMuscles[]>(initialFocusMuscles);
     const navigate = useNavigate();
+
+    const [muscleGroups, setMuscleGroups] = useState<FocusMuscles[]>(() => {
+        const savedMuscles = sessionStorage.getItem("selectedMuscles");
+        return savedMuscles ? JSON.parse(savedMuscles) : [...initialFocusMuscles];
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem("selectedMuscles", JSON.stringify(muscleGroups));
+    }, [muscleGroups]);
+
+    useEffect(() => {
+        window.addEventListener("beforeunload", () => {
+            sessionStorage.removeItem("selectedMuscles");
+        });
+
+        return () => {
+            window.removeEventListener("beforeunload", () => {
+                sessionStorage.removeItem("selectedMuscles");
+            });
+        };
+    }, []);
 
     // Redirect to home page on reload
     useEffect(() => {
