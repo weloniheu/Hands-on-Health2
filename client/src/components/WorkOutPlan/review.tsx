@@ -7,7 +7,7 @@ import "./css/review.css";
 import Header from "./Header";
 
 function Review() {
-    const { duration, focus, intensity } = useWorkout();
+    const { duration, focus, intensity, cancel } = useWorkout();
     const { token, user, firstName, logout } = useAuth();
     const navigate = useNavigate();
     const [planName, setPlanName] = useState(`${firstName}'s Workout`);
@@ -29,13 +29,13 @@ function Review() {
 
     async function handleStartWorkout() {
         const data = await createWorkoutTemplate(token, planName, focus, duration, intensity);
-        console.log(data);
 
-        if (data.logout) {
+        if (data && data.logout) {
             logout();
             navigate("/login");
         }
 
+        cancel();
         navigate("/current-workout");
     }
 
