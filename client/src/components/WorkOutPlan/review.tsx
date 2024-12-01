@@ -7,7 +7,7 @@ import "./css/review.css";
 import Header from "./Header";
 
 function Review() {
-    const { duration, focus, intensity } = useWorkout();
+    const { duration, focus, intensity, cancel } = useWorkout();
     const { token, user, firstName, logout } = useAuth();
     const navigate = useNavigate();
     const [planName, setPlanName] = useState(`${firstName}'s Workout`);
@@ -35,6 +35,7 @@ function Review() {
             navigate("/login");
         }
 
+        cancel();
         navigate("/current-workout");
     }
 
