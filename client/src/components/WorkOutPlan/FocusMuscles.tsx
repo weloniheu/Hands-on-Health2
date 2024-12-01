@@ -93,6 +93,7 @@ const FocusMusclesView: React.FC = () => {
                     </button>
                 </div>
                 <h2 className="focus">Focus</h2>
+                <p className="description">(Select one or multiple)</p>
                 <div className="muscle-group-container">
                     {muscleGroups.map((group) => (
                         <button
