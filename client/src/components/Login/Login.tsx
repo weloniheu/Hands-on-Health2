@@ -26,7 +26,10 @@ function Login() {
         try {
             const data = await login(email, password);
 
-            if (data.result) {
+            if (!data) {
+                setError("Login failed. Please try again.");
+            }
+            else if (data.result) {
                 setToken(data.token);
                 setUser(email);
                 setFirstName(data.firstName);

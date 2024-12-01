@@ -34,7 +34,10 @@ function Signup() {
         try {
             const data = await register(email, password, firstName, lastName);
 
-            if (data.result) {
+            if (!data){
+                setError("Signup failed. Please try again.");
+            }
+            else if (data.result) {
                 setUser(email);
                 setToken(data.token);
                 setContextFirstName(firstName);

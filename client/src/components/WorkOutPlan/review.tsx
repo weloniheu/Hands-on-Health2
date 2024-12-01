@@ -29,9 +29,8 @@ function Review() {
 
     async function handleStartWorkout() {
         const data = await createWorkoutTemplate(token, planName, focus, duration, intensity);
-        console.log(data);
 
-        if (data.logout) {
+        if (data && data.logout) {
             logout();
             navigate("/login");
         }
