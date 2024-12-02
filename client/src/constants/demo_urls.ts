@@ -1,31 +1,61 @@
 export const demo_urls = new Map<string, string>();
 
+demo_urls.set("Bench Press", "https://www.youtube.com/embed/SCVCLChPQFY");
 demo_urls.set(
-  "Dumbbell Bench Press",
-  "https://www.youtube.com/embed/XMc1N3o-Qyw?si=xflicxg3w0DHDuHL"
+  "Incline Dumbbell Press",
+  "https://www.youtube.com/embed/8iPEnn-ltC8"
 );
-
+demo_urls.set("Push-Up", "https://www.youtube.com/embed/IODxDxX7oi4");
+demo_urls.set("Chest Fly", "https://www.youtube.com/embed/eozdVDA78K0");
+demo_urls.set("Cable Crossover", "https://www.youtube.com/embed/taI4XduLpTk");
+demo_urls.set("Dumbbell Pullover", "https://www.youtube.com/embed/2z8JmcrW-As");
 demo_urls.set(
-  "Dumbbell Flies",
-  "https://www.youtube.com/embed/-CtonQQI7ec?si=yVbO5bgLHFasV7t_"
+  "Decline Bench Press",
+  "https://www.youtube.com/embed/YQ-7v0sVbKU"
 );
-
 demo_urls.set(
-  "Barbell Bench Press",
-  "https://www.youtube.com/embed/wzq57DB5Ppg?si=lLOlT4BWiuik6Kzv"
+  "Machine Chest Press",
+  "https://www.youtube.com/embed/E0z3g3G9QXA"
 );
-
+demo_urls.set("Pec Deck Machine", "https://www.youtube.com/embed/11gY7pQ7-7A");
+demo_urls.set("Incline Cable Fly", "https://www.youtube.com/embed/8iPEnn-ltC8");
 demo_urls.set(
-  "Bench Dips",
-  "https://www.youtube.com/embed/Pei7QKgavrA?si=HP9axULllQs0vTU2"
+  "Weighted Dip (Chest Focus)",
+  "https://www.youtube.com/embed/2z8JmcrW-As"
 );
-
+demo_urls.set("Landmine Press", "https://www.youtube.com/embed/YQ-7v0sVbKU");
+demo_urls.set("Pull-Up", "https://www.youtube.com/embed/SCVCLChPQFY");
+demo_urls.set("Deadlift", "https://www.youtube.com/embed/8iPEnn-ltC8");
+demo_urls.set("Bent Over Row", "https://www.youtube.com/embed/IODxDxX7oi4");
+demo_urls.set("Lat Pulldown", "https://www.youtube.com/embed/eozdVDA78K0");
+demo_urls.set("Seated Cable Row", "https://www.youtube.com/embed/taI4XduLpTk");
 demo_urls.set(
-  "Cable Pushdown",
-  "https://www.youtube.com/embed/6Fzep104f0s?si=dSpyZQfIfypIuxur"
+  "Single Arm Dumbbell Row",
+  "https://www.youtube.com/embed/2z8JmcrW-As"
 );
-
+demo_urls.set("Back Extension", "https://www.youtube.com/embed/YQ-7v0sVbKU");
+demo_urls.set("Face Pull", "https://www.youtube.com/embed/E0z3g3G9QXA");
+demo_urls.set("T-Bar Row", "https://www.youtube.com/embed/11gY7pQ7-7A");
+demo_urls.set("Wide-Grip Pull-Up", "https://www.youtube.com/embed/8iPEnn-ltC8");
+demo_urls.set("Inverted Row", "https://www.youtube.com/embed/2z8JmcrW-As");
+demo_urls.set("Trap Shrugs", "https://www.youtube.com/embed/YQ-7v0sVbKU");
+demo_urls.set("Squat", "https://www.youtube.com/embed/SCVCLChPQFY");
+demo_urls.set("Lunges", "https://www.youtube.com/embed/8iPEnn-ltC8");
+demo_urls.set("Leg Press", "https://www.youtube.com/embed/IODxDxX7oi4");
+demo_urls.set("Leg Extension", "https://www.youtube.com/embed/eozdVDA78K0");
+demo_urls.set("Leg Curl", "https://www.youtube.com/embed/taI4XduLpTk");
+demo_urls.set("Calf Raise", "https://www.youtube.com/embed/2z8JmcrW-As");
 demo_urls.set(
-  "EZ Bar Curls",
-  "https://www.youtube.com/embed/-gSM-kqNlUw?si=kvC0Lfg_qlP8RFla"
+  "Bulgarian Split Squat",
+  "https://www.youtube.com/embed/YQ-7v0sVbKU"
 );
+demo_urls.set("Hip Thrust", "https://www.youtube.com/embed/E0z3g3G9QXA");
+demo_urls.set("Goblet Squat", "https://www.youtube.com/embed/11gY7pQ7-7A");
+demo_urls.set("Step-Up", "https://www.youtube.com/embed/8iPEnn-ltC8");
+demo_urls.set("Sumo Deadlift", "https://www.youtube.com/embed/2z8JmcrW-As");
+demo_urls.set("Seated Calf Raise", "https://www.youtube.com/embed/YQ-7v0sVbKU");
+demo_urls.set("Bicep Curl", "https://www.youtube.com/embed/SCVCLChPQFY");
+demo_urls.set("Tricep Dip", "https://www.youtube.com/embed/8iPEnn-ltC8");
+demo_urls.set("Hammer Curl", "https://www.youtube.com/embed/IODxDxX7oi4");
+demo_urls.set("Skull Crusher", "https://www.youtube.com/embed/eozdVDA78K0");
+demo_urls.set("Crunch", "https://www.youtube.com/embed/2z8JmcrW-As");
