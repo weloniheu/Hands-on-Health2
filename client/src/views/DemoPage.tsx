@@ -23,9 +23,9 @@ const DemoPlayer = () => {
   return (
     <div>
       <div className="header-container">
-        <h1 className="header-title">Workout Demo</h1>
+        <h1 className="text--header-title">Workout Demo</h1>
         <button
-          className="finish-exercise"
+          className="finish-exercise-demo"
           onClick={GoToCurrWorkoutView}
         >
           Exit Demo

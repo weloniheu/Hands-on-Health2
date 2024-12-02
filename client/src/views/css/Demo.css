@@ -43,3 +43,18 @@
   max-width: 80vw; /* Sets a maximum width */
   max-height: calc(90vw * 9 / 16);
 }
+
+.finish-exercise-demo {
+  position: absolute;
+  right: 20px; /* Positions the button 20px from the right edge */
+  top: 50%; /* Vertically aligns it */
+  transform: translateY(-50%); /* Ensures perfect vertical centering */
+  padding: 10px 20px; /* Button padding */
+  font-size: 1rem; /* Adjust font size */
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Removes default border */
+  border-radius: 5px; /* Adds rounded corners */
+  cursor: pointer; /* Adds a pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
