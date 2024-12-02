@@ -80,6 +80,28 @@ export async function getAllWorkoutPlans(req: Request, res: Response) {
     }
 }
 
+// Delete a workout plan from history
+export async function deleteWorkoutPlan(req: Request, res: Response) {
+    const { id } = req.params;
+    const { userId } = req.body.user as { userId: string };
+
+    try {
+        const result = await client
+            .db("main")
+            .collection("plans")
+            .deleteOne({ _id: new ObjectId(id), userId });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: "Workout plan not found or unauthorized" });
+        }
+
+        res.status(200).json({ success: true, message: "Workout plan deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting workout plan:", error);
+        res.status(500).json({ message: "Error deleting workout plan", error });
+    }
+}
+
 // Get all exercises available to be added to current workout
 export async function getAllExercises(req: Request, res: Response) {
     try {
