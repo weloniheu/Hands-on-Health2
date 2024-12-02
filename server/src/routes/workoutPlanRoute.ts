@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { addNewExercise, finishCurrentWorkout, getAllExercises, getAllWorkoutPlans, getCurrentWorkoutPlan, saveCurrentWorkout, saveCurrentWorkoutPlan } from "../controllers/workoutPlanController";
+import { addNewExercise, deleteWorkoutPlan, finishCurrentWorkout, getAllExercises, getAllWorkoutPlans, getCurrentWorkoutPlan, saveCurrentWorkout, saveCurrentWorkoutPlan } from "../controllers/workoutPlanController";
 import { authenticate } from "../controllers/authController";
 import client from "../config/db";
 import { ObjectId } from "mongodb"; // update
@@ -28,6 +28,11 @@ router.get("/all", authenticate, (req: Request, res: Response) => {
     getAllWorkoutPlans(req, res);
 });
 
+// Delete a specific workout plan: history
+router.delete("/:id", authenticate, (req: Request, res: Response) => {
+    deleteWorkoutPlan(req, res);
+});
+
 // Delete a workout plan by ID
 /*
 router.delete("/:id", authenticate, async (req: Request, res: Response) => {
@@ -49,21 +54,6 @@ router.delete("/:id", authenticate, async (req: Request, res: Response) => {
     }
 });
 */
-
-// Get all exercises
-router.get("/exercises", authenticate, (req: Request, res: Response) => {
-    getAllExercises(req, res);
-});
-
-// Add a new exercise
-router.post("/exercises", authenticate, (req: Request, res: Response) => {
-    addNewExercise(req, res);
-});
-
-// Save current workout
-router.post("/current-workout/save", authenticate, (req: Request, res: Response) => {
-    saveCurrentWorkout(req, res);
-});
 
 
 export default router;
