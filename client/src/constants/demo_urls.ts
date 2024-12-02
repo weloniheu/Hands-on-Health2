@@ -1,7 +1,7 @@
 export const demo_urls = new Map<string, { primary: string; backup: string }>();
 
 demo_urls.set("Bench Press", {
-  primary: "https://www.youtube.com/embed/WQCn_o9BLj0",
+  primary: "https://www.youtube.com/embed/SCVCLChPQFY",
   backup: "https://www.youtube.com/embed/gRVjAtPip0Y",
 });
 demo_urls.set("Incline Dumbbell Press", {
