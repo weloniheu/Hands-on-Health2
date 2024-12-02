@@ -121,6 +121,29 @@ export async function fetchAllPlans(token: string | null) {
     }
 }
 
+// Fucntion to delete workout plans from history. Method: 
+export async function deletePlan(planId: string, token: string | null) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/workout-plan/${planId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status === 401) {
+            return { logout: true };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to delete the workout plan");
+        }
+
+        return { success: true };
+    } catch (error) {
+        console.error("Error in deletePlan", error);
+        return { success: false, error };
+    }
+}
+
 // Function to finish the current workout. Method: PATCH
 export async function finishCurrentWorkout(token: string | null) {
     try {
