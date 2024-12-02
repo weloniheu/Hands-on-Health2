@@ -6,12 +6,14 @@ import { login } from "../../utils/auth-utils";
 
 // Mock login function
 jest.mock("../../utils/auth-utils", () => ({
-    login: jest.fn(),
+    login: jest.fn(() => Promise.resolve({ result: true, token: "mockToken", firstName: "MockFirstName" })),
+    register: jest.fn(),
 }));
 
-// Mock navigate
+// Mock navigate and Location
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
+    useLocation: () => ({ pathname: '/login' })
 }));
 
 // Mock auth context
@@ -24,16 +26,19 @@ describe("Login Component", () => {
     const mockSetIsGuest = jest.fn();
     const mockSetUser = jest.fn();
     const mockNavigate = jest.fn();
+    const mockSetFirstName = jest.fn();
 
     beforeEach(() => {
         mockSetToken.mockReset();
         mockSetIsGuest.mockReset();
         mockSetUser.mockReset();
+        mockSetFirstName.mockReset();
         mockNavigate.mockReset();
         (useAuth as jest.Mock).mockReturnValue({
             setToken: mockSetToken,
             setIsGuest: mockSetIsGuest,
             setUser: mockSetUser,
+            setFirstName: mockSetFirstName,
         });
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
         render(<Login />);

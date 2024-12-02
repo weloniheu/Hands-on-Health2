@@ -1,13 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./css/CurrentWorkoutView.css";
 import { AppContext } from "../contexts/AppContext";
+import { Exercise2 } from "../types/types";
+import {
+    fetchCurrentPlan,
+    finishCurrentWorkout,
+    getCustomExercises,
+    getDefaultExercises,
+    saveCurrentPlan,
+} from "../utils/exercise-utils";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/WorkOutPlan/Header";
 import AddSet from "../components/EditWorkOutPlan/AddSet";
 import DeleteSet from "../components/EditWorkOutPlan/DeleteSet";
-import { Exercise2 } from "../types/types";
-import { fetchCurrentPlan, finishCurrentWorkout, saveCurrentWorkout } from "../utils/exercise-utils";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import Header from "../components/WorkOutPlan/Header";
 
 interface CurrentWorkoutProps {
     onAddExercise: () => void;
@@ -16,41 +22,139 @@ interface CurrentWorkoutProps {
 export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise }) => {
     const { token, logout } = useAuth();
     const navigate = useNavigate();
+
     const {
         currentWorkoutExercises,
         setCurrentWorkoutExercises,
         deleteExerciseFromCurrentWorkout,
         AvailableExercises,
+        setAvailableExercises,
+        setSearchedExercises,
     } = useContext(AppContext);
 
-    const [selectedExercises, setSelectedExercises] = useState(
-        currentWorkoutExercises.map((exercise) => exercise.name)
-    );
+    const isFirstRender = useRef(true);
+    const currentWorkoutExercisesRef = useRef(currentWorkoutExercises);
+    const [isInitialLoad, setIsInitialLoad] = useState(true); // Track if this is the initial load
+
+    // New state container for the current exercise types
+    const [currentExerciseTypes, setCurrentExerciseTypes] = useState<string[]>([]);
 
     console.log(currentWorkoutExercises);
 
-    // Get the current workout plan information from backend
-    async function handleDataFetch() {
-        const data = await fetchCurrentPlan(token);
+    // Get the default and custom exercises from the backend
+    useEffect(() => {
+        async function getData() {
+            const [defaultExercises, customExercises] = await Promise.all([
+                getDefaultExercises(),
+                getCustomExercises(token),
+            ]);
+            if (customExercises) {
+                setAvailableExercises([...defaultExercises, ...customExercises]);
+                setSearchedExercises([...defaultExercises, ...customExercises]);
+            } else {
+                setAvailableExercises(defaultExercises);
+                setSearchedExercises(defaultExercises);
+            }
+        }
 
+        if (token) {
+            getData();
+        }
+    }, [token]);
+
+    // Get the default exercises from the backend and filter only those in the current workout types
+    // useEffect(() => {
+    //     async function getData() {
+    //         try {
+    //             // Fetch all available exercises from the backend
+    //             const data = await getDefaultExercises();
+
+    //             // Use the currentExerciseTypes container to filter exercises
+    //             const filteredExercises = data.filter((exercise: Exercise2) =>
+    //                 currentExerciseTypes.includes(exercise.type)
+    //             );
+
+    //             // Update the state with the filtered exercises, but only if it's the initial load
+    //             if (isInitialLoad) {
+    //                 setAvailableExercises(filteredExercises.length > 0 ? filteredExercises : data);
+    //                 setIsInitialLoad(false); // Set to false to prevent future fetching
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching exercises:", error);
+    //         }
+    //     }
+
+    //     // Fetch available exercises only if we have exercise types
+    //     if (currentExerciseTypes.length > 0 && isInitialLoad) {
+    //         getData();
+    //     }
+    // }, [currentExerciseTypes, setAvailableExercises]);
+
+    // Get the current workout plan information from the backend and set the exercise types
+    useEffect(() => {
+        async function handleDataFetch() {
+            try {
+                const data = await fetchCurrentPlan(token);
+
+                if (data.logout) {
+                    logout();
+                    navigate("/login");
+                }
+
+                if (data.notActive) {
+                    navigate("/home");
+                }
+
+                // Set current workout exercises
+                setCurrentWorkoutExercises(data.workoutPlan);
+
+                // Extract unique exercise types from the current workout and set them
+                const types = Array.from(
+                    new Set(data.workoutPlan.map((exercise: Exercise2) => exercise.type))
+                ) as string[];
+                setCurrentExerciseTypes(types);
+            } catch (error) {
+                console.error("Error fetching current workout plan:", error);
+            }
+        }
+
+        if (token) {
+            handleDataFetch();
+        }
+    }, [token, setCurrentWorkoutExercises]);
+
+    // Update the reference so that it can be used on unmount
+    useEffect(() => {
+        currentWorkoutExercisesRef.current = currentWorkoutExercises;
+    }, [currentWorkoutExercises]);
+
+    // Send the current workout plan information to backend when currentWorkoutExercises updates or on unmount
+    const handleDataSave = async () => {
+        const data = await saveCurrentPlan(token, currentWorkoutExercisesRef.current);
         if (data.logout) {
             logout();
             navigate("/login");
         }
+    };
 
-        if (data.notActive) {
-            navigate("/home");
-        }
-
-        console.log(data.workoutPlan);
-        setCurrentWorkoutExercises(data.workoutPlan);
-    }
-
+    // Before component unmounts
     useEffect(() => {
-        if (token) {
-            handleDataFetch();
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        } else {
+            return () => {
+                handleDataSave();
+            };
         }
-    }, [token]);
+    }, []);
+
+    // Before page reloads
+    useEffect(() => {
+        window.addEventListener("beforeunload", handleDataSave);
+        return () => {
+            window.removeEventListener("beforeunload", handleDataSave);
+        };
+    });
 
     // Update exercise sets
     const handleUpdateExercise = (updatedExercise: Exercise2) => {
@@ -60,17 +164,30 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
         setCurrentWorkoutExercises(updatedExercises);
     };
 
+    // Update the sets values: weight and reps
+    const handleSetChange = (exerciseName: string, setIndex: number, field: "weight" | "reps", value: number) => {
+        const updatedExercises = currentWorkoutExercises.map((exercise) =>
+            exercise.name === exerciseName
+                ? {
+                      ...exercise,
+                      sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: value } : set)),
+                  }
+                : exercise
+        );
+        setCurrentWorkoutExercises(updatedExercises);
+    };
+
     // Delete an exercise
-    const handleDeleteExercise = (exerciseName: string) => {
-        deleteExerciseFromCurrentWorkout(exerciseName);
+    const handleDeleteExercise = (index: number) => {
+        setCurrentWorkoutExercises(currentWorkoutExercises.filter((exercise, i) => index !== i));
     };
 
     // Update selected exercises
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-        const selectedName = event.target.value;
-        const updatedSelectedExercises = [...selectedExercises];
-        updatedSelectedExercises[index] = selectedName;
-        setSelectedExercises(updatedSelectedExercises);
+        const currExercise = event.target.value;
+        const updatedExercises = [...currentWorkoutExercises];
+        updatedExercises[index] = { ...updatedExercises[index], name: currExercise };
+        setCurrentWorkoutExercises(updatedExercises);
     };
 
     // Finish Workout
@@ -80,20 +197,8 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             logout();
             navigate("/login");
         }
-        // Save the workout plan to the backend
-        await saveCurrentWorkout(token, currentWorkoutExercises);
-
         navigate("/home");
     }
-
-    useEffect(() => {
-        return () => {
-            // Call the function to save the workout if needed
-            if (currentWorkoutExercises.length > 0) {
-                saveCurrentWorkout(token, currentWorkoutExercises);
-            }
-        };
-    }, [currentWorkoutExercises, token]);
 
     // Navigation functions
     const navigateHome = () => navigate("/");
@@ -120,7 +225,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             <h2 className="text--exercise-name">
                                 <select
                                     className="select--dropdown"
-                                    value={selectedExercises[index] || ""}
+                                    value={exercise.name}
                                     onChange={(event) => handleSelectChange(event, index)}
                                 >
                                     {AvailableExercises.map((exerciseOption, idx) => (
@@ -135,7 +240,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                                 <button className="button--control" onClick={() => navigateToDemo(exercise.name)}>
                                     Demo
                                 </button>
-                                <button className="button--control" onClick={() => handleDeleteExercise(exercise.name)}>
+                                <button className="button--control" onClick={() => handleDeleteExercise(index)}>
                                     Delete
                                 </button>
                             </div>
@@ -146,9 +251,33 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                                 {exercise.sets.map((set, setIndex) => (
                                     <div key={setIndex} className="item--set">
                                         <label>Weight:</label>
-                                        <input type="number" defaultValue={set.weight} className="input--set" />
+                                        <input
+                                            type="number"
+                                            value={set.weight || ""}
+                                            className="input--set"
+                                            onChange={(e) =>
+                                                handleSetChange(
+                                                    exercise.name,
+                                                    setIndex,
+                                                    "weight",
+                                                    parseInt(e.target.value)
+                                                )
+                                            }
+                                        />
                                         <label>Reps:</label>
-                                        <input type="number" defaultValue={set.reps} className="input--set" />
+                                        <input
+                                            type="number"
+                                            value={set.reps || ""}
+                                            className="input--set"
+                                            onChange={(e) =>
+                                                handleSetChange(
+                                                    exercise.name,
+                                                    setIndex,
+                                                    "reps",
+                                                    parseInt(e.target.value)
+                                                )
+                                            }
+                                        />
                                         <DeleteSet
                                             exercise={exercise}
                                             setIndex={setIndex}
@@ -159,7 +288,17 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
                             </div>
                             <div className="container--notes">
                                 <label>Notes:</label>
-                                <textarea className="input--notes" placeholder="Add any notes here..." />
+                                <textarea
+                                    className="input--notes"
+                                    placeholder="Add any notes here..."
+                                    value={exercise.notes || ""}
+                                    onChange={(e) => {
+                                        const updatedExercises = currentWorkoutExercises.map((ex, i) =>
+                                            i === index ? { ...ex, notes: e.target.value } : ex
+                                          );
+                                        setCurrentWorkoutExercises(updatedExercises);
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>

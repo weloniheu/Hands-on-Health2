@@ -9,7 +9,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const { setToken, setIsGuest, setUser } = useAuth();
+    const { setToken, setIsGuest, setUser, setFirstName } = useAuth();
     const navigate = useNavigate();
 
     async function handleLogin(event: any) {
@@ -26,7 +26,9 @@ function Login() {
             if (data.result) {
                 setToken(data.token);
                 setUser(email);
+                setFirstName(data.firstName);
                 localStorage.setItem("authToken", data.token); // Save the token in localStorage
+                localStorage.setItem("firstName", data.firstName);
                 setIsGuest(false);
                 navigate("/home");
             } else {
@@ -40,6 +42,7 @@ function Login() {
     function handleGuestLogin() {
         setIsGuest(true);
         setToken(null);
+        setUser(null);
         navigate("/home");
     }
 
