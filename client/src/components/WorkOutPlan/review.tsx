@@ -46,6 +46,7 @@ function Review() {
 
     // Cancel the workout template creation
     function handleCancel() {
+        cancel();
         navigate("/");
     }
 
