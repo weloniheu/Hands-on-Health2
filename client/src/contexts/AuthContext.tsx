@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState, useEffect } from "react";
+import EventBus from "./EventBus";
 
 interface AuthContextType {
     token: string | null;
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isGuest, setIsGuest] = useState<boolean>(false);
 
     const logout = () => {
+        EventBus.emit('logout');
         setToken(null);
         setUser(null);
         setFirstName(null);
