@@ -4,7 +4,7 @@ import Header from "../WorkOutPlan/Header";
 import "../WorkOutPlan/css/WorkoutTemplateOptions.css";
 import "./HistoryEditing.css";
 import { useAuth } from "../../contexts/AuthContext";
-import { fetchAllPlans } from "../../utils/exercise-utils";
+import { deletePlan, fetchAllPlans } from "../../utils/exercise-utils";
 import { Exercise2 } from "../../types/types";
 
 interface WorkoutPlan {
@@ -26,7 +26,7 @@ const HistoryEditing: React.FC = () => {
     useEffect(() => {
         async function getPlans() {
             const workoutPlans = await fetchAllPlans(token);
-            if (workoutPlans.logout) {
+            if (workoutPlans && workoutPlans.logout) {
                 logout();
                 navigate("/login");
             }
@@ -39,9 +39,22 @@ const HistoryEditing: React.FC = () => {
         }
     }, [token]);
 
-    const handleDeleteWorkout = (planId: string) => {
-        setWorkoutHistory((prev) => prev.filter((plan) => plan._id !== planId));
+    const handleDeleteWorkout = async (planId: string) => {
+        // setWorkoutHistory((prev) => prev.filter((plan) => plan._id !== planId));
+        const result = await deletePlan(planId, token);
+        if (result.logout) {
+            logout();
+            navigate("/login");
+        } else if (result.success) {
+            setWorkoutHistory((prev) => prev.filter((plan) => plan._id !== planId));
+        } else {
+            alert("Failed to delete the workout plan.");
+        }
     };
+
+    const handleStartWorkout = async (planId: string) => {
+        
+    }
 
     return (
         <div className="duration-page-view">
@@ -49,7 +62,7 @@ const HistoryEditing: React.FC = () => {
             <div className="title-and-cancel">
                 <h1 className="focus">History</h1>
                 <button className="cancel-button" onClick={() => navigate("/home")}>
-                    Cancel
+                    Back
                 </button>
             </div>
 
@@ -67,6 +80,11 @@ const HistoryEditing: React.FC = () => {
                             {isEditing && (
                                 <button className="delete-button" onClick={() => handleDeleteWorkout(plan._id)}>
                                     Delete
+                                </button>
+                            )}
+                            {!isEditing && (
+                                <button className="start-workout-button">
+                                    Start Workout
                                 </button>
                             )}
                         </div>

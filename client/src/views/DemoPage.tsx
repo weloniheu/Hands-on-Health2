@@ -12,9 +12,22 @@ const DemoPlayer = () => {
   const { exerciseName = "" } = useParams(); //Get the param from URL
 
   useEffect(() => {
-    const url = demo_urls.get(exerciseName);
-    setVideoUrl(url || "https://www.youtube.com/embed/dQw4w9WgXcQ"); // use default video if no url is found
-  }, []);
+    const demoInfo = demo_urls.get(exerciseName);
+
+    if (demoInfo) {
+      setVideoUrl(demoInfo.primary); // Use primary URL by default
+    } else {
+      setVideoUrl("https://www.youtube.com/embed/dQw4w9WgXcQ"); // Default fallback
+    }
+  }, [exerciseName]);
+
+  const handleVideoError = () => {
+    console.log("video error");
+    const demoInfo = demo_urls.get(exerciseName);
+    if (demoInfo && demoInfo.backup) {
+      setVideoUrl(demoInfo.backup); // Use backup URL on error
+    }
+  };
 
   function GoToCurrWorkoutView() {
     navigate("/current-workout");
@@ -23,9 +36,9 @@ const DemoPlayer = () => {
   return (
     <div>
       <div className="header-container">
-        <h1 className="header-title">Workout Demo</h1>
+        <h1 className="text--header-title">Workout Demo</h1>
         <button
-          className="finish-exercise"
+          className="finish-exercise-demo"
           onClick={GoToCurrWorkoutView}
         >
           Exit Demo
@@ -38,6 +51,7 @@ const DemoPlayer = () => {
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            onError={handleVideoError} //Try to use backup link if error occurs
           ></iframe>
         </div>
       </div>
