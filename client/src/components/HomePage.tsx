@@ -47,10 +47,6 @@ const HomePage: React.FC = () => {
         navigate("/history");
     }
 
-    function handleQuickWorkouts() {
-        navigate("/quick-workouts");
-    }
-
     return (
         <div className="home-page">
             <Header />
@@ -65,9 +61,6 @@ const HomePage: React.FC = () => {
                     Current Workout
                 </button>
 
-                <button className="quick-workouts-button" onClick={handleQuickWorkouts}>
-                    Quick Workouts
-                </button>
             </div>
             {!isGuest && (
                 <div className="history-button">
