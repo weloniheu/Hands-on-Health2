@@ -17,10 +17,11 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     const [focus, setFocus] = useState<string[]>([]);
     const [intensity, setIntensity] = useState<string>("");
 
-    function cancel(){
+    function cancel() {
         setDuration(0);
         setFocus([]);
         setIntensity("");
+        sessionStorage.removeItem("selectedMuscles");
     }
 
     return (
