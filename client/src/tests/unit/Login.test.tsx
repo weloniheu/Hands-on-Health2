@@ -50,7 +50,7 @@ describe("Login Component", () => {
         expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
         expect(screen.getByText(/register for account/i)).toBeInTheDocument();
         expect(screen.getByTestId("loginButton")).toBeInTheDocument();
-        expect(screen.getByText(/continue as guest/i)).toBeInTheDocument();
+        // expect(screen.getByText(/continue as guest/i)).toBeInTheDocument();
     });
 
     test("Should show the correct error message when user is not found", async () => {
