@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import EventBus from './EventBus';
 
 type WorkoutContextType = {
     duration: number;
@@ -17,11 +18,24 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     const [focus, setFocus] = useState<string[]>([]);
     const [intensity, setIntensity] = useState<string>("");
 
-    function cancel(){
+    function cancel() {
         setDuration(0);
         setFocus([]);
         setIntensity("");
+        sessionStorage.removeItem("selectedMuscles");
     }
+
+    useEffect(() => {
+        const handleLogout = () => {
+            cancel();
+        };
+
+        EventBus.on('logout', handleLogout);
+
+        return () => {
+            EventBus.removeListener('logout', handleLogout);
+        };
+    }, []);
 
     return (
         <WorkoutContext.Provider value={{ duration, focus, intensity, setDuration, setFocus, setIntensity, cancel }}>

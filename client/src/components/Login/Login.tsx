@@ -45,12 +45,12 @@ function Login() {
         }
     }
 
-    function handleGuestLogin() {
+    /*function handleGuestLogin() {
         setIsGuest(true);
         setToken(null);
         setUser(null);
         navigate("/home");
-    }
+    }*/
 
     return (
         <div className="login">
@@ -87,11 +87,11 @@ function Login() {
                         Login
                     </button>
                 </div>
-                <div className="form-group guest">
+                {/*<div className="form-group guest">
                     <p onClick={handleGuestLogin} className="guest-login">
                         Continue as guest
                     </p>
-                </div>
+                </div>*/}
             </form>
         </div>
     );
