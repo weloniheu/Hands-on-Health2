@@ -35,6 +35,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
     const isFirstRender = useRef(true);
     const currentWorkoutExercisesRef = useRef(currentWorkoutExercises);
     const [isInitialLoad, setIsInitialLoad] = useState(true); // Track if this is the initial load
+    const [workoutName, setWorkoutName] = useState(null);
 
     // New state container for the current exercise types
     const [currentExerciseTypes, setCurrentExerciseTypes] = useState<string[]>([]);
@@ -107,6 +108,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
 
                 // Set current workout exercises
                 setCurrentWorkoutExercises(data.workoutPlan);
+                setWorkoutName(data.planName);
 
                 // Extract unique exercise types from the current workout and set them
                 const types = Array.from(
@@ -217,6 +219,7 @@ export const CurrentWorkout: React.FC<CurrentWorkoutProps> = ({ onAddExercise })
             </div>
             <div className="container--header-action">
                 <h1 className="text--header-title">Current Workout</h1>
+                <h2 className="workout-name">{workoutName}</h2>
             </div>
             <div className="container--exercise-list">
                 {currentWorkoutExercises.map((exercise, index) => (
