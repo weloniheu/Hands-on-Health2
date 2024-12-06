@@ -82,11 +82,6 @@ const HistoryEditing: React.FC = () => {
                                     Delete
                                 </button>
                             )}
-                            {!isEditing && (
-                                <button className="start-workout-button">
-                                    Start Workout
-                                </button>
-                            )}
                         </div>
                     ))
                 ) : (
