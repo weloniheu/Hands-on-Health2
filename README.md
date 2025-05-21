@@ -2,9 +2,8 @@
 
 ## Live website powered with render
 
+right click to open in new tab
 [https://hands-on-health2-1.onrender.com](https://hands-on-health2-1.onrender.com)
-
-<a href="(https://hands-on-health2-1.onrender.co)" target="_blank" rel="noopener noreferrer">Visit Example</a>
 
 
 ## Steps to set up:
