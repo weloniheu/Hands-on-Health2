@@ -22,11 +22,11 @@ app.get("/test", (req, res) => {
 });
 
 // Serve static files from React
-app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(express.static(path.join(__dirname, "../../client/build")));
 
 // Catch-all: send index.html for any unmatched route (for React Router)
 app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
 });
 
 // Start the server
