@@ -1,4 +1,9 @@
 # Hands-on-Health
+
+## Live website powered with render
+
+[(https://hands-on-health2-1.onrender.com)][(https://hands-on-health2-1.onrender.com))]
+
 ## Steps to set up:
 - Clone the repo into your local computer
 - cd into client; then `npm install`
@@ -53,3 +58,5 @@ Example:
   reps: 8
 }
 ```
+
+
