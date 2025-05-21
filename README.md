@@ -2,7 +2,9 @@
 
 ## Live website powered with render
 
-[https://hands-on-health2-1.onrender.com](https://hands-on-health2-1.onrender.com))
+[https://hands-on-health2-1.onrender.com](https://hands-on-health2-1.onrender.com)
+<a href="(https://hands-on-health2-1.onrender.co)" target="_blank" rel="noopener noreferrer">Visit Example</a>
+
 
 ## Steps to set up:
 - Clone the repo into your local computer
