@@ -17,9 +17,10 @@ app.use("/exercise", exerciseRoute);
 app.use("/auth", authRoutes);
 app.use("/exercises", workoutPlanRoute)
 
-app.get("/test", (req, res) => {
-	res.send("Test route working!");
-});
+// app.get("/test", (req, res) => {
+// 	res.send("Test route working!");
+// });
+
 
 // Serve static files from React
 app.use(express.static(path.join(__dirname, "../../client/build")));
@@ -29,18 +30,16 @@ app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
 });
 
-// Start the server
+
+// // Root endpoint to get test if the server is running
+// app.get("/", (req: Request, res: Response) => {
+// 	res.send({ data: "Hello, TypeScript Express!" });
+// 	res.status(200);
+// });
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-// Root endpoint to get test if the server is running
-app.get("/", (req: Request, res: Response) => {
-	res.send({ data: "Hello, TypeScript Express!" });
-	res.status(200);
-});
-
 
 
 export default app;
