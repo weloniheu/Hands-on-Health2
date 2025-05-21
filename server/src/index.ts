@@ -4,9 +4,10 @@ import workoutTemplateRoute from "./routes/workoutTemplateRoute";
 import workoutPlanRoute from "./routes/workoutPlanRoute";
 import exerciseRoute from "./routes/exerciseRoute";
 import authRoutes from "./routes/authRoute";
+import path from "path";
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080; // Use Render's provided PORT
 
 app.use(cors());
 app.use(express.json());
@@ -20,9 +21,18 @@ app.get("/test", (req, res) => {
 	res.send("Test route working!");
 });
 
+// Serve static files from React
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// Catch-all: send index.html for any unmatched route (for React Router)
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
+
 // Start the server
+
 app.listen(port, () => {
-	console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
 
 // Root endpoint to get test if the server is running
