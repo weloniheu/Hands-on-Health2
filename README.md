@@ -1,10 +1,6 @@
 # Hands-on-Health
 
-## Live website powered with render
-
-right click to open in new tab
 [https://hands-on-health2-1.onrender.com](https://hands-on-health2-1.onrender.com)
-
 
 ## Steps to set up:
 - Clone the repo into your local computer
