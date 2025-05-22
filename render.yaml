@@ -4,11 +4,11 @@ services:
   name: Hands-on-Health2-1
   runtime: static
   repo: https://github.com/weloniheu/Hands-on-Health2
-  buildCommand: npm run build
+  buildCommand: yarn; yarn build
   staticPublishPath: build
   rootDir: client
   routes:
     - type: rewrite
-      source: '/.*'
+      source: '/*'
       destination: '/index.html'
 version: "1"
