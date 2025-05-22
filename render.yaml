@@ -1,0 +1,14 @@
+# Exported from Render on 2025-05-22T09:50:24Z
+services:
+- type: web
+  name: Hands-on-Health2-1
+  runtime: static
+  repo: https://github.com/weloniheu/Hands-on-Health2
+  buildCommand: npm run build
+  staticPublishPath: build
+  rootDir: client
+  routes:
+    - type: rewrite
+      source: '/.*'
+      destination: '/index.html'
+version: "1"
